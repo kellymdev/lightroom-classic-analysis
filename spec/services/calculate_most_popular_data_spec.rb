@@ -60,5 +60,15 @@ RSpec.describe CalculateMostPopularData, type: :service do
         end
       end
     end
+
+    context 'focal_length' do
+      before do
+        exif_2.update!(focalLength: 400.0)
+      end
+
+      it 'returns the most frequently used focal length' do
+        expect(service.call[:focal_length]).to eq 100.0
+      end
+    end
   end
 end
