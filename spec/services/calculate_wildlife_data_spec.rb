@@ -2,9 +2,12 @@ require 'rails_helper'
 
 RSpec.describe CalculateWildlifeData, type: :service do
   describe '#call' do
-    let(:exif_1) { create(:exif, focalLength: 350.0) }
-    let(:exif_2) { create(:exif, focalLength: 400.0) }
-    let(:exif_3) { create(:exif, focalLength: 400.0) }
+    let(:camera_1) { create(:camera, value: 'Canon EOS 7D') }
+    let(:camera_2) { create(:camera, value: 'Canon EOS 5D Mark IV') }
+
+    let(:exif_1) { create(:exif, cameraModelRef: camera_1.id, focalLength: 350.0) }
+    let(:exif_2) { create(:exif, cameraModelRef: camera_2.id, focalLength: 400.0) }
+    let(:exif_3) { create(:exif, cameraModelRef: camera_1.id, focalLength: 400.0) }
 
     subject(:service) { described_class.new }
 
@@ -12,6 +15,12 @@ RSpec.describe CalculateWildlifeData, type: :service do
       exif_1
       exif_2
       exif_3
+    end
+
+    context 'cameras' do
+      it 'returns the most frequently used cameras for wildlife' do
+        expect(service.call[:cameras]).to eq [camera_1.value, camera_2.value]
+      end
     end
 
     context 'focal lengths' do

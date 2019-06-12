@@ -63,7 +63,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
   context 'calculating frequencies from models' do
     let(:lens_1) { create(:lens) }
     let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
-    let(:lens_3) { create(:lens) }
+    let(:lens_3) { create(:lens, value: 'EF100mm f/2.8 Macro USM') }
     let(:klass_name) { Lens }
 
     before do
@@ -88,6 +88,28 @@ RSpec.describe FrequencyCalculator, type: :concept do
 
         it 'returns the first element with the highest frequency' do
           expect(calculator).to eq lens_1.value
+        end
+      end
+    end
+
+    describe '.calculate_frequently_used_from_model' do
+      let(:model_ids) { [lens_1.id, lens_2.id, lens_1.id, lens_3.id] }
+
+      subject(:calculator) { FrequencyCalculator.calculate_frequently_used_from_model(model_ids, klass_name, number_of_results) }
+
+      context 'when there are more than the specified number of results' do
+        let(:number_of_results) { 2 }
+
+        it 'returns an array of the most frequently used values up to the required number of results' do
+          expect(calculator).to eq [lens_1.value, lens_2.value]
+        end
+      end
+
+      context 'when there are fewer than the specified number of results' do
+        let(:number_of_results) { 5 }
+
+        it 'returns an array of all the values' do
+          expect(calculator).to eq [lens_1.value, lens_2.value, lens_3.value]
         end
       end
     end

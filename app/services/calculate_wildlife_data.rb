@@ -3,6 +3,7 @@
 class CalculateWildlifeData
   def call
     {
+      cameras: most_frequent_cameras,
       focal_lengths: most_frequent_focal_lengths,
       isos: most_frequent_isos,
       month: most_frequent_month,
@@ -11,6 +12,15 @@ class CalculateWildlifeData
   end
 
   private
+
+  def most_frequent_cameras
+    model_ids = Exif.wildlife.pluck(:cameraModelRef)
+    calculate_most_frequently_used_from_model(model_ids, Camera)
+  end
+
+  def calculate_most_frequently_used_from_model(model_ids, klass_name)
+    FrequencyCalculator.calculate_frequently_used_from_model(model_ids, klass_name, 5)
+  end
 
   def most_frequent_focal_lengths
     focal_lengths = Exif.wildlife.pluck(:focalLength)

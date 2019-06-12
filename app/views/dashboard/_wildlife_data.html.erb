@@ -1,5 +1,14 @@
 <h2>Wildlife Data</h2>
 <dl>
+  <dt>Cameras:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:cameras].each do |camera| %>
+        <li><%= camera %></li>
+      <% end %>
+    </ul>
+  </dd>
+
   <dt>Focal Lengths:</dt>
   <dd>
     <ul>

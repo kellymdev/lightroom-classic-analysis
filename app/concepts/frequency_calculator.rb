@@ -37,6 +37,15 @@ class FrequencyCalculator
     total_frequencies.max_by { |model_name, frequency| frequency }&.first
   end
 
+  def self.calculate_frequently_used_from_model(model_ids, klass_name, number_of_results)
+    frequencies = calculate_frequencies_for_model(model_ids, klass_name)
+    total_frequencies = compare_frequencies_by_model_name(frequencies)
+    sorted = total_frequencies.sort { |a, b| b.second <=> a.second }
+
+    results = sorted.take(number_of_results)
+    results.map { |result| result.first }
+  end
+
   def self.calculate_frequencies_for_model(model_ids, klass_name)
     frequencies = {}
 
