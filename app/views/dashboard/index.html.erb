@@ -22,14 +22,4 @@
   <dd><%= @most_popular_data[:year] %></dd>
 </dl>
 
-<h2>Wildlife Data</h2>
-<dl>
-  <dt>Focal Lengths:</dt>
-  <dd>
-    <ul>
-      <% @wildlife_data[:focal_lengths].each do |focal_length| %>
-        <li><%= focal_length %>mm</li>
-      <% end %>
-    </ul>
-  </dd>
-</dl>
+<%= render partial: 'wildlife_data' %>

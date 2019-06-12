@@ -1,0 +1,26 @@
+<h2>Wildlife Data</h2>
+<dl>
+  <dt>Focal Lengths:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:focal_lengths].each do |focal_length| %>
+        <li><%= focal_length %>mm</li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Isos:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:isos].each do |iso| %>
+        <li><%= iso %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Month:</dt>
+  <dd><%= @wildlife_data[:month] %></dd>
+
+  <dt>Year:</dt>
+  <dd><%= @wildlife_data[:year] %></dd>
+</dl>
