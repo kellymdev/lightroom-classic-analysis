@@ -5,7 +5,8 @@ class CalculateMostPopularData
     {
       camera: most_frequent_camera,
       lens: most_frequent_lens,
-      focal_length: most_frequent_focal_length
+      focal_length: most_frequent_focal_length,
+      iso: most_frequent_iso
     }
   end
 
@@ -63,6 +64,13 @@ class CalculateMostPopularData
 
     frequencies = calculate_frequencies(focal_lengths)
     frequencies.max_by { |focal_length, frequency| frequency }.first
+  end
+
+  def most_frequent_iso
+    isos = Exif.pluck(:isoSpeedRating)
+
+    frequencies = calculate_frequencies(isos)
+    frequencies.max_by { |iso, frequency| frequency }.first.round
   end
 
   def calculate_frequencies(data)

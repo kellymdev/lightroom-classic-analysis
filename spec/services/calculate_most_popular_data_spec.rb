@@ -70,5 +70,15 @@ RSpec.describe CalculateMostPopularData, type: :service do
         expect(service.call[:focal_length]).to eq 100.0
       end
     end
+
+    context 'iso' do
+      before do
+        exif_2.update!(isoSpeedRating: 100.0)
+      end
+
+      it 'returns the most frequently used iso' do
+        expect(service.call[:iso]).to eq 1600
+      end
+    end
   end
 end
