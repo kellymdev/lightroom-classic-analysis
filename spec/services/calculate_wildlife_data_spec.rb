@@ -4,10 +4,12 @@ RSpec.describe CalculateWildlifeData, type: :service do
   describe '#call' do
     let(:camera_1) { create(:camera, value: 'Canon EOS 7D') }
     let(:camera_2) { create(:camera, value: 'Canon EOS 5D Mark IV') }
+    let(:lens_1) { create(:lens, value: 'EF300mm f/2.8L USM') }
+    let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
 
-    let(:exif_1) { create(:exif, cameraModelRef: camera_1.id, focalLength: 350.0) }
-    let(:exif_2) { create(:exif, cameraModelRef: camera_2.id, focalLength: 400.0) }
-    let(:exif_3) { create(:exif, cameraModelRef: camera_1.id, focalLength: 400.0) }
+    let(:exif_1) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_1.id, focalLength: 350.0) }
+    let(:exif_2) { create(:exif, cameraModelRef: camera_2.id, lensRef: lens_2.id, focalLength: 400.0) }
+    let(:exif_3) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_2.id, focalLength: 400.0) }
 
     subject(:service) { described_class.new }
 
@@ -20,6 +22,12 @@ RSpec.describe CalculateWildlifeData, type: :service do
     context 'cameras' do
       it 'returns the most frequently used cameras for wildlife' do
         expect(service.call[:cameras]).to eq [camera_1.value, camera_2.value]
+      end
+    end
+
+    context 'lenses' do
+      it 'retuns the most frequently used lenses for wildlife' do
+        expect(service.call[:lenses]).to eq [lens_2.value, lens_1.value]
       end
     end
 
