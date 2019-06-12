@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
 class FrequencyCalculator
+  def self.calculate_most_frequent(frequency_data)
+    frequencies = calculate_frequencies(frequency_data)
+    frequencies.max_by { |data_value, frequency| frequency }&.first
+  end
+
+  def self.calculate_frequently_used(frequency_data, number_of_results)
+    frequencies = calculate_frequencies(frequency_data)
+    sorted = frequencies.sort { |a, b| b.second <=> a.second }
+
+    results = sorted.take(number_of_results)
+    results.map { |result| result.first }
+  end
+
   def self.calculate_frequencies(frequency_data)
     frequencies = {}
 
@@ -12,6 +25,6 @@ class FrequencyCalculator
       end
     end
 
-    frequencies.max_by { |data_value, frequency| frequency }.first
+    frequencies
   end
 end

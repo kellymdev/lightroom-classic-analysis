@@ -5,5 +5,6 @@ class DashboardController < ApplicationController
     @image_count = Image.count
 
     @most_popular_data = CalculateMostPopularData.new.call
+    @wildlife_data = CalculateWildlifeData.new.call
   end
 end

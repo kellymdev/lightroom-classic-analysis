@@ -58,7 +58,7 @@ class CalculateMostPopularData
       total_frequencies[model_name] = frequency
     end
 
-    total_frequencies.max_by { |model_name, frequency| frequency }.first
+    total_frequencies.max_by { |model_name, frequency| frequency }&.first
   end
 
   def most_frequent_focal_length
@@ -68,22 +68,25 @@ class CalculateMostPopularData
 
   def most_frequent_iso
     isos = Exif.pluck(:isoSpeedRating)
-    calculate_frequencies(isos).round
+    calculate_frequencies(isos)&.round
   end
 
   def most_frequent_month
     months = Exif.pluck(:dateMonth)
 
-    month = calculate_frequencies(months).to_i
-    Date::MONTHNAMES[month]
+    month = calculate_frequencies(months)&.to_i
+
+    if month.present?
+      Date::MONTHNAMES[month]
+    end
   end
 
   def most_frequent_year
     years = Exif.pluck(:dateYear)
-    calculate_frequencies(years).round
+    calculate_frequencies(years)&.round
   end
 
   def calculate_frequencies(data)
-    FrequencyCalculator.calculate_frequencies(data)
+    FrequencyCalculator.calculate_most_frequent(data)
   end
 end
