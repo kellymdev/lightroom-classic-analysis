@@ -59,4 +59,95 @@ RSpec.describe FrequencyCalculator, type: :concept do
       expect(calculator).to eq expected_data
     end
   end
+
+  context 'calculating frequencies from models' do
+    let(:lens_1) { create(:lens) }
+    let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
+    let(:lens_3) { create(:lens) }
+    let(:klass_name) { Lens }
+
+    before do
+      lens_1
+      lens_2
+      lens_3
+    end
+
+    describe '.calculate_most_frequent_from_model' do
+      subject(:calculator) { FrequencyCalculator.calculate_most_frequent_from_model(model_ids, klass_name) }
+
+      context 'when there is one element with the highest frequency' do
+        let(:model_ids) { [lens_2.id, lens_1.id, lens_3.id, lens_2.id] }
+
+        it 'returns the value of the highest frequency model' do
+          expect(calculator).to eq lens_2.value
+        end
+      end
+
+      context 'when there is more than one element with the highest frequency' do
+        let(:model_ids) { [lens_1.id, lens_2.id, lens_1.id, lens_3.id, lens_2.id] }
+
+        it 'returns the first element with the highest frequency' do
+          expect(calculator).to eq lens_1.value
+        end
+      end
+    end
+
+    describe '.calculate_frequencies_for_model' do
+      subject(:calculator) { FrequencyCalculator.calculate_frequencies_for_model(model_ids, klass_name) }
+
+      let(:model_ids) { [lens_2.id, lens_1.id, lens_3.id, lens_3.id] }
+      let(:expected_result) do
+        {
+          lens_2.id => {
+            frequency: 1,
+            model_name: lens_2.value
+          },
+          lens_1.id => {
+            frequency: 1,
+            model_name: lens_1.value,
+          },
+          lens_3.id => {
+            frequency: 2,
+            model_name: lens_3.value
+          }
+        }
+      end
+
+      it 'returns a list of frequencies for each model id including the model name' do
+        expect(calculator).to eq expected_result
+      end
+    end
+
+    describe '.compare_frequencies_by_model_name' do
+      let(:frequencies) do
+        {
+          1 => {
+            frequency: 2,
+            model_name: 'Canon EOS 5D Mark IV'
+          },
+          2 => {
+            frequency: 4,
+            model_name: 'Canon EOS 6D'
+          },
+          3 => {
+            frequency: 3,
+            model_name: 'Canon EOS 5D Mark IV'
+          }
+        }
+      end
+
+      let(:expected_result) do
+        {
+          'Canon EOS 5D Mark IV' => 5,
+          'Canon EOS 6D' => 4
+        }
+      end
+
+      subject(:calculator) { FrequencyCalculator.compare_frequencies_by_model_name(frequencies) }
+
+      it 'returns the frequencies based on the model name' do
+        expect(calculator).to eq expected_result
+      end
+    end
+  end
 end
