@@ -80,5 +80,25 @@ RSpec.describe CalculateMostPopularData, type: :service do
         expect(service.call[:iso]).to eq 1600
       end
     end
+
+    context 'month' do
+      before do
+        exif_2.update!(dateMonth: 7.0)
+      end
+
+      it 'returns the name of the most popular month' do
+        expect(service.call[:month]).to eq 'February'
+      end
+    end
+
+    context 'year' do
+      before do
+        exif_2.update!(dateYear: 2018.0)
+      end
+
+      it 'returns the most popular year' do
+        expect(service.call[:year]).to eq 2019
+      end
+    end
   end
 end

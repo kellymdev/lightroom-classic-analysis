@@ -1,5 +1,5 @@
 <h1>Lightroom Classic Analysis</h1>
-<p>Lightroom classic catalog with <%= @image_count %> images.</p>
+<p>Lightroom Classic catalog with <%= @image_count %> images.</p>
 
 <h2>Most Popular</h2>
 <dl>
@@ -14,4 +14,10 @@
 
   <dt>Iso:</dt>
   <dd><%= @most_popular_data[:iso] %></dd>
+
+  <dt>Month:</dt>
+  <dd><%= @most_popular_data[:month] %></dd>
+
+  <dt>Year:</dt>
+  <dd><%= @most_popular_data[:year] %></dd>
 </dl>
