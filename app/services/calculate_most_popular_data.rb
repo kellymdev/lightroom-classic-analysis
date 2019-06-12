@@ -84,16 +84,6 @@ class CalculateMostPopularData
   end
 
   def calculate_frequencies(data)
-    frequencies = {}
-
-    data.each do |data_value|
-      if frequencies.key?(data_value)
-        frequencies[data_value] += 1
-      else
-        frequencies[data_value] = 1
-      end
-    end
-
-    frequencies.max_by { |data_value, frequency| frequency }.first
+    FrequencyCalculator.calculate_frequencies(data)
   end
 end
