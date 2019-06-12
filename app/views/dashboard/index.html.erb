@@ -1,0 +1,11 @@
+<h1>Lightroom Classic Analysis</h1>
+<p>Lightroom classic catalog with <%= @image_count %> images.</p>
+
+<h2>Most Popular</h2>
+<dl>
+  <dt>Camera:</dt>
+  <dd><%= @most_popular_data[:camera] %></dd>
+
+  <dt>Lens:</dt>
+  <dd><%= @most_popular_data[:lens] %></dd>
+</dl>
