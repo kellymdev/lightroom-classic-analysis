@@ -31,6 +31,12 @@ RSpec.describe CalculateWildlifeData, type: :service do
       end
     end
 
+    context 'camera lens combinations' do
+      it 'returns the most frequently used camera lens combinations for wildlife' do
+        expect(service.call[:camera_lens_combinations]).to eq ['Canon EOS 7D - EF300mm f/2.8L USM', 'Canon EOS 5D Mark IV - EF400mm f/5.6L USM', 'Canon EOS 7D - EF400mm f/5.6L USM']
+      end
+    end
+
     context 'focal lengths' do
       it 'returns the most frequently used focal lengths for wildlife' do
         expect(service.call[:focal_lengths]).to eq [400, 350]

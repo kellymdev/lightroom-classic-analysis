@@ -61,6 +61,18 @@ RSpec.describe CalculateMostPopularData, type: :service do
       end
     end
 
+    context 'camera and lens combinations' do
+      let(:exif_4) { create(:exif, cameraModelRef: camera_2.id, lensRef: lens_2.id) }
+
+      before do
+        exif_4
+      end
+
+      it 'returns the most frequently used camera and lens combination' do
+        expect(service.call[:camera_lens_combination]).to eq 'Canon EOS 6D - EF400mm f/5.6L USM'
+      end
+    end
+
     context 'focal_length' do
       before do
         exif_2.update!(focalLength: 400.0)

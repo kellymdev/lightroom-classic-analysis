@@ -5,6 +5,7 @@ class CalculateMostPopularData
     {
       camera: most_frequent_camera,
       lens: most_frequent_lens,
+      camera_lens_combination: most_frequent_camera_lens_combination,
       focal_length: most_frequent_focal_length,
       iso: most_frequent_iso,
       shutter_speed: most_frequent_shutter_speed,
@@ -27,6 +28,12 @@ class CalculateMostPopularData
 
   def calculate_most_frequent_from_model(model_ids, klass_name)
     FrequencyCalculator.calculate_most_frequent_from_model(model_ids, klass_name)
+  end
+
+  def most_frequent_camera_lens_combination
+    camera_lens_ids = Exif.pluck(:cameraModelRef, :lensRef)
+
+    FrequencyCalculator.calculate_most_frequent_camera_and_lens(camera_lens_ids)
   end
 
   def most_frequent_focal_length

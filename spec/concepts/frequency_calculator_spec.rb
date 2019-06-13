@@ -172,4 +172,106 @@ RSpec.describe FrequencyCalculator, type: :concept do
       end
     end
   end
+
+  context 'calculating frequencies for a combination of camera and lens' do
+    let(:lens_1) { create(:lens) }
+    let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
+
+    let(:camera_1) { create(:camera) }
+    let(:camera_2) { create(:camera, value: 'Canon EOS 6D') }
+
+
+    before do
+      lens_1
+      lens_2
+      camera_1
+      camera_2
+    end
+
+    describe '.calculate_most_frequent_camera_and_lens' do
+      let(:camera_lens_ids) { [[camera_1.id, lens_1.id], [camera_2.id, lens_2.id], [camera_2.id, lens_1.id], [camera_2.id, lens_2.id]] }
+
+      subject(:calculator) { FrequencyCalculator.calculate_most_frequent_camera_and_lens(camera_lens_ids) }
+
+      it 'returns the name of the most frequent camera and lens combination' do
+        expect(calculator).to eq 'Canon EOS 6D - EF400mm f/5.6L USM'
+      end
+    end
+
+    describe '.calculate_frequently_used_camera_and_lens' do
+      let(:number_of_results) { 3 }
+      let(:camera_lens_ids) { [[camera_1.id, lens_1.id], [camera_2.id, lens_2.id], [camera_2.id, lens_1.id], [camera_2.id, lens_2.id]] }
+
+      subject(:calculator) { FrequencyCalculator.calculate_frequently_used_camera_and_lens(camera_lens_ids, number_of_results) }
+
+      it 'returns an array of camera and lens names' do
+        expect(calculator).to eq ['Canon EOS 6D - EF400mm f/5.6L USM', 'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM', 'Canon EOS 6D - EF24-105mm f/4L IS USM']
+      end
+    end
+
+    describe '.calculate_frequencies_for_camera_and_lens' do
+      let(:camera_lens_ids) { [[camera_1.id, lens_1.id], [camera_2.id, lens_2.id], [camera_2.id, lens_1.id], [camera_2.id, lens_2.id]] }
+
+      let(:expected_result) do
+        {
+          [camera_1.id, lens_1.id] => {
+            frequency: 1,
+            camera: 'Canon EOS 5D Mark IV',
+            lens: 'EF24-105mm f/4L IS USM'
+          },
+          [camera_2.id, lens_2.id] => {
+            frequency: 2,
+            camera: 'Canon EOS 6D',
+            lens: 'EF400mm f/5.6L USM'
+          },
+          [camera_2.id, lens_1.id] => {
+            frequency: 1,
+            camera: 'Canon EOS 6D',
+            lens: 'EF24-105mm f/4L IS USM'
+          }
+        }
+      end
+
+      subject(:calculator) { FrequencyCalculator.calculate_frequencies_for_camera_and_lens(camera_lens_ids) }
+
+      it 'returns a list of camera lens combinations with their frequencies' do
+        expect(calculator).to eq expected_result
+      end
+    end
+
+    describe '.group_frequencies_by_camera_and_lens_name' do
+      let(:frequencies) do
+        {
+          [1, 1] => {
+            frequency: 1,
+            camera: 'Canon EOS 5D Mark IV',
+            lens: 'EF24-105mm f/4L IS USM'
+          },
+          [2, 2] => {
+            frequency: 2,
+            camera: 'Canon EOS 6D',
+            lens: 'EF400mm f/5.6L USM'
+          },
+          [2, 3] => {
+            frequency: 1,
+            camera: 'Canon EOS 6D',
+            lens: 'EF400mm f/5.6L USM'
+          }
+        }
+      end
+
+      let(:expected_result) do
+        {
+          'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM' => 1,
+          'Canon EOS 6D - EF400mm f/5.6L USM' => 3
+        }
+      end
+
+      subject(:calculator) { FrequencyCalculator.group_frequencies_by_camera_and_lens_name(frequencies) }
+
+      it 'groups the frequencies into a hash based on the camera and lens name' do
+        expect(calculator).to eq expected_result
+      end
+    end
+  end
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class FrequencyCalculator
-
   # Frequencies for string or numeric values
   def self.calculate_most_frequent(frequency_data)
     frequencies = calculate_frequencies(frequency_data)
@@ -77,5 +76,54 @@ class FrequencyCalculator
     end
 
     total_frequencies
+  end
+
+  # Frequencies for a combination of Camera and Lens
+  def self.calculate_most_frequent_camera_and_lens(camera_and_lens_ids)
+    frequencies = calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)
+    grouped = group_frequencies_by_camera_and_lens_name(frequencies)
+    grouped.max_by { |camera_lens_name, frequency| frequency }&.first
+  end
+
+  def self.calculate_frequently_used_camera_and_lens(camera_and_lens_ids, number_of_results)
+    frequencies = calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)
+    grouped = group_frequencies_by_camera_and_lens_name(frequencies)
+
+    results = grouped.sort { |a, b| b.second <=> a.second }.take(number_of_results)
+    results.map { |result| result.first }
+  end
+
+  def self.calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)
+    frequencies = {}
+
+    camera_and_lens_ids.each do |camera_lens_id|
+      if frequencies.key?(camera_lens_id)
+        frequencies[camera_lens_id][:frequency] += 1
+      else
+        frequencies[camera_lens_id] = {
+          frequency: 1,
+          camera: Camera.find_by(id_local: camera_lens_id.first)&.value,
+          lens: Lens.find_by(id_local: camera_lens_id.second)&.value
+        }
+      end
+    end
+
+    frequencies
+  end
+
+  def self.group_frequencies_by_camera_and_lens_name(frequencies)
+    grouped = {}
+
+    frequencies.each do |id_pair, data|
+      name = "#{data[:camera]} - #{data[:lens]}"
+
+      if grouped.key?(name)
+        grouped[name] += data[:frequency]
+      else
+        grouped[name] = data[:frequency]
+      end
+    end
+
+    grouped
   end
 end

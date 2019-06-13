@@ -5,6 +5,7 @@ class CalculateWildlifeData
     {
       cameras: most_frequent_cameras,
       lenses: most_frequent_lenses,
+      camera_lens_combinations: most_frequent_camera_lens_combinations,
       focal_lengths: most_frequent_focal_lengths,
       isos: most_frequent_isos,
       shutter_speeds: most_frequent_shutter_speeds,
@@ -27,6 +28,11 @@ class CalculateWildlifeData
 
   def calculate_most_frequently_used_from_model(model_ids, klass_name)
     FrequencyCalculator.calculate_frequently_used_from_model(model_ids, klass_name, 5)
+  end
+
+  def most_frequent_camera_lens_combinations
+    camera_lens_ids = Exif.wildlife.pluck(:cameraModelRef, :lensRef)
+    FrequencyCalculator.calculate_frequently_used_camera_and_lens(camera_lens_ids, 5)
   end
 
   def most_frequent_focal_lengths

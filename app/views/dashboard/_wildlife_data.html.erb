@@ -18,6 +18,15 @@
     </ul>
   </dd>
 
+  <dt>Camera Lens Combinations:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:camera_lens_combinations].each do |combination| %>
+        <li><%= combination %></li>
+      <% end %>
+    </ul>
+  </dd>
+
   <dt>Focal Lengths:</dt>
   <dd>
     <ul>
