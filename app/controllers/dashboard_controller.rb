@@ -6,5 +6,6 @@ class DashboardController < ApplicationController
 
     @most_popular_data = CalculateMostPopularData.new.call
     @wildlife_data = CalculateWildlifeData.new.call
+    @keyword_data = CalculateKeywordData.new.call
   end
 end

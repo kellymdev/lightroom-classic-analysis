@@ -1,0 +1,21 @@
+<h2>Keyword Data</h2>
+
+<dl>
+  <dt>Most frequent keywords:</dt>
+  <dd>
+    <ul>
+      <% @keyword_data[:most_frequent_keywords].each do |keyword| %>
+        <li><%= keyword %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Most frequent wildlife keywords:</dt>
+  <dd>
+    <ul>
+      <% @keyword_data[:most_frequent_wildlife_keywords].each do |keyword| %>
+        <li><%= keyword %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>
