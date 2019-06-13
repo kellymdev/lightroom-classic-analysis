@@ -33,6 +33,41 @@ RSpec.describe Exif, type: :model do
         end
       end
     end
+
+    describe 'by_camera' do
+      let(:camera_1) { create(:camera) }
+      let(:exif) { create(:exif, cameraModelRef: camera_1.id) }
+
+      context 'for a single camera id' do
+        context 'when the cameraModelRef matches the value passed in' do
+          it 'is included in the results' do
+            expect(Exif.by_camera(camera_1.id)).to include exif
+          end
+        end
+
+        context 'when the cameraModelRef does not match the value passed in' do
+          it 'is not included in the results' do
+            expect(Exif.by_camera(0)).not_to include exif
+          end
+        end
+      end
+
+      context 'for multiple camera ids' do
+        let(:camera_2) { create(:camera) }
+        let(:exif_2) { create(:exif, cameraModelRef: camera_2.id) }
+
+        before do
+          exif_2
+        end
+
+        it 'includes results for all the camera ids' do
+          results = Exif.by_camera([camera_1.id, camera_2.id])
+
+          expect(results).to include exif
+          expect(results).to include exif_2
+        end
+      end
+    end
   end
 
   describe '#shutter_speed_value' do
