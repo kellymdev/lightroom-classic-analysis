@@ -87,5 +87,15 @@ RSpec.describe CalculateWildlifeData, type: :service do
         expect(service.call[:year]).to eq 2019
       end
     end
+
+    context 'month year combinations' do
+      before do
+        exif_2.update!(dateMonth: 9.0, dateYear: 2018)
+      end
+
+      it 'returns the most frequent month and year combinations for wildlife images' do
+        expect(service.call[:month_year_combinations]).to eq ['February 2019', 'September 2018']
+      end
+    end
   end
 end

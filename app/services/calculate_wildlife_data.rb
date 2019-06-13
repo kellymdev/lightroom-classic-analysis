@@ -10,7 +10,8 @@ class CalculateWildlifeData
       isos: most_frequent_isos,
       shutter_speeds: most_frequent_shutter_speeds,
       month: most_frequent_month,
-      year: most_frequent_year
+      year: most_frequent_year,
+      month_year_combinations: most_frequent_month_years
     }
   end
 
@@ -66,7 +67,15 @@ class CalculateWildlifeData
 
   def most_frequent_year
     years = Exif.wildlife.pluck(:dateYear)
-    calculate_most_frequent(years)&.round
+    calculate_most_frequent(years)&.to_i
+  end
+
+  def most_frequent_month_years
+    month_years = Exif.wildlife.map do |exif|
+      exif.month_and_year
+    end.compact
+
+    calculate_frequencies(month_years)
   end
 
   def calculate_frequencies(data)

@@ -59,4 +59,13 @@
 
   <dt>Year:</dt>
   <dd><%= @wildlife_data[:year] %></dd>
+
+  <dt>Month Year Combinations:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:month_year_combinations].each do |combination| %>
+        <li><%= combination %></li>
+      <% end %>
+    </ul>
+    </dd>
 </dl>
