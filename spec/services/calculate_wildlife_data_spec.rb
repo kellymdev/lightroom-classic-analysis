@@ -47,6 +47,21 @@ RSpec.describe CalculateWildlifeData, type: :service do
       end
     end
 
+    context 'shutter speeds' do
+      let(:shutter_speed_1) { 12.643856 }
+      let(:shutter_speed_2) { 10.643856 }
+
+      before do
+        exif_1.update!(shutterSpeed: shutter_speed_1)
+        exif_2.update!(shutterSpeed: shutter_speed_2)
+        exif_3.update!(shutterSpeed: shutter_speed_2)
+      end
+
+      it 'returns the most frequently used shutter speeds for wildlife' do
+        expect(service.call[:shutter_speeds]).to eq [1600, 6400]
+      end
+    end
+
     context 'month' do
       before do
         exif_2.update!(dateMonth: 11.0)

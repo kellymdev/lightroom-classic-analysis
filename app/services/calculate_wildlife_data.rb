@@ -7,6 +7,7 @@ class CalculateWildlifeData
       lenses: most_frequent_lenses,
       focal_lengths: most_frequent_focal_lengths,
       isos: most_frequent_isos,
+      shutter_speeds: most_frequent_shutter_speeds,
       month: most_frequent_month,
       year: most_frequent_year
     }
@@ -38,6 +39,16 @@ class CalculateWildlifeData
     isos = Exif.wildlife.pluck(:isoSpeedRating)
     results = calculate_frequencies(isos)
     results.map { |iso| iso.round }
+  end
+
+  def most_frequent_shutter_speeds
+    shutter_speeds = Exif.wildlife.map do |exif|
+      next unless exif.shutterSpeed.present?
+
+      exif.shutter_speed_value
+    end.compact
+
+    calculate_frequencies(shutter_speeds)
   end
 
   def most_frequent_month

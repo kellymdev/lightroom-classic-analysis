@@ -36,6 +36,15 @@
     </ul>
   </dd>
 
+  <dt>Shutter Speeds:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:shutter_speeds].each do |shutter_speed| %>
+        <li>1/<%= shutter_speed %></li>
+      <% end %>
+    </ul>
+  </dd>
+
   <dt>Month:</dt>
   <dd><%= @wildlife_data[:month] %></dd>
 
