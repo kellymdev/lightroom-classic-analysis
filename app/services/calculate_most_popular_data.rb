@@ -7,6 +7,7 @@ class CalculateMostPopularData
       lens: most_frequent_lens,
       focal_length: most_frequent_focal_length,
       iso: most_frequent_iso,
+      shutter_speed: most_frequent_shutter_speed,
       month: most_frequent_month,
       year: most_frequent_year
     }
@@ -36,6 +37,16 @@ class CalculateMostPopularData
   def most_frequent_iso
     isos = Exif.pluck(:isoSpeedRating)
     calculate_frequencies(isos)&.round
+  end
+
+  def most_frequent_shutter_speed
+    shutter_speeds = Exif.all.map do |exif|
+      next unless exif.shutterSpeed.present?
+
+      exif.shutter_speed_value
+    end.compact
+
+    calculate_frequencies(shutter_speeds)
   end
 
   def most_frequent_month

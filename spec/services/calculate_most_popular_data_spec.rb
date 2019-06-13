@@ -7,14 +7,14 @@ RSpec.describe CalculateMostPopularData, type: :service do
     let(:lens_1) { create(:lens, value: 'EF24-105mm f/4L IS USM' ) }
     let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
 
-    let(:exif) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_1.id) }
+    let(:exif_1) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_1.id) }
     let(:exif_2) { create(:exif, cameraModelRef: camera_2.id, lensRef: lens_2.id) }
     let(:exif_3) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_2.id) }
 
     subject(:service) { described_class.new }
 
     before do
-      exif
+      exif_1
       exif_2
       exif_3
     end
@@ -78,6 +78,19 @@ RSpec.describe CalculateMostPopularData, type: :service do
 
       it 'returns the most frequently used iso' do
         expect(service.call[:iso]).to eq 1600
+      end
+    end
+
+    context 'shutter_speed' do
+      let(:shutter_speed) { 10.643856 }
+
+      before do
+        exif_1.update!(shutterSpeed: shutter_speed)
+        exif_3.update!(shutterSpeed: shutter_speed)
+      end
+
+      it 'returns the most frequently used shutter speed' do
+        expect(service.call[:shutter_speed]).to eq 1600
       end
     end
 

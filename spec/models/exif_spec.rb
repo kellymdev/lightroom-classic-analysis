@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Exif, type: :model do
+  before do
+    exif
+  end
+
   describe 'scopes' do
     describe 'wildlife' do
       let(:exif) { create(:exif, focalLength: focal_length) }
-
-      before do
-        exif
-      end
 
       context 'when the lens focal length is greater than 300' do
         let(:focal_length) { 400.0 }
@@ -32,6 +32,14 @@ RSpec.describe Exif, type: :model do
           expect(Exif.wildlife).not_to include exif
         end
       end
+    end
+  end
+
+  describe '#shutter_speed_value' do
+    let(:exif) { create(:exif, shutterSpeed: 10.643856) }
+
+    it 'calculates the fractional shutter speed' do
+      expect(exif.shutter_speed_value).to eq 1600
     end
   end
 end
