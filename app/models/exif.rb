@@ -6,6 +6,14 @@ class Exif < ApplicationRecord
   scope :wildlife, -> { where('focalLength >= ?', 300.0) }
 
   def shutter_speed_value
+    return unless shutterSpeed.present?
+
     (2**shutterSpeed).round
+  end
+
+  def month_and_year
+    return unless dateMonth.present? && dateYear.present?
+
+    "#{Date::MONTHNAMES[dateMonth]} #{dateYear.to_i}"
   end
 end

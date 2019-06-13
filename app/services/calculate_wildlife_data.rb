@@ -49,8 +49,6 @@ class CalculateWildlifeData
 
   def most_frequent_shutter_speeds
     shutter_speeds = Exif.wildlife.map do |exif|
-      next unless exif.shutterSpeed.present?
-
       exif.shutter_speed_value
     end.compact
 
