@@ -1,0 +1,13 @@
+<h1>Analysis by Lens</h1>
+
+<h2><%= @data_by_lens[:lens] %></h2>
+<dl>
+  <dt>Keywords:</dt>
+  <dd>
+    <ul>
+      <% @data_by_lens[:keywords].each do |keyword| %>
+        <li><%= keyword %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>

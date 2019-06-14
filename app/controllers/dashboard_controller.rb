@@ -12,4 +12,8 @@ class DashboardController < ApplicationController
   def by_camera
     @data_by_camera = CalculateDataByCamera.new(params[:camera_name]).call
   end
+
+  def by_lens
+    @data_by_lens = CalculateDataByLens.new(params[:lens_name]).call
+  end
 end

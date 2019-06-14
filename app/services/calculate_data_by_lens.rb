@@ -18,7 +18,7 @@ class CalculateDataByLens
 
   def keywords_by_lens
     image_ids = Exif.by_lens(lens_ids).pluck(:image)
-    keyword_ids = KeywordImage.where(image: image_ids).pluck(:tag)
+    keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
     frequencies = calculate_frequently_used(keyword_ids)
 
     frequencies.flat_map do |frequency|

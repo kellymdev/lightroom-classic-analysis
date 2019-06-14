@@ -28,4 +28,18 @@ RSpec.describe DashboardController, type: :controller do
       expect(response).to render_template :by_camera
     end
   end
+
+  describe '#by_lens' do
+    let(:lens) { create(:lens) }
+
+    before do
+      lens
+    end
+
+    it 'renders the by_lens template' do
+      post :by_lens, params: { lens_name: 'EF24-105mm f/4L IS USM' }
+
+      expect(response).to render_template :by_lens
+    end
+  end
 end
