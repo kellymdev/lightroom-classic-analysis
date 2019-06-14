@@ -26,9 +26,11 @@ class CalculateDataByCamera
   def keywords_by_camera
     image_ids = Exif.by_camera(camera_ids).pluck(:image)
     keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
-    keywords = Keyword.where(id_local: keyword_ids).pluck(:lc_name)
+    frequencies = calculate_frequently_used(keyword_ids)
 
-    calculate_frequently_used(keywords)
+    frequencies.flat_map do |frequency|
+      Keyword.where(id_local: frequency).pluck(:lc_name)
+    end
   end
 
   def lenses_by_camera

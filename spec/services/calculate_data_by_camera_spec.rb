@@ -35,7 +35,7 @@ RSpec.describe CalculateDataByCamera, type: :service do
       let(:keyword_image_1) { create(:keyword_image, image: image_1.id, tag: keyword_1.id) }
       let(:keyword_image_2) { create(:keyword_image, image: image_1.id, tag: keyword_2.id) }
       let(:keyword_image_3) { create(:keyword_image, image: image_1.id, tag: keyword_3.id) }
-      let(:keyword_image_4) { create(:keyword_image, image: image_2.id, tag: keyword_1.id) }
+      let(:keyword_image_4) { create(:keyword_image, image: image_2.id, tag: keyword_2.id) }
 
       before do
         keyword_image_1
@@ -45,7 +45,7 @@ RSpec.describe CalculateDataByCamera, type: :service do
       end
 
       it 'returns the most frequently used keywords for that camera' do
-        expect(service.call[:keywords]).to eq ['cat', 'kitten', 'portrait']
+        expect(service.call[:keywords]).to eq ['kitten', 'cat', 'portrait']
       end
     end
 
