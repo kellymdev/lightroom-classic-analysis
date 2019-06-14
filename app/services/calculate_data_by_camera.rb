@@ -11,7 +11,9 @@ class CalculateDataByCamera
     {
       camera: camera_name,
       keywords: keywords_by_camera,
-      focal_lengths: focal_lengths_by_camera
+      focal_lengths: focal_lengths_by_camera,
+      shutter_speeds: shutter_speeds_by_camera,
+      isos: isos_by_camera
     }
   end
 
@@ -29,6 +31,21 @@ class CalculateDataByCamera
     focal_lengths = Exif.by_camera(camera_ids).pluck(:focalLength)
 
     results = calculate_frequently_used(focal_lengths)
+    results.map { |result| result.round }
+  end
+
+  def shutter_speeds_by_camera
+    shutter_speeds = Exif.by_camera(camera_ids).map do |exif|
+      exif.shutter_speed_value
+    end.compact
+
+    calculate_frequently_used(shutter_speeds)
+  end
+
+  def isos_by_camera
+    isos = Exif.by_camera(camera_ids).pluck(:isoSpeedRating)
+
+    results = calculate_frequently_used(isos)
     results.map { |result| result.round }
   end
 

@@ -56,5 +56,25 @@ RSpec.describe CalculateDataByCamera, type: :service do
         expect(service.call[:focal_lengths]).to eq [100, 200]
       end
     end
+
+    context 'shutter_speeds' do
+      before do
+        exif_1.update!(shutterSpeed: 10.643856)
+      end
+
+      it 'returns the most frequently used shutter speeds for that camera' do
+        expect(service.call[:shutter_speeds]).to eq [17, 1600]
+      end
+    end
+
+    context 'isos' do
+      before do
+        exif_1.update!(isoSpeedRating: 1000)
+      end
+
+      it 'returns the most frequently used isos for that camera' do
+        expect(service.call[:isos]).to eq [1600, 1000]
+      end
+    end
   end
 end
