@@ -3,5 +3,5 @@
 class Camera < ApplicationRecord
   self.table_name = 'AgInternedExifCameraModel'
 
-  scope :for_model_name, ->(model_name) { where('value = ?', model_name) }
+  scope :for_model_name, ->(model_name) { where(value: model_name) }
 end
