@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
 
   get '/dashboard', to: 'dashboard#index'
+  post '/by_camera', to: 'dashboard#by_camera', as: 'by_camera'
 end

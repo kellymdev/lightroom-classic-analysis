@@ -14,4 +14,18 @@ RSpec.describe DashboardController, type: :controller do
       expect(response).to render_template :index
     end
   end
+
+  describe '#by_camera' do
+    let(:camera) { create(:camera) }
+
+    before do
+      camera
+    end
+
+    it 'renders the by_camera template' do
+      post :by_camera, params: { camera_name: 'Canon EOS 5D Mark IV' }
+
+      expect(response).to render_template :by_camera
+    end
+  end
 end

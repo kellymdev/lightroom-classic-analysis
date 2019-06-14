@@ -9,6 +9,7 @@ class CalculateDataByCamera
 
   def call
     {
+      camera: camera_name,
       keywords: keywords_by_camera
     }
   end

@@ -17,6 +17,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
 
     subject(:service) { CalculateDataByCamera.new('Canon EOS 5D Mark IV') }
 
+    context 'camera' do
+      it 'returns the camera name passed in' do
+        expect(service.call[:camera]).to eq 'Canon EOS 5D Mark IV'
+      end
+    end
+
     context 'keywords' do
       let(:keyword_1) { create(:keyword, lc_name: 'cat') }
       let(:keyword_2) { create(:keyword, lc_name: 'kitten') }

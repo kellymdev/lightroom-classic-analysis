@@ -1,0 +1,13 @@
+<h1>Analysis by Camera</h1>
+
+<h2><%= @data_by_camera[:camera] %></h2>
+<dl>
+  <dt>Keywords</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:keywords].each do |keyword| %>
+        <li><%= keyword %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>

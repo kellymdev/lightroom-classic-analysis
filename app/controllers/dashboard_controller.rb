@@ -8,4 +8,8 @@ class DashboardController < ApplicationController
     @wildlife_data = CalculateWildlifeData.new.call
     @keyword_data = CalculateKeywordData.new.call
   end
+
+  def by_camera
+    @data_by_camera = CalculateDataByCamera.new(params[:camera_name]).call
+  end
 end

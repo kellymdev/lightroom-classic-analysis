@@ -34,3 +34,9 @@
 <%= render partial: 'wildlife_data' %>
 
 <%= render partial: 'keyword_data' %>
+
+<h2>Data By Camera</h2>
+<%= form_with url: by_camera_path, local: true do |f| %>
+  <%= f.select(:camera_name, cameras_for_select, { include_blank: true} ) %>
+  <%= f.submit 'Go' %>
+<% end %>
