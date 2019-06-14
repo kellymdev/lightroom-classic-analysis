@@ -37,4 +37,31 @@
       <% end %>
     </ul>
   </dd>
+
+  <dt>Months:</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:months].each do |month| %>
+        <li><%= month %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Years:</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:years].each do |year| %>
+        <li><%= year %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Month Year Combinations:</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:month_year_combinations].each do |month_year| %>
+        <li><%= month_year %></li>
+      <% end %>
+    </ul>
+  </dd>
 </dl>

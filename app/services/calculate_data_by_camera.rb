@@ -13,7 +13,10 @@ class CalculateDataByCamera
       keywords: keywords_by_camera,
       focal_lengths: focal_lengths_by_camera,
       shutter_speeds: shutter_speeds_by_camera,
-      isos: isos_by_camera
+      isos: isos_by_camera,
+      months: months_by_camera,
+      years: years_by_camera,
+      month_year_combinations: month_year_combinations_by_camera
     }
   end
 
@@ -47,6 +50,32 @@ class CalculateDataByCamera
 
     results = calculate_frequently_used(isos)
     results.map { |result| result.round }
+  end
+
+  def months_by_camera
+    months = Exif.by_camera(camera_ids).pluck(:dateMonth)
+
+    results = calculate_frequently_used(months)
+    results.map do |result|
+      Date::MONTHNAMES[result]
+    end
+  end
+
+  def years_by_camera
+    years = Exif.by_camera(camera_ids).pluck(:dateYear)
+
+    results = calculate_frequently_used(years)
+    results.map do |result|
+      result.round
+    end
+  end
+
+  def month_year_combinations_by_camera
+    month_years = Exif.by_camera(camera_ids).map do |exif|
+      exif.month_and_year
+    end.compact
+
+    calculate_frequently_used(month_years)
   end
 
   def calculate_frequently_used(frequency_data)

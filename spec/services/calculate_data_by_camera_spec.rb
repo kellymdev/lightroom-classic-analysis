@@ -76,5 +76,35 @@ RSpec.describe CalculateDataByCamera, type: :service do
         expect(service.call[:isos]).to eq [1600, 1000]
       end
     end
+
+    context 'months' do
+      before do
+        exif_1.update!(dateMonth: 5.0)
+      end
+
+      it 'returns the most frequent months for that camera' do
+        expect(service.call[:months]).to eq ['February', 'May']
+      end
+    end
+
+    context 'years' do
+      before do
+        exif_1.update!(dateYear: 2017.0)
+      end
+
+      it 'returns the most frequent years for that camera' do
+        expect(service.call[:years]).to eq [2019, 2017]
+      end
+    end
+
+    context 'month_year_combinations' do
+      before do
+        exif_1.update!(dateMonth: 4.0, dateYear: 2018.0)
+      end
+
+      it 'returns the most frequent month year combinations for that camera' do
+        expect(service.call[:month_year_combinations]).to eq ['February 2019', 'April 2018']
+      end
+    end
   end
 end
