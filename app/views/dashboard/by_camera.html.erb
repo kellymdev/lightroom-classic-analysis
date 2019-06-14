@@ -11,6 +11,15 @@
     </ul>
   </dd>
 
+  <dt>Lenses:</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:lenses].each do |lens| %>
+        <li><%= lens %></li>
+      <% end %>
+    </ul>
+  </dd>
+
   <dt>Focal Lengths:</dt>
   <dd>
     <ul>

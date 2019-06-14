@@ -3,13 +3,15 @@ require 'rails_helper'
 RSpec.describe CalculateDataByCamera, type: :service do
   describe '#call' do
     let(:camera) { create(:camera) }
+    let(:lens_1) { create(:lens, value: 'EF24-105mm f/4L IS USM') }
+    let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
 
     let(:image_1) { create(:image) }
     let(:image_2) { create(:image) }
 
-    let(:exif_1) { create(:exif, cameraModelRef: camera.id, image: image_1.id) }
-    let(:exif_2) { create(:exif, cameraModelRef: camera.id, image: image_2.id) }
-    let(:exif_3) { create(:exif, cameraModelRef: camera.id) }
+    let(:exif_1) { create(:exif, cameraModelRef: camera.id, lensRef: lens_1.id, image: image_1.id) }
+    let(:exif_2) { create(:exif, cameraModelRef: camera.id, lensRef: lens_2.id, image: image_2.id) }
+    let(:exif_3) { create(:exif, cameraModelRef: camera.id, lensRef: lens_1.id) }
 
     before do
       exif_1
@@ -44,6 +46,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
 
       it 'returns the most frequently used keywords for that camera' do
         expect(service.call[:keywords]).to eq ['cat', 'kitten', 'portrait']
+      end
+    end
+
+    context 'lenses' do
+      it 'returns the most frequently used lenses for that camera' do
+        expect(service.call[:lenses]).to eq ['EF24-105mm f/4L IS USM', 'EF400mm f/5.6L USM']
       end
     end
 

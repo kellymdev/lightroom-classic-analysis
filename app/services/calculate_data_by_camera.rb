@@ -11,6 +11,7 @@ class CalculateDataByCamera
     {
       camera: camera_name,
       keywords: keywords_by_camera,
+      lenses: lenses_by_camera,
       focal_lengths: focal_lengths_by_camera,
       shutter_speeds: shutter_speeds_by_camera,
       isos: isos_by_camera,
@@ -28,6 +29,11 @@ class CalculateDataByCamera
     keywords = Keyword.where(id_local: keyword_ids).pluck(:lc_name)
 
     calculate_frequently_used(keywords)
+  end
+
+  def lenses_by_camera
+    lens_ids = Exif.by_camera(camera_ids).pluck(:lensRef).compact
+    FrequencyCalculator.calculate_frequently_used_from_model(lens_ids, Lens, 5)
   end
 
   def focal_lengths_by_camera
