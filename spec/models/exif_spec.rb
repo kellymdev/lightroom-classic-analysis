@@ -68,6 +68,41 @@ RSpec.describe Exif, type: :model do
         end
       end
     end
+
+    describe 'by_lens' do
+      let(:lens_1) { create(:lens) }
+      let(:exif) { create(:exif, lensRef: lens_1.id) }
+
+      context 'for a single lens id' do
+        context 'when the lensRef matches the value passed in' do
+          it 'is included in the results' do
+            expect(Exif.by_lens(lens_1.id)).to include exif
+          end
+        end
+
+        context 'when the lensRef does not match the value passed in' do
+          it 'is not included in the results' do
+            expect(Exif.by_lens(0)).not_to include exif
+          end
+        end
+      end
+
+      context 'for multiple lens ids' do
+        let(:lens_2) { create(:lens) }
+        let(:exif_2) { create(:exif, lensRef: lens_2.id) }
+
+        before do
+          exif_2
+        end
+
+        it 'includes results for all the lens ids' do
+          results = Exif.by_lens([lens_1.id, lens_2.id])
+
+          expect(results).to include exif
+          expect(results).to include exif_2
+        end
+      end
+    end
   end
 
   describe '#shutter_speed_value' do

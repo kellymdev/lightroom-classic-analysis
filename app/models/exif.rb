@@ -5,6 +5,7 @@ class Exif < ApplicationRecord
 
   scope :wildlife, -> { where('focalLength >= ?', 300.0) }
   scope :by_camera, ->(camera_id) { where(cameraModelRef: camera_id) }
+  scope :by_lens, ->(lens_id) { where(lensRef: lens_id) }
 
   def shutter_speed_value
     return unless shutterSpeed.present?
