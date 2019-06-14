@@ -10,7 +10,8 @@ class CalculateDataByCamera
   def call
     {
       camera: camera_name,
-      keywords: keywords_by_camera
+      keywords: keywords_by_camera,
+      focal_lengths: focal_lengths_by_camera
     }
   end
 
@@ -22,6 +23,13 @@ class CalculateDataByCamera
     keywords = Keyword.where(id_local: keyword_ids).pluck(:lc_name)
 
     calculate_frequently_used(keywords)
+  end
+
+  def focal_lengths_by_camera
+    focal_lengths = Exif.by_camera(camera_ids).pluck(:focalLength)
+
+    results = calculate_frequently_used(focal_lengths)
+    results.map { |result| result.round }
   end
 
   def calculate_frequently_used(frequency_data)

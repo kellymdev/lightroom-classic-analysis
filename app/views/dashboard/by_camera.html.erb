@@ -10,4 +10,13 @@
       <% end %>
     </ul>
   </dd>
+
+  <dt>Focal Lengths</dt>
+  <dd>
+    <ul>
+      <% @data_by_camera[:focal_lengths].each do |focal_length| %>
+        <li><%= focal_length %></li>
+      <% end %>
+    </ul>
+  </dd>
 </dl>

@@ -9,10 +9,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
 
     let(:exif_1) { create(:exif, cameraModelRef: camera.id, image: image_1.id) }
     let(:exif_2) { create(:exif, cameraModelRef: camera.id, image: image_2.id) }
+    let(:exif_3) { create(:exif, cameraModelRef: camera.id) }
 
     before do
       exif_1
       exif_2
+      exif_3
     end
 
     subject(:service) { CalculateDataByCamera.new('Canon EOS 5D Mark IV') }
@@ -42,6 +44,16 @@ RSpec.describe CalculateDataByCamera, type: :service do
 
       it 'returns the most frequently used keywords for that camera' do
         expect(service.call[:keywords]).to eq ['cat', 'kitten', 'portrait']
+      end
+    end
+
+    context 'focal_lengths' do
+      before do
+        exif_1.update!(focalLength: 200.0)
+      end
+
+      it 'returns the most frequently used focal lengths for that camera' do
+        expect(service.call[:focal_lengths]).to eq [100, 200]
       end
     end
   end
