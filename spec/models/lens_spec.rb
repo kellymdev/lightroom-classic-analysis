@@ -24,5 +24,23 @@ RSpec.describe Lens, type: :model do
         expect(Lens.for_model_name('EF24-105mm f/4L IS USM')).not_to include lens_2
       end
     end
+
+    describe 'macro' do
+      before do
+        lens_1.update!(value: 'EF100mm f/2.8 Macro USM')
+        lens_2.update!(value: 'EF-S60mm f/2.8 Macro USM')
+      end
+
+      it 'includes all macro lenses' do
+        result = Lens.macro
+
+        expect(result).to include lens_1
+        expect(result).to include lens_2
+      end
+
+      it 'does not include non-macro lenses' do
+        expect(Lens.macro).not_to include lens_3
+      end
+    end
   end
 end

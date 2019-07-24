@@ -7,6 +7,7 @@ class DashboardController < ApplicationController
     @most_popular_data = CalculateMostPopularData.new.call
     @wildlife_data = CalculateMostFrequentFromExif.new(Exif.wildlife, 5).call
     @landscape_data = CalculateMostFrequentFromExif.new(Exif.wide_angle_landscape, 5).call
+    @macro_data = CalculateMostFrequentFromExif.new(Exif.macro, 5).call
     @keyword_data = CalculateKeywordData.new.call
   end
 

@@ -75,6 +75,26 @@ RSpec.describe Exif, type: :model do
       end
     end
 
+    describe 'macro' do
+      let(:exif) { create(:exif, lensRef: lens.id) }
+
+      context 'for a macro lens' do
+        let(:lens) { create(:lens, value: 'EF100mm f/2.8 Macro USM') }
+
+        it 'is included in the results' do
+          expect(Exif.macro).to include exif
+        end
+      end
+
+      context 'for a non-macro lens' do
+        let(:lens) { create(:lens, value: 'EF24-105mm f/4 IS USM') }
+
+        it 'is not included in the results' do
+          expect(Exif.macro).not_to include exif
+        end
+      end
+    end
+
     describe 'by_camera' do
       let(:camera_1) { create(:camera) }
       let(:exif) { create(:exif, cameraModelRef: camera_1.id) }

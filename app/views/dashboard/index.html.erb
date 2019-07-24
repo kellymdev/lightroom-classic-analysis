@@ -31,9 +31,11 @@
   <dd><%= @most_popular_data[:month_year_combination] %></dd>
 </dl>
 
-<%= render partial: 'wildlife_data' %>
+<%= render partial: 'data_from_exif', locals: { title: 'Wildlife Data', data: @wildlife_data } %>
 
-<%= render partial: 'wide_angle_landscape_data' %>
+<%= render partial: 'data_from_exif', locals: { title: 'Wide Angle Landscape Data', data: @landscape_data } %>
+
+<%= render partial: 'data_from_exif', locals: { title: 'Macro Data', data: @macro_data } %>
 
 <%= render partial: 'keyword_data' %>
 
