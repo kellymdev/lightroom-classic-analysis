@@ -54,11 +54,23 @@
     </ul>
   </dd>
 
-  <dt>Month:</dt>
-  <dd><%= @wildlife_data[:month] %></dd>
+  <dt>Months:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:months].each do |month| %>
+        <li><%= month %></li>
+      <% end %>
+    </ul>
+  </dd>
 
-  <dt>Year:</dt>
-  <dd><%= @wildlife_data[:year] %></dd>
+  <dt>Years:</dt>
+  <dd>
+    <ul>
+      <% @wildlife_data[:years].each do |year| %>
+        <li><%= year %></li>
+      <% end %>
+    </ul>
+  </dd>
 
   <dt>Month Year Combinations:</dt>
   <dd>

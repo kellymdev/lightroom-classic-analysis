@@ -46,11 +46,23 @@
     </ul>
   </dd>
 
-  <dt>Month:</dt>
-  <dd><%= @landscape_data[:month] %></dd>
+  <dt>Months:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:months].each do |month| %>
+        <li><%= month %></li>
+      <% end %>
+    </ul>
+  </dd>
 
-  <dt>Year:</dt>
-  <dd><%= @landscape_data[:year] %></dd>
+  <dt>Years:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:years].each do |year| %>
+        <li><%= year %></li>
+      <% end %>
+    </ul>
+  </dd>
 
   <dt>Month Year Combinations:</dt>
   <dd>

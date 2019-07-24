@@ -144,6 +144,39 @@ RSpec.describe Exif, type: :model do
         end
       end
     end
+
+    describe 'by_year' do
+      let(:exif) { create(:exif, dateYear: 2019.0) }
+
+      context 'for a single year' do
+        context 'when the year matches the value passed in' do
+          it 'is included in the results' do
+            expect(Exif.by_year(2019)).to include exif
+          end
+        end
+
+        context 'when the year does not match the value passed in' do
+          it 'is not included in the results' do
+            expect(Exif.by_year(2018)).not_to include exif
+          end
+        end
+      end
+
+      context 'for more than one year' do
+        let(:exif_2) { create(:exif, dateYear: 2018.0) }
+
+        before do
+          exif_2
+        end
+
+        it 'includes results for all the years' do
+          results = Exif.by_year([2019, 2018])
+
+          expect(results).to include exif
+          expect(results).to include exif_2
+        end
+      end
+    end
   end
 
   describe '#shutter_speed_value' do

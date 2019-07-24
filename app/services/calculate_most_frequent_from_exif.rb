@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
-class CalculateWildlifeData
+class CalculateMostFrequentFromExif
+  attr_reader :exif_scope, :number_of_results
+
+  def initialize(exif_scope, number_of_results)
+    @exif_scope = exif_scope
+    @number_of_results = number_of_results
+  end
+
   def call
     {
       cameras: most_frequent_cameras,
@@ -9,8 +16,8 @@ class CalculateWildlifeData
       focal_lengths: most_frequent_focal_lengths,
       isos: most_frequent_isos,
       shutter_speeds: most_frequent_shutter_speeds,
-      month: most_frequent_month,
-      year: most_frequent_year,
+      months: most_frequent_months,
+      years: most_frequent_years,
       month_year_combinations: most_frequent_month_years
     }
   end
@@ -18,60 +25,64 @@ class CalculateWildlifeData
   private
 
   def most_frequent_cameras
-    model_ids = Exif.wildlife.pluck(:cameraModelRef)
+    model_ids = exif_scope.pluck(:cameraModelRef)
     calculate_most_frequently_used_from_model(model_ids, Camera)
   end
 
   def most_frequent_lenses
-    model_ids = Exif.wildlife.pluck(:lensRef)
+    model_ids = exif_scope.pluck(:lensRef)
     calculate_most_frequently_used_from_model(model_ids, Lens)
   end
 
   def calculate_most_frequently_used_from_model(model_ids, klass_name)
-    FrequencyCalculator.calculate_frequently_used_from_model(model_ids, klass_name, 5)
+    FrequencyCalculator.calculate_frequently_used_from_model(model_ids, klass_name, number_of_results)
   end
 
   def most_frequent_camera_lens_combinations
-    camera_lens_ids = Exif.wildlife.pluck(:cameraModelRef, :lensRef)
-    FrequencyCalculator.calculate_frequently_used_camera_and_lens(camera_lens_ids, 5)
+    camera_lens_ids = exif_scope.pluck(:cameraModelRef, :lensRef)
+    FrequencyCalculator.calculate_frequently_used_camera_and_lens(camera_lens_ids, number_of_results)
   end
 
   def most_frequent_focal_lengths
-    focal_lengths = Exif.wildlife.pluck(:focalLength)
+    focal_lengths = exif_scope.pluck(:focalLength)
     results = calculate_frequencies(focal_lengths)
     results.map { |focal_length| focal_length.round }
   end
 
   def most_frequent_isos
-    isos = Exif.wildlife.pluck(:isoSpeedRating)
+    isos = exif_scope.pluck(:isoSpeedRating)
     results = calculate_frequencies(isos)
     results.map { |iso| iso.round }
   end
 
   def most_frequent_shutter_speeds
-    shutter_speeds = Exif.wildlife.map do |exif|
+    shutter_speeds = exif_scope.map do |exif|
       exif.shutter_speed_value
     end.compact
 
     calculate_frequencies(shutter_speeds)
   end
 
-  def most_frequent_month
-    months = Exif.wildlife.pluck(:dateMonth)
-    month = calculate_most_frequent(months)&.to_i
+  def most_frequent_months
+    months = exif_scope.pluck(:dateMonth)
 
-    if month.present?
-      Date::MONTHNAMES[month]
+    results = calculate_frequencies(months)
+    results.map do |result|
+      Date::MONTHNAMES[result]
     end
   end
 
-  def most_frequent_year
-    years = Exif.wildlife.pluck(:dateYear)
-    calculate_most_frequent(years)&.to_i
+  def most_frequent_years
+    years = exif_scope.pluck(:dateYear)
+
+    results = calculate_frequencies(years)
+    results.map do |result|
+      result.round
+    end
   end
 
   def most_frequent_month_years
-    month_years = Exif.wildlife.map do |exif|
+    month_years = exif_scope.map do |exif|
       exif.month_and_year
     end.compact
 
@@ -80,9 +91,5 @@ class CalculateWildlifeData
 
   def calculate_frequencies(data)
     FrequencyCalculator.calculate_frequently_used(data, 5)
-  end
-
-  def calculate_most_frequent(data)
-    FrequencyCalculator.calculate_most_frequent(data)
   end
 end
