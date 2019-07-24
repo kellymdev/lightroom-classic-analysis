@@ -117,26 +117,44 @@ RSpec.describe FrequencyCalculator, type: :concept do
     describe '.calculate_frequencies_for_model' do
       subject(:calculator) { FrequencyCalculator.calculate_frequencies_for_model(model_ids, klass_name) }
 
-      let(:model_ids) { [lens_2.id, lens_1.id, lens_3.id, lens_3.id] }
-      let(:expected_result) do
-        {
-          lens_2.id => {
-            frequency: 1,
-            model_name: lens_2.value
-          },
-          lens_1.id => {
-            frequency: 1,
-            model_name: lens_1.value,
-          },
-          lens_3.id => {
-            frequency: 2,
-            model_name: lens_3.value
+      context 'when the model_ids are present' do
+        let(:model_ids) { [lens_2.id, lens_1.id, lens_3.id, lens_3.id] }
+        let(:expected_result) do
+          {
+            lens_2.id => {
+              frequency: 1,
+              model_name: lens_2.value
+            },
+            lens_1.id => {
+              frequency: 1,
+              model_name: lens_1.value
+            },
+            lens_3.id => {
+              frequency: 2,
+              model_name: lens_3.value
+            }
           }
-        }
+        end
+
+        it 'returns a list of frequencies for each model id including the model name' do
+          expect(calculator).to eq expected_result
+        end
       end
 
-      it 'returns a list of frequencies for each model id including the model name' do
-        expect(calculator).to eq expected_result
+      context 'when there is a nil in the model_ids' do
+        let(:model_ids) { [lens_1.id, nil] }
+        let(:expected_result) do
+          {
+            lens_1.id => {
+              frequency: 1,
+              model_name: lens_1.value
+            }
+          }
+        end
+
+        it 'the nil is not included in the results' do
+          expect(calculator).to eq expected_result
+        end
       end
     end
 

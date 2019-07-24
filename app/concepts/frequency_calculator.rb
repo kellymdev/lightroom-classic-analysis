@@ -49,6 +49,8 @@ class FrequencyCalculator
     frequencies = {}
 
     model_ids.each do |model_id|
+      next if model_id.nil?
+
       if frequencies.key?(model_id)
         frequencies[model_id][:frequency] += 1
       else

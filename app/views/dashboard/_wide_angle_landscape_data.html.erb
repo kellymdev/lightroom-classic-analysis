@@ -1,0 +1,63 @@
+<h2>Wide Angle Landscape Data</h2>
+
+<dl>
+  <dt>Cameras:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:cameras].each do |camera| %>
+        <li><%= camera %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Lenses:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:lenses].each do |lens| %>
+        <li><%= lens %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Camera Lens Combinations:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:camera_lens_combinations].each do |combination| %>
+        <li><%= combination %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Focal Lengths:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:focal_lengths].each do |focal_length| %>
+        <li><%= focal_length %>mm</li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Shutter Speeds:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:shutter_speeds].each do |shutter_speed| %>
+        <li>1/<%= shutter_speed %></li>
+      <% end %>
+    </ul>
+  </dd>
+
+  <dt>Month:</dt>
+  <dd><%= @landscape_data[:month] %></dd>
+
+  <dt>Year:</dt>
+  <dd><%= @landscape_data[:year] %></dd>
+
+  <dt>Month Year Combinations:</dt>
+  <dd>
+    <ul>
+      <% @landscape_data[:month_year_combinations].each do |combination| %>
+        <li><%= combination %></li>
+      <% end %>
+    </ul>
+  </dd>
+</dl>

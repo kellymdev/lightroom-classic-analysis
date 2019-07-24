@@ -34,6 +34,47 @@ RSpec.describe Exif, type: :model do
       end
     end
 
+    describe 'wide_angle_landscape' do
+      let(:exif) { create(:exif, isoSpeedRating: iso, focalLength: focal_length) }
+
+      context 'when the iso is 100' do
+        let(:iso) { 100.0 }
+
+        context 'when the focal length is less than 35mm' do
+          let(:focal_length) { 34.0 }
+
+          it 'is included in the results' do
+            expect(Exif.wide_angle_landscape).to include exif
+          end
+        end
+
+        context 'when the focal length is 35mm' do
+          let(:focal_length) { 35.0 }
+
+          it 'is included in the results' do
+            expect(Exif.wide_angle_landscape).to include exif
+          end
+        end
+
+        context 'when the focal length is greater than 35mm' do
+          let(:focal_length) { 36.0 }
+
+          it 'is not included in the results' do
+            expect(Exif.wide_angle_landscape).not_to include exif
+          end
+        end
+      end
+
+      context 'when the iso is not 100' do
+        let(:iso) { 200.0 }
+        let(:focal_length) { 34.0 }
+
+        it 'is not included in the results' do
+          expect(Exif.wide_angle_landscape).not_to include exif
+        end
+      end
+    end
+
     describe 'by_camera' do
       let(:camera_1) { create(:camera) }
       let(:exif) { create(:exif, cameraModelRef: camera_1.id) }
