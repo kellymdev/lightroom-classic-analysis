@@ -4,7 +4,7 @@ class Exif < ApplicationRecord
   self.table_name = 'AgHarvestedExifMetadata'
 
   scope :wildlife, -> { where('focalLength >= ?', 300.0) }
-  scope :wide_angle_landscape, -> { where('focalLength <= ? AND isoSpeedRating = ?', 35.0, 100.0) }
+  scope :wide_angle_landscape, -> { where('focalLength <= ? AND isoSpeedRating = ?', 35.0, 100.0).by_camera(Camera.canon_dslr.pluck(:id_local)) }
   scope :macro, -> { by_lens(Lens.macro.pluck(:id_local)) }
   scope :by_camera, ->(camera_id) { where(cameraModelRef: camera_id) }
   scope :by_lens, ->(lens_id) { where(lensRef: lens_id) }

@@ -35,29 +35,42 @@ RSpec.describe Exif, type: :model do
     end
 
     describe 'wide_angle_landscape' do
-      let(:exif) { create(:exif, isoSpeedRating: iso, focalLength: focal_length) }
+      let(:exif) { create(:exif, isoSpeedRating: iso, focalLength: focal_length, cameraModelRef: camera.id) }
 
-      context 'when the iso is 100' do
-        let(:iso) { 100.0 }
+      context 'for a Canon dslr' do
+        let(:camera) { create(:camera, value: 'Canon EOS 5D Mark IV') }
 
-        context 'when the focal length is less than 35mm' do
+        context 'when the iso is 100' do
+          let(:iso) { 100.0 }
+
+          context 'when the focal length is less than 35mm' do
+            let(:focal_length) { 34.0 }
+
+            it 'is included in the results' do
+              expect(Exif.wide_angle_landscape).to include exif
+            end
+          end
+
+          context 'when the focal length is 35mm' do
+            let(:focal_length) { 35.0 }
+
+            it 'is included in the results' do
+              expect(Exif.wide_angle_landscape).to include exif
+            end
+          end
+
+          context 'when the focal length is greater than 35mm' do
+            let(:focal_length) { 36.0 }
+
+            it 'is not included in the results' do
+              expect(Exif.wide_angle_landscape).not_to include exif
+            end
+          end
+        end
+
+        context 'when the iso is not 100' do
+          let(:iso) { 200.0 }
           let(:focal_length) { 34.0 }
-
-          it 'is included in the results' do
-            expect(Exif.wide_angle_landscape).to include exif
-          end
-        end
-
-        context 'when the focal length is 35mm' do
-          let(:focal_length) { 35.0 }
-
-          it 'is included in the results' do
-            expect(Exif.wide_angle_landscape).to include exif
-          end
-        end
-
-        context 'when the focal length is greater than 35mm' do
-          let(:focal_length) { 36.0 }
 
           it 'is not included in the results' do
             expect(Exif.wide_angle_landscape).not_to include exif
@@ -65,8 +78,9 @@ RSpec.describe Exif, type: :model do
         end
       end
 
-      context 'when the iso is not 100' do
-        let(:iso) { 200.0 }
+      context 'for a camera that is not a Canon dslr' do
+        let(:camera) { create(:camera, value: 'Canon Powershot G12') }
+        let(:iso) { 100.0 }
         let(:focal_length) { 34.0 }
 
         it 'is not included in the results' do
