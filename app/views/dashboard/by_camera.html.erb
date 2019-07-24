@@ -24,7 +24,7 @@
   <dd>
     <ul>
       <% @data_by_camera[:focal_lengths].each do |focal_length| %>
-        <li><%= focal_length %></li>
+        <li><%= focal_length %>mm</li>
       <% end %>
     </ul>
   </dd>
@@ -33,7 +33,7 @@
   <dd>
     <ul>
       <% @data_by_camera[:shutter_speeds].each do |shutter_speed| %>
-        <li><%= shutter_speed %></li>
+        <li>1/<%= shutter_speed %></li>
       <% end %>
     </ul>
   </dd>
