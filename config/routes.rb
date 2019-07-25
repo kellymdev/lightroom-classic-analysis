@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get '/dashboard', to: 'dashboard#index'
   post '/by_camera', to: 'dashboard#by_camera', as: 'by_camera'
   post '/by_lens', to: 'dashboard#by_lens', as: 'by_lens'
+  post '/by_camera_and_lens', to: 'dashboard#by_camera_and_lens', as: 'by_camera_and_lens'
 end

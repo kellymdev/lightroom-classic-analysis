@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe DashboardController, type: :controller do
+  render_views
+
   describe '#index' do
     let(:image) { create(:image) }
 
@@ -40,6 +42,20 @@ RSpec.describe DashboardController, type: :controller do
       post :by_lens, params: { lens_name: 'EF24-105mm f/4L IS USM', year: '2019' }
 
       expect(response).to render_template :by_lens
+    end
+  end
+
+  describe '#by_camera_and_lens' do
+    let(:camera) { create(:camera) }
+    let(:lens) { create(:lens) }
+
+    before do
+      camera
+      lens
+    end
+
+    it 'renders the by_camera_and_lens template' do
+      post :by_camera_and_lens, params: { camera_name: 'Canon EOS 5D Mark IV', lens_name: 'EF24-105mm f/4L IS USM', year: '2019' }
     end
   end
 end
