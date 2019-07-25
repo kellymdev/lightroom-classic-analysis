@@ -23,7 +23,7 @@ RSpec.describe DashboardController, type: :controller do
     end
 
     it 'renders the by_camera template' do
-      post :by_camera, params: { camera_name: 'Canon EOS 5D Mark IV', year: 2019 }
+      post :by_camera, params: { camera_name: 'Canon EOS 5D Mark IV', year: '2019' }
 
       expect(response).to render_template :by_camera
     end
@@ -37,7 +37,7 @@ RSpec.describe DashboardController, type: :controller do
     end
 
     it 'renders the by_lens template' do
-      post :by_lens, params: { lens_name: 'EF24-105mm f/4L IS USM' }
+      post :by_lens, params: { lens_name: 'EF24-105mm f/4L IS USM', year: '2019' }
 
       expect(response).to render_template :by_lens
     end

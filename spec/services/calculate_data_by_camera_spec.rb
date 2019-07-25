@@ -30,6 +30,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
     end
 
     context 'when no year is passed in' do
+      context 'years_covered' do
+        it 'returns All years' do
+          expect(service.call[:years_covered]).to eq 'All years'
+        end
+      end
+
       context 'keywords' do
         let(:keyword_1) { create(:keyword, lc_name: 'cat') }
         let(:keyword_2) { create(:keyword, lc_name: 'kitten') }
@@ -125,6 +131,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
       before do
         exif_1.update!(dateYear: 2018.0)
         exif_2.update!(dateYear: 2018.0)
+      end
+
+      context 'years_covered' do
+        it 'returns the year passed in' do
+          expect(service.call[:years_covered]).to eq '2018'
+        end
       end
 
       context 'keywords' do

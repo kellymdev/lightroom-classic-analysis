@@ -11,6 +11,7 @@ class CalculateDataByCamera
   def call
     {
       camera: camera_name,
+      years_covered: years_covered,
       keywords: keywords_by_camera,
       lenses: lenses_by_camera,
       focal_lengths: focal_lengths_by_camera,
@@ -23,6 +24,10 @@ class CalculateDataByCamera
   end
 
   private
+  
+  def years_covered
+    year.presence || 'All years'
+  end
 
   def keywords_by_camera
     image_ids = exif_scope.pluck(:image)
