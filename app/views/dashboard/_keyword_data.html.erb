@@ -1,21 +1,11 @@
 <h2>Keyword Data</h2>
 
 <dl>
-  <dt>Most frequent keywords:</dt>
-  <dd>
-    <ul>
-      <% @keyword_data[:most_frequent_keywords].each do |keyword| %>
-        <li><%= keyword %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Most frequent keywords', data: @keyword_data[:most_frequent_keywords] } %>
 
-  <dt>Most frequent wildlife keywords:</dt>
-  <dd>
-    <ul>
-      <% @keyword_data[:most_frequent_wildlife_keywords].each do |keyword| %>
-        <li><%= keyword %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Most frequent wildlife keywords', data: @keyword_data[:most_frequent_wildlife_keywords] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Most frequent landscape keywords', data: @keyword_data[:most_frequent_landscape_keywords] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Most frequent macro keywords', data: @keyword_data[:most_frequent_macro_keywords] } %>
 </dl>

@@ -4,7 +4,9 @@ class CalculateKeywordData
   def call
     {
       most_frequent_keywords: most_frequent_keywords,
-      most_frequent_wildlife_keywords: most_frequent_wildlife_keywords
+      most_frequent_wildlife_keywords: most_frequent_keywords_from_exif(Exif.wildlife),
+      most_frequent_landscape_keywords: most_frequent_keywords_from_exif(Exif.wide_angle_landscape),
+      most_frequent_macro_keywords: most_frequent_keywords_from_exif(Exif.macro)
     }
   end
 
@@ -15,9 +17,9 @@ class CalculateKeywordData
     calculate_most_frequent_keywords(keyword_ids)
   end
 
-  def most_frequent_wildlife_keywords
-    wildlife_image_ids = Exif.wildlife.pluck(:image)
-    keyword_ids = KeywordImage.where(:image => wildlife_image_ids).pluck(:tag)
+  def most_frequent_keywords_from_exif(exif_scope)
+    image_ids = exif_scope.pluck(:image)
+    keyword_ids = KeywordImage.where(:image => image_ids).pluck(:tag)
     calculate_most_frequent_keywords(keyword_ids)
   end
 
