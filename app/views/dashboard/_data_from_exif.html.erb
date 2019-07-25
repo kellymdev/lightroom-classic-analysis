@@ -1,83 +1,20 @@
 <h2><%= title %></h2>
 <dl>
-  <dt>Cameras:</dt>
-  <dd>
-    <ul>
-      <% data[:cameras].each do |camera| %>
-        <li><%= camera %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Cameras', data: data[:cameras] } %>
 
-  <dt>Lenses:</dt>
-  <dd>
-    <ul>
-      <% data[:lenses].each do |lens| %>
-        <li><%= lens %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Lenses', data: data[:lenses] } %>
 
-  <dt>Camera Lens Combinations:</dt>
-  <dd>
-    <ul>
-      <% data[:camera_lens_combinations].each do |combination| %>
-        <li><%= combination %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Camera Lens Combinations', data: data[:camera_lens_combinations] } %>
 
-  <dt>Focal Lengths:</dt>
-  <dd>
-    <ul>
-      <% data[:focal_lengths].each do |focal_length| %>
-        <li><%= focal_length %>mm</li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Focal Lengths', data: data[:focal_lengths], item_prefix: nil, item_suffix: 'mm' } %>
 
-  <dt>Isos:</dt>
-  <dd>
-    <ul>
-      <% data[:isos].each do |iso| %>
-        <li><%= iso %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Isos', data: data[:isos] } %>
 
-  <dt>Shutter Speeds:</dt>
-  <dd>
-    <ul>
-      <% data[:shutter_speeds].each do |shutter_speed| %>
-        <li>1/<%= shutter_speed %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: data[:shutter_speeds], item_prefix: '1/', item_suffix: nil } %>
 
-  <dt>Months:</dt>
-  <dd>
-    <ul>
-      <% data[:months].each do |month| %>
-        <li><%= month %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Months', data: data[:months] } %>
 
-  <dt>Years:</dt>
-  <dd>
-    <ul>
-      <% data[:years].each do |year| %>
-        <li><%= year %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Years', data: data[:years] } %>
 
-  <dt>Month Year Combinations:</dt>
-  <dd>
-    <ul>
-      <% data[:month_year_combinations].each do |combination| %>
-        <li><%= combination %></li>
-      <% end %>
-    </ul>
-  </dd>
+  <%= render partial: 'data_list', locals: { heading: 'Month Year Combinations', data: data[:month_year_combinations] } %>
 </dl>
