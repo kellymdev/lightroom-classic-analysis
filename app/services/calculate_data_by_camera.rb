@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class CalculateDataByCamera
-  attr_reader :camera_name
+  attr_reader :camera_name, :year
 
-  def initialize(camera_name)
+  def initialize(camera_name, year)
     @camera_name = camera_name
+    @year = year
   end
 
   def call
@@ -24,7 +25,7 @@ class CalculateDataByCamera
   private
 
   def keywords_by_camera
-    image_ids = Exif.by_camera(camera_ids).pluck(:image)
+    image_ids = exif_scope.pluck(:image)
     keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
     frequencies = calculate_frequently_used(keyword_ids)
 
@@ -34,19 +35,19 @@ class CalculateDataByCamera
   end
 
   def lenses_by_camera
-    lens_ids = Exif.by_camera(camera_ids).pluck(:lensRef).compact
+    lens_ids = exif_scope.pluck(:lensRef).compact
     FrequencyCalculator.calculate_frequently_used_from_model(lens_ids, Lens, 5)
   end
 
   def focal_lengths_by_camera
-    focal_lengths = Exif.by_camera(camera_ids).pluck(:focalLength)
+    focal_lengths = exif_scope.pluck(:focalLength)
 
     results = calculate_frequently_used(focal_lengths)
     results.map { |result| result.round }
   end
 
   def shutter_speeds_by_camera
-    shutter_speeds = Exif.by_camera(camera_ids).map do |exif|
+    shutter_speeds = exif_scope.map do |exif|
       exif.shutter_speed_value
     end.compact
 
@@ -54,14 +55,14 @@ class CalculateDataByCamera
   end
 
   def isos_by_camera
-    isos = Exif.by_camera(camera_ids).pluck(:isoSpeedRating)
+    isos = exif_scope.pluck(:isoSpeedRating)
 
     results = calculate_frequently_used(isos)
     results.map { |result| result.round }
   end
 
   def months_by_camera
-    months = Exif.by_camera(camera_ids).pluck(:dateMonth)
+    months = exif_scope.pluck(:dateMonth)
 
     results = calculate_frequently_used(months)
     results.map do |result|
@@ -70,7 +71,7 @@ class CalculateDataByCamera
   end
 
   def years_by_camera
-    years = Exif.by_camera(camera_ids).pluck(:dateYear)
+    years = exif_scope.pluck(:dateYear)
 
     results = calculate_frequently_used(years)
     results.map do |result|
@@ -79,7 +80,7 @@ class CalculateDataByCamera
   end
 
   def month_year_combinations_by_camera
-    month_years = Exif.by_camera(camera_ids).map do |exif|
+    month_years = exif_scope.map do |exif|
       exif.month_and_year
     end.compact
 
@@ -92,5 +93,13 @@ class CalculateDataByCamera
 
   def camera_ids
     @camera_ids ||= Camera.for_model_name(camera_name).pluck(:id_local)
+  end
+
+  def exif_scope
+    @exif_scope ||= if year.present?
+      Exif.by_camera(camera_ids).by_year(year.to_i)
+    else
+      Exif.by_camera(camera_ids)
+    end
   end
 end

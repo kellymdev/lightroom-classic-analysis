@@ -12,7 +12,7 @@ class DashboardController < ApplicationController
   end
 
   def by_camera
-    @data_by_camera = CalculateDataByCamera.new(params[:camera_name]).call
+    @data_by_camera = CalculateDataByCamera.new(params[:camera_name], params[:year]).call
   end
 
   def by_lens
