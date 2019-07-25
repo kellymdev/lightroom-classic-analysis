@@ -39,7 +39,7 @@ class CalculateMostPopularData
 
   def most_frequent_focal_length
     focal_lengths = Exif.pluck(:focalLength)
-    calculate_frequencies(focal_lengths)
+    calculate_frequencies(focal_lengths)&.round
   end
 
   def most_frequent_iso

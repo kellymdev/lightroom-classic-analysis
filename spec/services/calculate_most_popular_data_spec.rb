@@ -79,7 +79,7 @@ RSpec.describe CalculateMostPopularData, type: :service do
       end
 
       it 'returns the most frequently used focal length' do
-        expect(service.call[:focal_length]).to eq 100.0
+        expect(service.call[:focal_length]).to eq 100
       end
     end
 
