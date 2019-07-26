@@ -1,0 +1,25 @@
+<h2>Develop Setting Data</h2>
+
+<dl>
+  <%= render partial: 'data_list', locals: { heading: 'Develop Steps', data: @develop_data[:develop_steps] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Exposure', data: @develop_data[:exposure] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Contrast', data: @develop_data[:contrast] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Highlights', data: @develop_data[:highlights] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Shadows', data: @develop_data[:shadows] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'White Clipping', data: @develop_data[:white_clipping] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Black Clipping', data: @develop_data[:black_clipping] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Clarity', data: @develop_data[:clarity] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Post-Crop Vignette Amount', data: @develop_data[:post_crop_vignette_amount] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Vibrance', data: @develop_data[:vibrance] } %>
+
+  <%= render partial: 'data_list', locals: { heading: 'Saturation', data: @develop_data[:saturation] } %>
+</dl>
