@@ -1,24 +1,21 @@
-# README
+# Lightroom Classic Analysis
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This app takes a Lightroom Classic database (Lightroom Catalog.lrcat) file, which is a SQLite database and allows you to view data based on camera, lens, year and genre of photography.
 
-Things you may want to cover:
 
-* Ruby version
+As it is built around an existing database which does not follow Rails conventions, the following points should be noted:
 
-* System dependencies
+* Table names are inconsistently named, e.g. AgHarvestedExifCameraModel, Adobe_images
 
-* Configuration
+* Columns within tables are inconsistently named, e.g. cameraModelRef, id_global
 
-* Database creation
+* There is no id column, id_local is used instead
 
-* Database initialization
+* Data is sometimes stored as a decimal when it should be an integer, e.g. dateMonth, dateYear
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+To set up the database:
 
-* Deployment instructions
+* Create a copy of the Lightroom Catalog and put it into the db folder
 
-* ...
+* Rename the Lightroom database to development.sqlite3
