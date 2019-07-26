@@ -1,62 +1,76 @@
 <h1>Lightroom Classic Analysis</h1>
 <p>Lightroom Classic catalog with <%= @image_count %> images.</p>
 
-<h2>Most Popular</h2>
-<dl>
-  <dt>Camera:</dt>
-  <dd><%= @most_popular_data[:camera] %></dd>
+<%= render partial: 'navigation' %>
 
-  <dt>Lens:</dt>
-  <dd><%= @most_popular_data[:lens] %></dd>
+<div class="most-popular content-section">
+  <h2>Most Popular</h2>
+  <dl>
+    <dt>Camera:</dt>
+    <dd><%= @most_popular_data[:camera] %></dd>
 
-  <dt>Camera and Lens:</dt>
-  <dd><%= @most_popular_data[:camera_lens_combination] %></dd>
+    <dt>Lens:</dt>
+    <dd><%= @most_popular_data[:lens] %></dd>
 
-  <dt>Focal Length:</dt>
-  <dd><%= @most_popular_data[:focal_length] %>mm</dd>
+    <dt>Camera and Lens:</dt>
+    <dd><%= @most_popular_data[:camera_lens_combination] %></dd>
 
-  <dt>Iso:</dt>
-  <dd><%= @most_popular_data[:iso] %></dd>
+    <dt>Focal Length:</dt>
+    <dd><%= @most_popular_data[:focal_length] %>mm</dd>
 
-  <dt>Shutter Speed:</dt>
-  <dd>1/<%= @most_popular_data[:shutter_speed] %></dd>
+    <dt>Iso:</dt>
+    <dd><%= @most_popular_data[:iso] %></dd>
 
-  <dt>Month:</dt>
-  <dd><%= @most_popular_data[:month] %></dd>
+    <dt>Shutter Speed:</dt>
+    <dd>1/<%= @most_popular_data[:shutter_speed] %></dd>
 
-  <dt>Year:</dt>
-  <dd><%= @most_popular_data[:year] %></dd>
+    <dt>Month:</dt>
+    <dd><%= @most_popular_data[:month] %></dd>
 
-  <dt>Month Year Combination:</dt>
-  <dd><%= @most_popular_data[:month_year_combination] %></dd>
-</dl>
+    <dt>Year:</dt>
+    <dd><%= @most_popular_data[:year] %></dd>
 
-<%= render partial: 'data_from_exif', locals: { title: 'Wildlife Data', data: @wildlife_data } %>
+    <dt>Month Year Combination:</dt>
+    <dd><%= @most_popular_data[:month_year_combination] %></dd>
+  </dl>
+</div>
 
-<%= render partial: 'data_from_exif', locals: { title: 'Wide Angle Landscape Data', data: @landscape_data } %>
+<div class="wildlife-data content-section">
+  <%= render partial: 'data_from_exif', locals: { title: 'Wildlife Data', data: @wildlife_data } %>
+</div>
 
-<%= render partial: 'data_from_exif', locals: { title: 'Macro Data', data: @macro_data } %>
+<div class="landscape-data content-section">
+  <%= render partial: 'data_from_exif', locals: { title: 'Wide Angle Landscape Data', data: @landscape_data } %>
+</div>
 
-<%= render partial: 'keyword_data' %>
+<div class="macro-data content-section">
+  <%= render partial: 'data_from_exif', locals: { title: 'Macro Data', data: @macro_data } %>
+</div>
 
-<h2>Data By Camera</h2>
-<%= form_with url: by_camera_path, local: true do |f| %>
-  <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
-  <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-  <%= f.submit 'Go' %>
-<% end %>
+<div class="keywords content-section">
+  <%= render partial: 'keyword_data' %>
+</div>
 
-<h2>Data By Lens</h2>
-<%= form_with url: by_lens_path, local: true do |f| %>
-  <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--' }) %>
-  <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-  <%= f.submit 'Go' %>
-<% end %>
+<div class="data-by-camera-forms content-section">
+  <h2>Data By Camera</h2>
+  <%= form_with url: by_camera_path, local: true do |f| %>
+    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
 
-<h2>Data By Camera And Lens</h2>
-<%= form_with url: by_camera_and_lens_path, local: true do |f| %>
-  <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
-  <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--'}) %>
-  <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-  <%= f.submit 'Go' %>
-<% end %>
+  <h2>Data By Lens</h2>
+  <%= form_with url: by_lens_path, local: true do |f| %>
+    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--' }) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
+
+  <h2>Data By Camera And Lens</h2>
+  <%= form_with url: by_camera_and_lens_path, local: true do |f| %>
+    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
+    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--'}) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
+</div>

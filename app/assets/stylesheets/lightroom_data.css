@@ -1,0 +1,11 @@
+.most-popular {
+  display: block;
+}
+
+.wildlife-data,
+.landscape-data,
+.macro-data,
+.keywords,
+.data-by-camera-forms {
+  display: none;
+}
