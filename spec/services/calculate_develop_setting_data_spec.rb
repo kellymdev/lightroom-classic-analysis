@@ -119,8 +119,218 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Exposure' }
 
         context 'positive' do
-          it 'returns the average positive exposure' do
+          it 'returns the average positive exposure adjustment' do
             expect(service.call[:averages][:positive_exposure]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-0.5')
+            develop_step_2.update!(valueString: '-0.9')
+            develop_step_3.update!(valueString: '-0.1')
+          end
+
+          it 'returns the average negative exposure adjustment' do
+            expect(service.call[:averages][:negative_exposure]).to eq(-0.5)
+          end
+        end
+      end
+
+      context 'contrast' do
+        let(:step_name) { 'Contrast' }
+
+        context 'positive' do
+          it 'returns the average positive contrast adjustment' do
+            expect(service.call[:averages][:positive_contrast]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative contrast adjustment' do
+            expect(service.call[:averages][:negative_contrast]).to eq(-5)
+          end
+        end
+      end
+
+      context 'highlights' do
+        let(:step_name) { 'Highlights' }
+
+        context 'positive' do
+          it 'returns the average positive highlights adjustment' do
+            expect(service.call[:averages][:positive_highlights]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative highlights adjustment' do
+            expect(service.call[:averages][:negative_highlights]).to eq(-5)
+          end
+        end
+      end
+
+      context 'shadows' do
+        let(:step_name) { 'Shadows' }
+
+        context 'positive' do
+          it 'returns the average positive shadows adjustment' do
+            expect(service.call[:averages][:positive_shadows]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative shadows adjustment' do
+            expect(service.call[:averages][:negative_shadows]).to eq(-5)
+          end
+        end
+      end
+
+      context 'white clipping' do
+        let(:step_name) { 'White Clipping' }
+
+        context 'positive' do
+          it 'returns the average positive white clipping adjustment' do
+            expect(service.call[:averages][:positive_white_clipping]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative white clipping adjustment' do
+            expect(service.call[:averages][:negative_white_clipping]).to eq(-5)
+          end
+        end
+      end
+
+      context 'black clipping' do
+        let(:step_name) { 'Black Clipping' }
+
+        context 'positive' do
+          it 'returns the average positive black clipping adjustment' do
+            expect(service.call[:averages][:positive_black_clipping]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative black clipping adjustment' do
+            expect(service.call[:averages][:negative_black_clipping]).to eq(-5)
+          end
+        end
+      end
+
+      context 'clarity' do
+        let(:step_name) { 'Clarity' }
+
+        context 'positive' do
+          it 'returns the average positive clarity adjustment' do
+            expect(service.call[:averages][:positive_clarity]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative clarity adjustment' do
+            expect(service.call[:averages][:negative_clarity]).to eq(-5)
+          end
+        end
+      end
+
+      context 'post crop vignette amount' do
+        let(:step_name) { 'Post-Crop Vignette Amount' }
+
+        context 'positive' do
+          it 'returns the average positive post crop vignette amount adjustment' do
+            expect(service.call[:averages][:positive_post_crop_vignette_amount]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative post crop vignette amount adjustment' do
+            expect(service.call[:averages][:negative_post_crop_vignette_amount]).to eq(-5)
+          end
+        end
+      end
+
+      context 'vibrance' do
+        let(:step_name) { 'Vibrance' }
+
+        context 'positive' do
+          it 'returns the average positive vibrance adjustment' do
+            expect(service.call[:averages][:positive_vibrance]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative vibrance amount' do
+            expect(service.call[:averages][:negative_vibrance]).to eq(-5)
+          end
+        end
+      end
+
+      context 'saturation' do
+        let(:step_name) { 'Saturation' }
+
+        context 'positive' do
+          it 'returns the average positive saturation adjustment' do
+            expect(service.call[:averages][:positive_saturation]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative saturation adjustment' do
+            expect(service.call[:averages][:negative_saturation]).to eq(-5)
           end
         end
       end

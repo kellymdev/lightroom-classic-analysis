@@ -5,21 +5,41 @@
 
   <%= render partial: 'data_list', locals: { heading: 'Exposure', data: @develop_data[:exposure] } %>
 
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_exposure], negative: @develop_data[:averages][:negative_exposure] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Contrast', data: @develop_data[:contrast] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_contrast], negative: @develop_data[:averages][:negative_contrast] } %>
 
   <%= render partial: 'data_list', locals: { heading: 'Highlights', data: @develop_data[:highlights] } %>
 
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_highlights], negative: @develop_data[:averages][:negative_highlights] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Shadows', data: @develop_data[:shadows] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_shadows], negative: @develop_data[:averages][:negative_shadows] } %>
 
   <%= render partial: 'data_list', locals: { heading: 'White Clipping', data: @develop_data[:white_clipping] } %>
 
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_white_clipping], negative: @develop_data[:averages][:negative_white_clipping] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Black Clipping', data: @develop_data[:black_clipping] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_black_clipping], negative: @develop_data[:averages][:negative_black_clipping] } %>
 
   <%= render partial: 'data_list', locals: { heading: 'Clarity', data: @develop_data[:clarity] } %>
 
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_clarity], negative: @develop_data[:averages][:negative_clarity] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Post-Crop Vignette Amount', data: @develop_data[:post_crop_vignette_amount] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_post_crop_vignette_amount], negative: @develop_data[:averages][:negative_post_crop_vignette_amount] } %>
 
   <%= render partial: 'data_list', locals: { heading: 'Vibrance', data: @develop_data[:vibrance] } %>
 
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_vibrance], negative: @develop_data[:averages][:negative_vibrance] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Saturation', data: @develop_data[:saturation] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_saturation], negative: @develop_data[:averages][:negative_saturation] } %>
 </dl>
