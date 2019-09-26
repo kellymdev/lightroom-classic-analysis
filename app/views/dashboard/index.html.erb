@@ -35,6 +35,10 @@
   </dl>
 </div>
 
+<div class="capture-time content-section">
+  <%= render partial: 'capture_time_data' %>
+</div>
+
 <div class="wildlife-data content-section">
   <%= render partial: 'data_from_exif', locals: { title: 'Wildlife Data', data: @wildlife_data } %>
 </div>

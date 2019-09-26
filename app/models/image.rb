@@ -13,6 +13,10 @@ class Image < ApplicationRecord
   scope :for_year, ->(year) { where('captureTime LIKE ?', "#{year}-%") }
 
   def capture_hour
-    captureTime.hour
+    if captureTime.is_a?(DateTime) || captureTime.is_a?(Time)
+      captureTime.hour
+    else
+      Time.parse(captureTime).hour
+    end
   end
 end

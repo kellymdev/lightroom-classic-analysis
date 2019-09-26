@@ -1,0 +1,14 @@
+<h2>Capture Time Data</h2>
+
+<dl>
+  <% @capture_time_data.each do |month, data| %>
+    <dt><%= month.to_s.capitalize %></dt>
+    <dd>
+      <ul>
+        <% data.each do |time| %>
+          <li><%= time %></li>
+        <% end %>
+      </ul>
+    </dd>
+  <% end %>
+</dl>
