@@ -11,5 +11,7 @@
 
   <%= render partial: 'data_list', locals: { heading: 'Isos', data: @data_by_camera_and_lens[:isos] } %>
 
+  <%= render partial: 'ratings_by_equipment', locals: { data: @data_by_camera_and_lens[:ratings] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Months', data: @data_by_camera_and_lens[:months] } %>
 </dl>

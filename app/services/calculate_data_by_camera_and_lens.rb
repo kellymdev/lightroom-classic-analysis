@@ -18,6 +18,7 @@ class CalculateDataByCameraAndLens
       focal_lengths: focal_lengths_by_camera_and_lens,
       shutter_speeds: shutter_speeds_by_camera_and_lens,
       isos: isos_by_camera_and_lens,
+      ratings: ratings_by_camera_and_lens,
       months: months_by_camera_and_lens
     }
   end
@@ -29,7 +30,6 @@ class CalculateDataByCameraAndLens
   end
 
   def keywords_by_camera_and_lens
-    image_ids = exif_scope.pluck(:image)
     keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
     frequencies = calculate_frequently_used(keyword_ids)
 
@@ -42,13 +42,11 @@ class CalculateDataByCameraAndLens
     focal_lengths = exif_scope.pluck(:focalLength)
 
     results = calculate_frequently_used(focal_lengths)
-    results.map { |result| result.round }
+    results.map(&:round)
   end
 
   def shutter_speeds_by_camera_and_lens
-    shutter_speeds = exif_scope.map do |exif|
-      exif.shutter_speed_value
-    end.compact
+    shutter_speeds = exif_scope.map(&:shutter_speed_value).compact
 
     calculate_frequently_used(shutter_speeds)
   end
@@ -57,7 +55,13 @@ class CalculateDataByCameraAndLens
     isos = exif_scope.pluck(:isoSpeedRating)
 
     results = calculate_frequently_used(isos)
-    results.map { |result| result.round }
+    results.map(&:round)
+  end
+
+  def ratings_by_camera_and_lens
+    image_scope = Image.where(id_local: image_ids)
+
+    CalculateRatingsData.new(image_scope).call
   end
 
   def months_by_camera_and_lens
@@ -73,6 +77,10 @@ class CalculateDataByCameraAndLens
     FrequencyCalculator.calculate_frequently_used(frequency_data, 5)
   end
 
+  def image_ids
+    @image_ids ||= exif_scope.pluck(:image)
+  end
+
   def camera_ids
     @camera_ids ||= Camera.for_model_name(camera_name).pluck(:id_local)
   end
@@ -83,9 +91,9 @@ class CalculateDataByCameraAndLens
 
   def exif_scope
     @exif_scope ||= if year.present?
-      Exif.by_camera(camera_ids).by_lens(lens_ids).by_year(year.to_i)
-    else
-      Exif.by_camera(camera_ids).by_lens(lens_ids)
-    end
+                      Exif.by_camera(camera_ids).by_lens(lens_ids).by_year(year.to_i)
+                    else
+                      Exif.by_camera(camera_ids).by_lens(lens_ids)
+                    end
   end
 end

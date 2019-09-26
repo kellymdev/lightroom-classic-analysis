@@ -97,6 +97,56 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
         end
       end
 
+      context 'ratings' do
+        let(:image_3) { create(:image, rating: 5.0) }
+
+        let(:expected_data) do
+          {
+            unrated: {
+              rating: 'Unrated',
+              count: 0,
+              percentage: 0.0
+            },
+            one_star: {
+              rating: '1 star',
+              count: 0,
+              percentage: 0.0
+            },
+            two_stars: {
+              rating: '2 stars',
+              count: 1,
+              percentage: 33.33
+            },
+            three_stars: {
+              rating: '3 stars',
+              count: 0,
+              percentage: 0.0
+            },
+            four_stars: {
+              rating: '4 stars',
+              count: 1,
+              percentage: 33.33
+            },
+            five_stars: {
+              rating: '5 stars',
+              count: 1,
+              percentage: 33.33
+            }
+          }
+        end
+
+        before do
+          image_3
+          image_1.update!(rating: 4.0)
+          image_2.update!(rating: 2.0)
+          exif_3.update!(image: image_3.id)
+        end
+
+        it 'returns the number of images for each rating' do
+          expect(service.call[:ratings]).to eq expected_data
+        end
+      end
+
       context 'months' do
         before do
           exif_2.update!(dateMonth: 7.0)
@@ -173,6 +223,52 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
 
         it 'returns the most frequently used isos for that camera, lens and year' do
           expect(service.call[:isos]).to eq [200, 1600]
+        end
+      end
+
+      context 'ratings' do
+        let(:expected_data) do
+          {
+            unrated: {
+              rating: 'Unrated',
+              count: 0,
+              percentage: 0.0
+            },
+            one_star: {
+              rating: '1 star',
+              count: 0,
+              percentage: 0.0
+            },
+            two_stars: {
+              rating: '2 stars',
+              count: 0,
+              percentage: 0.0
+            },
+            three_stars: {
+              rating: '3 stars',
+              count: 1,
+              percentage: 50.0
+            },
+            four_stars: {
+              rating: '4 stars',
+              count: 1,
+              percentage: 50.0
+            },
+            five_stars: {
+              rating: '5 stars',
+              count: 0,
+              percentage: 0.0
+            }
+          }
+        end
+
+        before do
+          image_1.update!(rating: 4.0)
+          image_2.update!(rating: 3.0)
+        end
+
+        it 'returns the number of images for each rating' do
+          expect(service.call[:ratings]).to eq expected_data
         end
       end
 
