@@ -4,35 +4,7 @@
 <%= render partial: 'navigation' %>
 
 <div class="most-popular content-section">
-  <h2>Most Popular</h2>
-  <dl>
-    <dt>Camera:</dt>
-    <dd><%= @most_popular_data[:camera] %></dd>
-
-    <dt>Lens:</dt>
-    <dd><%= @most_popular_data[:lens] %></dd>
-
-    <dt>Camera and Lens:</dt>
-    <dd><%= @most_popular_data[:camera_lens_combination] %></dd>
-
-    <dt>Focal Length:</dt>
-    <dd><%= @most_popular_data[:focal_length] %>mm</dd>
-
-    <dt>Iso:</dt>
-    <dd><%= @most_popular_data[:iso] %></dd>
-
-    <dt>Shutter Speed:</dt>
-    <dd>1/<%= @most_popular_data[:shutter_speed] %></dd>
-
-    <dt>Month:</dt>
-    <dd><%= @most_popular_data[:month] %></dd>
-
-    <dt>Year:</dt>
-    <dd><%= @most_popular_data[:year] %></dd>
-
-    <dt>Month Year Combination:</dt>
-    <dd><%= @most_popular_data[:month_year_combination] %></dd>
-  </dl>
+  <%= render partial: 'most_popular_data' %>
 </div>
 
 <div class="capture-time content-section">
@@ -64,25 +36,5 @@
 </div>
 
 <div class="data-by-camera-forms content-section">
-  <h2>Data By Camera</h2>
-  <%= form_with url: by_camera_path, local: true do |f| %>
-    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
-    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-    <%= f.submit 'Go' %>
-  <% end %>
-
-  <h2>Data By Lens</h2>
-  <%= form_with url: by_lens_path, local: true do |f| %>
-    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--' }) %>
-    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-    <%= f.submit 'Go' %>
-  <% end %>
-
-  <h2>Data By Camera And Lens</h2>
-  <%= form_with url: by_camera_and_lens_path, local: true do |f| %>
-    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
-    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--'}) %>
-    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
-    <%= f.submit 'Go' %>
-  <% end %>
+  <%= render partial: 'data_by_camera_forms' %>
 </div>

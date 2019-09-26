@@ -1,0 +1,30 @@
+<h2>Most Popular</h2>
+
+<dl>
+  <dt>Camera:</dt>
+  <dd><%= @most_popular_data[:camera] %></dd>
+
+  <dt>Lens:</dt>
+  <dd><%= @most_popular_data[:lens] %></dd>
+
+  <dt>Camera and Lens:</dt>
+  <dd><%= @most_popular_data[:camera_lens_combination] %></dd>
+
+  <dt>Focal Length:</dt>
+  <dd><%= @most_popular_data[:focal_length] %>mm</dd>
+
+  <dt>Iso:</dt>
+  <dd><%= @most_popular_data[:iso] %></dd>
+
+  <dt>Shutter Speed:</dt>
+  <dd>1/<%= @most_popular_data[:shutter_speed] %></dd>
+
+  <dt>Month:</dt>
+  <dd><%= @most_popular_data[:month] %></dd>
+
+  <dt>Year:</dt>
+  <dd><%= @most_popular_data[:year] %></dd>
+
+  <dt>Month Year Combination:</dt>
+  <dd><%= @most_popular_data[:month_year_combination] %></dd>
+</dl>
