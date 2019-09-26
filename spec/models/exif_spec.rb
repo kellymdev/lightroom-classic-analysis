@@ -9,7 +9,7 @@ RSpec.describe Exif, type: :model do
     describe 'wildlife' do
       let(:exif) { create(:exif, focalLength: focal_length) }
 
-      context 'when the lens focal length is greater than 300' do
+      context 'when the lens focal length is greater than 200' do
         let(:focal_length) { 400.0 }
 
         it 'is included in the results' do
@@ -17,15 +17,15 @@ RSpec.describe Exif, type: :model do
         end
       end
 
-      context 'when the lens focal length is 300' do
-        let(:focal_length) { 300.0 }
+      context 'when the lens focal length is 200' do
+        let(:focal_length) { 200.0 }
 
         it 'is included in the results' do
           expect(Exif.wildlife).to include exif
         end
       end
 
-      context 'when the lens focal length is less than 300' do
+      context 'when the lens focal length is less than 200' do
         let(:focal_length) { 100.0 }
 
         it 'is not included in the results' do
