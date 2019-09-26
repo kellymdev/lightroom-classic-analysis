@@ -1,0 +1,13 @@
+<h2>Ratings Data</h2>
+
+<%= render partial: 'rating', locals: { heading: 'Unrated', count: @ratings_data[:unrated_count], percentage: @ratings_data[:unrated_percentage] } %>
+
+<%= render partial: 'rating', locals: { heading: '1 star', count: @ratings_data[:one_star_count], percentage: @ratings_data[:one_star_percentage] } %>
+
+<%= render partial: 'rating', locals: { heading: '2 stars', count: @ratings_data[:two_star_count], percentage: @ratings_data[:two_star_percentage] } %>
+
+<%= render partial: 'rating', locals: { heading: '3 stars', count: @ratings_data[:three_star_count], percentage: @ratings_data[:three_star_percentage] } %>
+
+<%= render partial: 'rating', locals: { heading: '4 stars', count: @ratings_data[:four_star_count], percentage: @ratings_data[:four_star_percentage] } %>
+
+<%= render partial: 'rating', locals: { heading: '5 stars', count: @ratings_data[:five_star_count], percentage: @ratings_data[:five_star_percentage] } %>
