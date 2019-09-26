@@ -4,7 +4,7 @@ class FrequencyCalculator
   # Frequencies for string or numeric values
   def self.calculate_most_frequent(frequency_data)
     frequencies = calculate_frequencies(frequency_data)
-    frequencies.max_by { |data_value, frequency| frequency }&.first
+    frequencies.max_by { |_data_value, frequency| frequency }&.first
   end
 
   def self.calculate_frequently_used(frequency_data, number_of_results)
@@ -12,7 +12,7 @@ class FrequencyCalculator
     sorted = frequencies.sort { |a, b| b.second <=> a.second }
 
     results = sorted.take(number_of_results)
-    results.map { |result| result.first }
+    results.map(&:first)
   end
 
   def self.calculate_frequencies(frequency_data)
@@ -33,7 +33,7 @@ class FrequencyCalculator
   def self.calculate_most_frequent_from_model(model_ids, klass_name)
     frequencies = calculate_frequencies_for_model(model_ids, klass_name)
     total_frequencies = compare_frequencies_by_model_name(frequencies)
-    total_frequencies.max_by { |model_name, frequency| frequency }&.first
+    total_frequencies.max_by { |_model_name, frequency| frequency }&.first
   end
 
   def self.calculate_frequently_used_from_model(model_ids, klass_name, number_of_results)
@@ -42,7 +42,7 @@ class FrequencyCalculator
     sorted = total_frequencies.sort { |a, b| b.second <=> a.second }
 
     results = sorted.take(number_of_results)
-    results.map { |result| result.first }
+    results.map(&:first)
   end
 
   def self.calculate_frequencies_for_model(model_ids, klass_name)
@@ -65,7 +65,7 @@ class FrequencyCalculator
   end
 
   def self.compare_frequencies_by_model_name(frequencies)
-    grouped_by_name = frequencies.group_by { |model_id, data| data[:model_name] }
+    grouped_by_name = frequencies.group_by { |_model_id, data| data[:model_name] }
 
     total_frequencies = {}
 
@@ -84,7 +84,7 @@ class FrequencyCalculator
   def self.calculate_most_frequent_camera_and_lens(camera_and_lens_ids)
     frequencies = calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)
     grouped = group_frequencies_by_camera_and_lens_name(frequencies)
-    grouped.max_by { |camera_lens_name, frequency| frequency }&.first
+    grouped.max_by { |_camera_lens_name, frequency| frequency }&.first
   end
 
   def self.calculate_frequently_used_camera_and_lens(camera_and_lens_ids, number_of_results)
@@ -92,7 +92,7 @@ class FrequencyCalculator
     grouped = group_frequencies_by_camera_and_lens_name(frequencies)
 
     results = grouped.sort { |a, b| b.second <=> a.second }.take(number_of_results)
-    results.map { |result| result.first }
+    results.map(&:first)
   end
 
   def self.calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)
@@ -116,7 +116,7 @@ class FrequencyCalculator
   def self.group_frequencies_by_camera_and_lens_name(frequencies)
     grouped = {}
 
-    frequencies.each do |id_pair, data|
+    frequencies.each do |_id_pair, data|
       name = "#{data[:camera]} - #{data[:lens]}"
 
       if grouped.key?(name)
