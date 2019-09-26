@@ -17,6 +17,7 @@ class CalculateDataByLens
       focal_lengths: focal_lengths_by_lens,
       shutter_speeds: shutter_speeds_by_lens,
       isos: isos_by_lens,
+      ratings: ratings_by_lens,
       months: months_by_lens,
       years: years_by_lens,
       month_year_combinations: month_year_combinations_by_lens
@@ -30,7 +31,6 @@ class CalculateDataByLens
   end
 
   def keywords_by_lens
-    image_ids = exif_scope.pluck(:image)
     keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
     frequencies = calculate_frequently_used(keyword_ids)
 
@@ -48,13 +48,11 @@ class CalculateDataByLens
     focal_lengths = exif_scope.pluck(:focalLength)
 
     results = calculate_frequently_used(focal_lengths)
-    results.map { |result| result.round }
+    results.map(&:round)
   end
 
   def shutter_speeds_by_lens
-    shutter_speeds = exif_scope.map do |exif|
-      exif.shutter_speed_value
-    end.compact
+    shutter_speeds = exif_scope.map(&:shutter_speed_value).compact
 
     calculate_frequently_used(shutter_speeds)
   end
@@ -62,7 +60,13 @@ class CalculateDataByLens
   def isos_by_lens
     isos = exif_scope.pluck(:isoSpeedRating)
     results = calculate_frequently_used(isos)
-    results.map { |result| result.round }
+    results.map(&:round)
+  end
+
+  def ratings_by_lens
+    images = Image.where(id_local: image_ids)
+
+    CalculateRatingsData.new(images).call
   end
 
   def months_by_lens
@@ -78,15 +82,11 @@ class CalculateDataByLens
     years = exif_scope.pluck(:dateYear)
 
     results = calculate_frequently_used(years)
-    results.map do |result|
-      result.round
-    end
+    results.map(&:round)
   end
 
   def month_year_combinations_by_lens
-    month_years = exif_scope.map do |exif|
-      exif.month_and_year
-    end.compact
+    month_years = exif_scope.map(&:month_and_year).compact
 
     calculate_frequently_used(month_years)
   end
@@ -95,15 +95,19 @@ class CalculateDataByLens
     FrequencyCalculator.calculate_frequently_used(frequency_data, 5)
   end
 
+  def image_ids
+    @image_ids ||= exif_scope.pluck(:image)
+  end
+
   def lens_ids
     @lens_ids ||= Lens.for_model_name(lens_name).pluck(:id_local)
   end
 
   def exif_scope
     @exif_scope ||= if year.present?
-      Exif.by_lens(lens_ids).by_year(year.to_i)
-    else
-      Exif.by_lens(lens_ids)
-    end
+                      Exif.by_lens(lens_ids).by_year(year.to_i)
+                    else
+                      Exif.by_lens(lens_ids)
+                    end
   end
 end
