@@ -79,6 +79,57 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
     end
 
+    context 'ratings' do
+      let(:image_1) { create(:image, rating: 5.0) }
+      let(:image_2) { create(:image, rating: 4.0) }
+      let(:image_3) { create(:image, rating: 3.0) }
+
+      let(:expected_data) do
+        {
+          unrated: {
+            rating: 'Unrated',
+            count: 0,
+            percentage: 0.0
+          },
+          one_star: {
+            rating: '1 star',
+            count: 0,
+            percentage: 0.0
+          },
+          two_stars: {
+            rating: '2 stars',
+            count: 0,
+            percentage: 0.0
+          },
+          three_stars: {
+            rating: '3 stars',
+            count: 1,
+            percentage: 33.33
+          },
+          four_stars: {
+            rating: '4 stars',
+            count: 1,
+            percentage: 33.33
+          },
+          five_stars: {
+            rating: '5 stars',
+            count: 1,
+            percentage: 33.33
+          }
+        }
+      end
+
+      before do
+        exif_1.update!(image: image_1.id)
+        exif_2.update!(image: image_2.id)
+        exif_3.update!(image: image_3.id)
+      end
+
+      it 'returns the number of images with each rating' do
+        expect(service.call[:ratings]).to eq expected_data
+      end
+    end
+
     context 'months' do
       before do
         exif_1.update!(dateMonth: 4.0)

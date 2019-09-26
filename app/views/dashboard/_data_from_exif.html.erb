@@ -12,6 +12,8 @@
 
   <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: data[:shutter_speeds], item_prefix: '1/', item_suffix: nil } %>
 
+  <%= render partial: 'ratings_by_equipment', locals: { data: data[:ratings] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Months', data: data[:months] } %>
 
   <%= render partial: 'data_list', locals: { heading: 'Years', data: data[:years] } %>

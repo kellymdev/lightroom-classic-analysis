@@ -16,6 +16,7 @@ class CalculateMostFrequentFromExif
       focal_lengths: most_frequent_focal_lengths,
       isos: most_frequent_isos,
       shutter_speeds: most_frequent_shutter_speeds,
+      ratings: ratings,
       months: most_frequent_months,
       years: most_frequent_years,
       month_year_combinations: most_frequent_month_years
@@ -46,21 +47,25 @@ class CalculateMostFrequentFromExif
   def most_frequent_focal_lengths
     focal_lengths = exif_scope.pluck(:focalLength)
     results = calculate_frequencies(focal_lengths)
-    results.map { |focal_length| focal_length.round }
+    results.map(&:round)
   end
 
   def most_frequent_isos
     isos = exif_scope.pluck(:isoSpeedRating)
     results = calculate_frequencies(isos)
-    results.map { |iso| iso.round }
+    results.map(&:round)
   end
 
   def most_frequent_shutter_speeds
-    shutter_speeds = exif_scope.map do |exif|
-      exif.shutter_speed_value
-    end.compact
+    shutter_speeds = exif_scope.map(&:shutter_speed_value).compact
 
     calculate_frequencies(shutter_speeds)
+  end
+
+  def ratings
+    image_scope = Image.where(id_local: image_ids)
+
+    CalculateRatingsData.new(image_scope).call
   end
 
   def most_frequent_months
@@ -76,17 +81,17 @@ class CalculateMostFrequentFromExif
     years = exif_scope.pluck(:dateYear)
 
     results = calculate_frequencies(years)
-    results.map do |result|
-      result.round
-    end
+    results.map(&:round)
   end
 
   def most_frequent_month_years
-    month_years = exif_scope.map do |exif|
-      exif.month_and_year
-    end.compact
+    month_years = exif_scope.map(&:month_and_year)
 
     calculate_frequencies(month_years)
+  end
+
+  def image_ids
+    @image_ids ||= exif_scope.pluck(:image)
   end
 
   def calculate_frequencies(data)
