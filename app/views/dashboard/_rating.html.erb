@@ -1,4 +1,4 @@
-<p><%= heading %></p>
+<p><%= data[:rating] %></p>
 <ul>
-  <li><%= count %> images (<%= percentage %>%)</li>
+  <li><%= pluralize(data[:count], 'image') %> (<%= data[:percentage] %>%)</li>
 </ul>
