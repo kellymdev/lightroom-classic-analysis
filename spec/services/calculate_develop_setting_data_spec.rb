@@ -77,6 +77,14 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         end
       end
 
+      context 'Texture' do
+        let(:step_name) { 'Texture' }
+
+        it 'returns a list of the most popular texture adjustments' do
+          expect(service.call[:texture]).to eq %w[10 7]
+        end
+      end
+
       context 'clarity' do
         let(:step_name) { 'Clarity' }
 
@@ -245,6 +253,28 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
 
           it 'returns the average negative black clipping adjustment' do
             expect(service.call[:averages][:negative_black_clipping]).to eq(-5)
+          end
+        end
+      end
+
+      context 'texture' do
+        let(:step_name) { 'Texture' }
+
+        context 'positive' do
+          it 'returns the average positive texture adjustment' do
+            expect(service.call[:averages][:positive_texture]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative texture adjustment' do
+            expect(service.call[:averages][:negative_texture]).to eq(-5)
           end
         end
       end

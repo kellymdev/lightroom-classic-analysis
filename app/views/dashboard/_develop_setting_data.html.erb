@@ -27,6 +27,10 @@
 
   <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_black_clipping], negative: @develop_data[:averages][:negative_black_clipping] } %>
 
+  <%= render partial: 'data_list', locals: { heading: 'Texture', data: @develop_data[:texture] } %>
+
+  <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_texture], negative: @develop_data[:averages][:negative_texture] } %>
+
   <%= render partial: 'data_list', locals: { heading: 'Clarity', data: @develop_data[:clarity] } %>
 
   <%= render partial: 'average_adjustments', locals: { positive: @develop_data[:averages][:positive_clarity], negative: @develop_data[:averages][:negative_clarity] } %>
