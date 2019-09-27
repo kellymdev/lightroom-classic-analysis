@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe LensHelper, type: :helper do
@@ -11,7 +13,7 @@ RSpec.describe LensHelper, type: :helper do
     end
 
     it 'returns a list of lenses' do
-      expect(helper.lenses_for_select).to eq [['EF24-105mm f/4L IS USM', 'EF24-105mm f/4L IS USM'],['EF400mm f/5.6L USM', 'EF400mm f/5.6L USM']]
+      expect(helper.lenses_for_select).to eq [['EF24-105mm f/4L IS USM', 'EF24-105mm f/4L IS USM'], ['EF400mm f/5.6L USM', 'EF400mm f/5.6L USM']]
     end
 
     context 'when there is more than one lens with the same value' do
@@ -22,7 +24,7 @@ RSpec.describe LensHelper, type: :helper do
       end
 
       it 'only returns one record for the lens name' do
-        expect(helper.lenses_for_select).to eq [['EF24-105mm f/4L IS USM', 'EF24-105mm f/4L IS USM'],['EF400mm f/5.6L USM', 'EF400mm f/5.6L USM']]
+        expect(helper.lenses_for_select).to eq [['EF24-105mm f/4L IS USM', 'EF24-105mm f/4L IS USM'], ['EF400mm f/5.6L USM', 'EF400mm f/5.6L USM']]
       end
     end
   end

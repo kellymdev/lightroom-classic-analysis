@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe FrequencyCalculator, type: :concept do
@@ -5,7 +7,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
     subject(:calculator) { FrequencyCalculator.calculate_most_frequent(frequency_data) }
 
     context 'when there is one element with the highest frequency' do
-      let(:frequency_data) { ['A', 'B', 'C', 'B'] }
+      let(:frequency_data) { %w[A B C B] }
 
       it 'returns the element with the highest frequency' do
         expect(calculator).to eq 'B'
@@ -13,7 +15,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
     end
 
     context 'when there is more than one element with the highest frequency' do
-      let(:frequency_data) { ['A', 'B', 'A', 'B', 'C'] }
+      let(:frequency_data) { %w[A B A B C] }
 
       it 'returns the first element with the highest frequency' do
         expect(calculator).to eq 'A'
@@ -22,7 +24,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
   end
 
   describe '.calculate_frequently_used' do
-    let(:frequency_data) { ['A', 'B', 'C', 'B', 'D'] }
+    let(:frequency_data) { %w[A B C B D] }
 
     subject(:calculator) { FrequencyCalculator.calculate_frequently_used(frequency_data, number_of_results) }
 
@@ -30,7 +32,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
       let(:number_of_results) { 3 }
 
       it 'returns an array of the most frequently occurring values up to the required number of results' do
-        expect(calculator).to eq ['B', 'A', 'C']
+        expect(calculator).to eq %w[B A C]
       end
     end
 
@@ -38,7 +40,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
       let(:number_of_results) { 5 }
 
       it 'returns an array of all the values, ordered by frequency' do
-        expect(calculator).to eq ['B', 'A', 'C', 'D']
+        expect(calculator).to eq %w[B A C D]
       end
     end
   end
@@ -46,7 +48,7 @@ RSpec.describe FrequencyCalculator, type: :concept do
   describe '.calculate_frequencies' do
     subject(:calculator) { FrequencyCalculator.calculate_frequencies(frequency_data) }
 
-    let(:frequency_data) { ['A', 'B', 'C', 'B'] }
+    let(:frequency_data) { %w[A B C B] }
     let(:expected_data) do
       {
         'A' => 1,
@@ -197,7 +199,6 @@ RSpec.describe FrequencyCalculator, type: :concept do
 
     let(:camera_1) { create(:camera) }
     let(:camera_2) { create(:camera, value: 'Canon EOS 6D') }
-
 
     before do
       lens_1

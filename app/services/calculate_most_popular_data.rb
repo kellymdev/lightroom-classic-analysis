@@ -48,9 +48,7 @@ class CalculateMostPopularData
   end
 
   def most_frequent_shutter_speed
-    shutter_speeds = Exif.all.map do |exif|
-      exif.shutter_speed_value
-    end.compact
+    shutter_speeds = Exif.all.map(&:shutter_speed_value).compact
 
     calculate_frequencies(shutter_speeds)
   end
@@ -60,9 +58,9 @@ class CalculateMostPopularData
 
     month = calculate_frequencies(months)&.to_i
 
-    if month.present?
-      Date::MONTHNAMES[month]
-    end
+    return unless month.present?
+
+    Date::MONTHNAMES[month]
   end
 
   def most_frequent_year
@@ -71,9 +69,7 @@ class CalculateMostPopularData
   end
 
   def most_frequent_month_year
-    month_and_years = Exif.all.map do |exif|
-      exif.month_and_year
-    end.compact
+    month_and_years = Exif.all.map(&:month_and_year).compact
 
     calculate_frequencies(month_and_years)
   end

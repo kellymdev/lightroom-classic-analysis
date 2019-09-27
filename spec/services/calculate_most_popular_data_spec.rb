@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CalculateMostPopularData, type: :service do
   describe '#call' do
     let(:camera_1) { create(:camera) }
     let(:camera_2) { create(:camera, value: 'Canon EOS 6D') }
-    let(:lens_1) { create(:lens, value: 'EF24-105mm f/4L IS USM' ) }
+    let(:lens_1) { create(:lens, value: 'EF24-105mm f/4L IS USM') }
     let(:lens_2) { create(:lens, value: 'EF400mm f/5.6L USM') }
 
     let(:exif_1) { create(:exif, cameraModelRef: camera_1.id, lensRef: lens_1.id) }
@@ -27,7 +29,7 @@ RSpec.describe CalculateMostPopularData, type: :service do
       context 'when there is more than one camera record for the same camera model' do
         let(:camera_3) { create(:camera, value: 'Canon EOS 6D') }
         let(:exif_4) { create(:exif, cameraModelRef: camera_3.id, lensRef: lens_1.id) }
-        let(:exif_5) { create(:exif, cameraModelRef: camera_3.id, lensRef: lens_2.id)}
+        let(:exif_5) { create(:exif, cameraModelRef: camera_3.id, lensRef: lens_2.id) }
 
         before do
           exif_4

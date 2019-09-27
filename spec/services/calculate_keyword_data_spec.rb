@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CalculateKeywordData, type: :service do
@@ -23,7 +25,7 @@ RSpec.describe CalculateKeywordData, type: :service do
 
     context 'most frequent keywords' do
       it 'returns an array of the most frequently used keyword values' do
-        expect(service.call[:most_frequent_keywords]).to eq ['cat', 'dog']
+        expect(service.call[:most_frequent_keywords]).to eq %w[cat dog]
       end
     end
 
@@ -47,7 +49,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for wildlife' do
-        expect(service.call[:most_frequent_wildlife_keywords]).to eq ['dog', 'seal']
+        expect(service.call[:most_frequent_wildlife_keywords]).to eq %w[dog seal]
       end
     end
 
@@ -73,7 +75,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for wide angle landscape' do
-        expect(service.call[:most_frequent_landscape_keywords]).to eq ['dog', 'cat', 'mountain']
+        expect(service.call[:most_frequent_landscape_keywords]).to eq %w[dog cat mountain]
       end
     end
 
@@ -99,7 +101,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for macro' do
-        expect(service.call[:most_frequent_macro_keywords]).to eq ['dog', 'butterfly']
+        expect(service.call[:most_frequent_macro_keywords]).to eq %w[dog butterfly]
       end
     end
   end

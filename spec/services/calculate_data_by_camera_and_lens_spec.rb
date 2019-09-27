@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CalculateDataByCameraAndLens, type: :service do
@@ -61,7 +63,7 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
         end
 
         it 'returns the most frequently used keywords for that camera and lens' do
-          expect(service.call[:keywords]).to eq ['kitten', 'cat', 'portrait']
+          expect(service.call[:keywords]).to eq %w[kitten cat portrait]
         end
       end
 
@@ -153,7 +155,7 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
         end
 
         it 'returns the most frequent months for that camera and lens' do
-          expect(service.call[:months]).to eq ['February', 'July']
+          expect(service.call[:months]).to eq %w[February July]
         end
       end
     end
@@ -191,7 +193,7 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
         end
 
         it 'returns the most frequently used keywords for that camera, lens and year' do
-          expect(service.call[:keywords]).to eq ['kitten', 'cat', 'portrait']
+          expect(service.call[:keywords]).to eq %w[kitten cat portrait]
         end
       end
 
@@ -278,7 +280,7 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
         end
 
         it 'returns the most frequent months for that camera, lens and year' do
-          expect(service.call[:months]).to eq ['September', 'February']
+          expect(service.call[:months]).to eq %w[September February]
         end
       end
     end

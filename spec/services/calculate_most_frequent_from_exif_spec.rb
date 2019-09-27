@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CalculateMostFrequentFromExif, type: :service do
@@ -69,9 +71,9 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       let(:shutter_speed_2) { 7.96 }
 
       before do
-        exif_1.update!(:shutterSpeed => shutter_speed_1)
-        exif_2.update!(:shutterSpeed => shutter_speed_2)
-        exif_3.update!(:shutterSpeed => shutter_speed_1)
+        exif_1.update!(shutterSpeed: shutter_speed_1)
+        exif_2.update!(shutterSpeed: shutter_speed_2)
+        exif_3.update!(shutterSpeed: shutter_speed_1)
       end
 
       it 'is the most frequently used shutter speeds for the scope' do
@@ -138,7 +140,7 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequent months for the scope' do
-        expect(service.call[:months]).to eq ['April', 'November']
+        expect(service.call[:months]).to eq %w[April November]
       end
     end
 
