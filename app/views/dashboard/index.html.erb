@@ -1,5 +1,5 @@
 <h1>Lightroom Classic Analysis</h1>
-<p>Lightroom Classic catalog with <%= @image_count %> images.</p>
+<p>Lightroom Classic catalog with <%= pluralize(@image_count, 'image') %>.</p>
 
 <%= render partial: 'navigation' %>
 
