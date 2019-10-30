@@ -111,6 +111,47 @@ RSpec.describe Exif, type: :model do
       end
     end
 
+    describe 'astro' do
+      let(:exif) { create(:exif, isoSpeedRating: iso, aperture: aperture) }
+
+      context 'when the iso is 3200' do
+        let(:iso) { 3200.0 }
+
+        context 'when the aperture is 4' do
+          let(:aperture) { 4.0 }
+
+          it 'is included in the results' do
+            expect(Exif.astro).to include exif
+          end
+        end
+
+        context 'when the aperture is lower than 4' do
+          let(:aperture) { 2.8 }
+
+          it 'is included in the results' do
+            expect(Exif.astro).to include exif
+          end
+        end
+
+        context 'when the aperture is higher than 4' do
+          let(:aperture) { 5.6 }
+
+          it 'is not included in the results' do
+            expect(Exif.astro).not_to include exif
+          end
+        end
+      end
+
+      context 'when the iso is less than 3200' do
+        let(:iso) { 2000.0 }
+        let(:aperture) { 4.0 }
+
+        it 'is not included in the results' do
+          expect(Exif.astro).not_to include exif
+        end
+      end
+    end
+
     describe 'by_camera' do
       let(:camera_1) { create(:camera) }
       let(:exif) { create(:exif, cameraModelRef: camera_1.id) }

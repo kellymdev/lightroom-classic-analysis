@@ -27,6 +27,10 @@
   <%= render partial: 'data_from_exif', locals: { title: 'Macro Data', data: @macro_data } %>
 </div>
 
+<div class="astro-data content-section">
+  <%= render partial: 'data_from_exif', locals: { title: 'Astro Data', data: @astro_data } %>
+</div>
+
 <div class="keywords content-section">
   <%= render partial: 'keyword_data' %>
 </div>
