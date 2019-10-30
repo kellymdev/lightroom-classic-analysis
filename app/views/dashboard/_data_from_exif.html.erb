@@ -10,7 +10,7 @@
 
   <%= render partial: 'data_list', locals: { heading: 'Isos', data: data[:isos] } %>
 
-  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: data[:shutter_speeds], item_prefix: '1/', item_suffix: nil } %>
+  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: data[:shutter_speeds], item_prefix: nil, item_suffix: 's' } %>
 
   <%= render partial: 'ratings_by_equipment', locals: { data: data[:ratings] } %>
 

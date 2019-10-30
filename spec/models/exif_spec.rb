@@ -260,10 +260,20 @@ RSpec.describe Exif, type: :model do
     let(:exif) { create(:exif, shutterSpeed: shutter_speed) }
 
     context 'when shutterSpeed is present' do
-      let(:shutter_speed) { 10.643856 }
+      context 'when the shutterSpeed is a positive value' do
+        let(:shutter_speed) { 10.643856 }
 
-      it 'calculates the fractional shutter speed' do
-        expect(exif.shutter_speed_value).to eq 1600
+        it 'calculates the fractional shutter speed' do
+          expect(exif.shutter_speed_value).to eq(1 / 1600r)
+        end
+      end
+
+      context 'when the shutterSpeed is a negative value' do
+        let(:shutter_speed) { -7.348728 }
+
+        it 'calculates the shutter speed' do
+          expect(exif.shutter_speed_value).to eq 163
+        end
       end
     end
 

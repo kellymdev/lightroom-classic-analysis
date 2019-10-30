@@ -14,12 +14,27 @@ class Exif < ApplicationRecord
   def shutter_speed_value
     return unless shutterSpeed.present?
 
-    (2**shutterSpeed).round
+    if shutterSpeed.negative?
+      (2**-shutterSpeed).round
+    else
+      speed = (2**shutterSpeed).round
+      format_speed(speed)
+    end
   end
 
   def month_and_year
     return unless dateMonth.present? && dateYear.present?
 
     "#{Date::MONTHNAMES[dateMonth]} #{dateYear.to_i}"
+  end
+
+  private
+
+  def format_speed(speed)
+    if speed == 1
+      1
+    else
+      "1/#{speed}".to_r
+    end
   end
 end

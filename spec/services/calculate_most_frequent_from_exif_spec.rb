@@ -77,7 +77,7 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequently used shutter speeds for the scope' do
-        expect(service.call[:shutter_speeds]).to eq [60, 249]
+        expect(service.call[:shutter_speeds]).to eq [(1 / 60r), (1 / 249r)]
       end
     end
 

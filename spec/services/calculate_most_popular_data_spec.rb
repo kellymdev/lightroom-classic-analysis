@@ -104,7 +104,7 @@ RSpec.describe CalculateMostPopularData, type: :service do
       end
 
       it 'returns the most frequently used shutter speed' do
-        expect(service.call[:shutter_speed]).to eq 1600
+        expect(service.call[:shutter_speed]).to eq(1 / 1600r)
       end
     end
 

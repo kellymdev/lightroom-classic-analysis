@@ -82,7 +82,7 @@ RSpec.describe CalculateDataByCamera, type: :service do
         end
 
         it 'returns the most frequently used shutter speeds for that camera' do
-          expect(service.call[:shutter_speeds]).to eq [17, 1600]
+          expect(service.call[:shutter_speeds]).to eq [(1 / 17r), (1 / 1600r)]
         end
       end
 
@@ -237,7 +237,7 @@ RSpec.describe CalculateDataByCamera, type: :service do
         end
 
         it 'returns the most frequently used shutter speeds for that camera and year' do
-          expect(service.call[:shutter_speeds]).to eq [1600, 17]
+          expect(service.call[:shutter_speeds]).to eq [(1 / 1600r), (1 / 17r)]
         end
       end
 
