@@ -104,5 +104,33 @@ RSpec.describe CalculateKeywordData, type: :service do
         expect(service.call[:most_frequent_macro_keywords]).to eq %w[dog butterfly]
       end
     end
+
+    context 'most frequent astro keywords' do
+      let(:keyword_3) { create(:keyword, lc_name: 'stars') }
+      let(:image_4) { create(:image) }
+      let(:keyword_image_4) { create(:keyword_image, image: image_4.id, tag: keyword_3.id) }
+      let(:keyword_image_5) { create(:keyword_image, image: image_1.id, tag: keyword_3.id) }
+      let(:keyword_image_6) { create(:keyword_image, image: image_2.id, tag: keyword_3.id) }
+
+      let(:exif_1) { create(:exif, image: image_1.id, isoSpeedRating: 3200.0, aperture: 4.0) }
+      let(:exif_2) { create(:exif, image: image_2.id, isoSpeedRating: 4000.0, aperture: 4.0) }
+      let(:exif_3) { create(:exif, image: image_3.id, isoSpeedRating: 3200.0, aperture: 2.8) }
+      let(:exif_4) { create(:exif, image: image_4.id, isoSpeedRating: 3200.0, aperture: 4.0) }
+
+      before do
+        keyword_image_4
+        keyword_image_5
+        keyword_image_6
+
+        exif_1
+        exif_2
+        exif_3
+        exif_4
+      end
+
+      it 'returns the most frequently used keyword values for astro' do
+        expect(service.call[:most_frequent_astro_keywords]).to eq %w[stars cat dog]
+      end
+    end
   end
 end
