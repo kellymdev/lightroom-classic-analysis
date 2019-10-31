@@ -34,8 +34,8 @@ class CalculateDataByLens
     keyword_ids = KeywordImage.by_image(image_ids).pluck(:tag)
     frequencies = calculate_frequently_used(keyword_ids)
 
-    frequencies.flat_map do |frequency|
-      Keyword.where(id_local: frequency).pluck(:lc_name)
+    frequencies.each do |frequency|
+      frequency[:value] = Keyword.where(id_local: frequency[:value]).pluck(:lc_name).join
     end
   end
 
@@ -48,7 +48,9 @@ class CalculateDataByLens
     focal_lengths = exif_scope.pluck(:focalLength)
 
     results = calculate_frequently_used(focal_lengths)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def shutter_speeds_by_lens
@@ -60,7 +62,9 @@ class CalculateDataByLens
   def isos_by_lens
     isos = exif_scope.pluck(:isoSpeedRating)
     results = calculate_frequently_used(isos)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def ratings_by_lens
@@ -73,8 +77,8 @@ class CalculateDataByLens
     months = exif_scope.pluck(:dateMonth)
 
     results = calculate_frequently_used(months)
-    results.map do |result|
-      Date::MONTHNAMES[result]
+    results.each do |result|
+      result[:value] = Date::MONTHNAMES[result[:value]]
     end
   end
 
@@ -82,7 +86,9 @@ class CalculateDataByLens
     years = exif_scope.pluck(:dateYear)
 
     results = calculate_frequently_used(years)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def month_year_combinations_by_lens

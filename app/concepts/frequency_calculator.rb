@@ -12,7 +12,13 @@ class FrequencyCalculator
     sorted = frequencies.sort { |a, b| b.second <=> a.second }
 
     results = sorted.take(number_of_results)
-    results.map(&:first)
+
+    results.map do |value, frequency|
+      {
+        value: value,
+        percentage: calculate_percentage(frequency, frequency_data)
+      }
+    end
   end
 
   def self.calculate_frequencies(frequency_data)
@@ -29,6 +35,14 @@ class FrequencyCalculator
     frequencies
   end
 
+  def self.calculate_percentage(frequency, frequency_data)
+    if frequency.zero?
+      0.to_d
+    else
+      (frequency / frequency_data.count.to_d * 100).round(2)
+    end
+  end
+
   # Frequencies from models (e.g. camera, lens)
   def self.calculate_most_frequent_from_model(model_ids, klass_name)
     frequencies = calculate_frequencies_for_model(model_ids, klass_name)
@@ -42,7 +56,12 @@ class FrequencyCalculator
     sorted = total_frequencies.sort { |a, b| b.second <=> a.second }
 
     results = sorted.take(number_of_results)
-    results.map(&:first)
+    results.map do |value, frequency|
+      {
+        value: value,
+        percentage: calculate_percentage(frequency, model_ids)
+      }
+    end
   end
 
   def self.calculate_frequencies_for_model(model_ids, klass_name)
@@ -92,7 +111,12 @@ class FrequencyCalculator
     grouped = group_frequencies_by_camera_and_lens_name(frequencies)
 
     results = grouped.sort { |a, b| b.second <=> a.second }.take(number_of_results)
-    results.map(&:first)
+    results.map do |value, frequency|
+      {
+        value: value,
+        percentage: calculate_percentage(frequency, camera_and_lens_ids)
+      }
+    end
   end
 
   def self.calculate_frequencies_for_camera_and_lens(camera_and_lens_ids)

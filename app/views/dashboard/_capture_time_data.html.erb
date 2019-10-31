@@ -6,7 +6,7 @@
     <dd>
       <ul>
         <% data.each do |time| %>
-          <li><%= time %></li>
+          <li><%= time[:value] %> (<%= time[:percentage] %>%)</li>
         <% end %>
       </ul>
     </dd>

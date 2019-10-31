@@ -22,7 +22,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-01-05T15:29:34' }
 
       let(:expected_result) do
-        ['15:00 - 15:59', '06:00 - 06:59']
+        [
+          {
+            value: '15:00 - 15:59',
+            percentage: 66.67
+          },
+          {
+            value: '06:00 - 06:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for january' do
@@ -36,7 +45,20 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-02-07T00:47:21' }
 
       let(:expected_result) do
-        ['23:00 - 23:59', '01:00 - 01:59', '00:00 - 00:59']
+        [
+          {
+            value: '23:00 - 23:59',
+            percentage: 33.33
+          },
+          {
+            value: '01:00 - 01:59',
+            percentage: 33.33
+          },
+          {
+            value: '00:00 - 00:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for february' do
@@ -50,7 +72,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-03-07T09:47:21' }
 
       let(:expected_result) do
-        ['09:00 - 09:59', '15:00 - 15:59']
+        [
+          {
+            value: '09:00 - 09:59',
+            percentage: 66.67
+          },
+          {
+            value: '15:00 - 15:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for march' do
@@ -64,7 +95,20 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-04-07T12:47:21' }
 
       let(:expected_result) do
-        ['00:00 - 00:59', '23:00 - 23:59', '12:00 - 12:59']
+        [
+          {
+            value: '00:00 - 00:59',
+            percentage: 33.33
+          },
+          {
+            value: '23:00 - 23:59',
+            percentage: 33.33
+          },
+          {
+            value: '12:00 - 12:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for april' do
@@ -78,7 +122,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-05-07T14:47:21' }
 
       let(:expected_result) do
-        ['14:00 - 14:59', '19:00 - 19:59']
+        [
+          {
+            value: '14:00 - 14:59',
+            percentage: 66.67
+          },
+          {
+            value: '19:00 - 19:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for may' do
@@ -92,7 +145,12 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-06-07T14:47:21' }
 
       let(:expected_result) do
-        ['14:00 - 14:59']
+        [
+          {
+            value: '14:00 - 14:59',
+            percentage: 100
+          }
+        ]
       end
 
       it 'returns the most popular capture times for june' do
@@ -106,7 +164,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-07-07T08:47:21' }
 
       let(:expected_result) do
-        ['08:00 - 08:59', '01:00 - 01:59']
+        [
+          {
+            value: '08:00 - 08:59',
+            percentage: 66.67
+          },
+          {
+            value: '01:00 - 01:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for july' do
@@ -120,7 +187,20 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-08-07T02:47:21' }
 
       let(:expected_result) do
-        ['17:00 - 17:59', '14:00 - 14:59', '02:00 - 02:59']
+        [
+          {
+            value: '17:00 - 17:59',
+            percentage: 33.33
+          },
+          {
+            value: '14:00 - 14:59',
+            percentage: 33.33
+          },
+          {
+            value: '02:00 - 02:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for august' do
@@ -134,7 +214,20 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-09-07T11:47:21' }
 
       let(:expected_result) do
-        ['22:00 - 22:59', '03:00 - 03:59', '11:00 - 11:59']
+        [
+          {
+            value: '22:00 - 22:59',
+            percentage: 33.33
+          },
+          {
+            value: '03:00 - 03:59',
+            percentage: 33.33
+          },
+          {
+            value: '11:00 - 11:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for september' do
@@ -148,7 +241,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-10-07T18:47:21' }
 
       let(:expected_result) do
-        ['18:00 - 18:59', '20:00 - 20:59']
+        [
+          {
+            value: '18:00 - 18:59',
+            percentage: 66.67
+          },
+          {
+            value: '20:00 - 20:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for october' do
@@ -162,7 +264,12 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-11-07T11:47:21' }
 
       let(:expected_result) do
-        ['11:00 - 11:59']
+        [
+          {
+            value: '11:00 - 11:59',
+            percentage: 100
+          }
+        ]
       end
 
       it 'returns the most popular capture times for november' do
@@ -176,7 +283,16 @@ RSpec.describe CalculateCaptureTimeData, type: :service do
       let(:capture_time_3) { '2019-12-07T21:47:21' }
 
       let(:expected_result) do
-        ['21:00 - 21:59', '15:00 - 15:59']
+        [
+          {
+            value: '21:00 - 21:59',
+            percentage: 66.67
+          },
+          {
+            value: '15:00 - 15:59',
+            percentage: 33.33
+          }
+        ]
       end
 
       it 'returns the most popular capture times for december' do

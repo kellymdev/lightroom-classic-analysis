@@ -9,7 +9,7 @@
 
   <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Focal Lengths', data: @data_by_lens[:focal_lengths], item_prefix: nil, item_suffix: 'mm' } %>
 
-  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: @data_by_lens[:shutter_speeds], item_prefix: '1/', item_suffix: nil } %>
+  <%= render partial: 'data_list_with_prefix_and_suffix', locals: { heading: 'Shutter Speeds', data: @data_by_lens[:shutter_speeds], item_prefix: nil, item_suffix: 's' } %>
 
   <%= render partial: 'data_list', locals: { heading: 'Isos', data: @data_by_lens[:isos] } %>
 

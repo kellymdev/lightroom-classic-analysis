@@ -49,6 +49,23 @@ RSpec.describe CalculateDataByLens, type: :service do
         let(:keyword_image_3) { create(:keyword_image, image: image_1.id, tag: keyword_3.id) }
         let(:keyword_image_4) { create(:keyword_image, image: image_2.id, tag: keyword_2.id) }
 
+        let(:expected_data) do
+          [
+            {
+              value: 'kitten',
+              percentage: 50
+            },
+            {
+              value: 'cat',
+              percentage: 25
+            },
+            {
+              value: 'portrait',
+              percentage: 25
+            }
+          ]
+        end
+
         before do
           exif_1.update!(image: image_1.id)
           exif_2.update!(image: image_2.id)
@@ -60,17 +77,43 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequently used keywords for that lens' do
-          expect(service.call[:keywords]).to eq %w[kitten cat portrait]
+          expect(service.call[:keywords]).to eq expected_data
         end
       end
 
       context 'cameras' do
+        let(:expected_data) do
+          [
+            {
+              value: camera_2.value,
+              percentage: 66.67
+            },
+            {
+              value: camera_1.value,
+              percentage: 33.33
+            }
+          ]
+        end
+
         it 'lists the most frequently used camera models for that lens' do
-          expect(service.call[:cameras]).to eq [camera_2.value, camera_1.value]
+          expect(service.call[:cameras]).to eq expected_data
         end
       end
 
       context 'focal_lengths' do
+        let(:expected_data) do
+          [
+            {
+              value: 35,
+              percentage: 66.67
+            },
+            {
+              value: 100,
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(focalLength: 35.0)
           exif_2.update!(focalLength: 100.0)
@@ -78,11 +121,24 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequently used focal lengths for that lens' do
-          expect(service.call[:focal_lengths]).to eq [35, 100]
+          expect(service.call[:focal_lengths]).to eq expected_data
         end
       end
 
       context 'shutter_speeds' do
+        let(:expected_data) do
+          [
+            {
+              value: (1 / 60r),
+              percentage: 66.67
+            },
+            {
+              value: (1 / 1600r),
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(shutterSpeed: 5.91)
           exif_2.update!(shutterSpeed: 10.643856)
@@ -90,11 +146,24 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequently used shutter speeds for that lens' do
-          expect(service.call[:shutter_speeds]).to eq [(1 / 60r), (1 / 1600r)]
+          expect(service.call[:shutter_speeds]).to eq expected_data
         end
       end
 
       context 'isos' do
+        let(:expected_data) do
+          [
+            {
+              value: 100,
+              percentage: 66.67
+            },
+            {
+              value: 1600,
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(isoSpeedRating: 1600.0)
           exif_2.update!(isoSpeedRating: 100.0)
@@ -102,7 +171,7 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequently used isos for that lens' do
-          expect(service.call[:isos]).to eq [100, 1600]
+          expect(service.call[:isos]).to eq expected_data
         end
       end
 
@@ -161,6 +230,19 @@ RSpec.describe CalculateDataByLens, type: :service do
       end
 
       context 'months' do
+        let(:expected_data) do
+          [
+            {
+              value: 'August',
+              percentage: 66.67
+            },
+            {
+              value: 'May',
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(dateMonth: 5.0)
           exif_2.update!(dateMonth: 8.0)
@@ -168,11 +250,24 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequent months for that lens' do
-          expect(service.call[:months]).to eq %w[August May]
+          expect(service.call[:months]).to eq expected_data
         end
       end
 
       context 'years' do
+        let(:expected_data) do
+          [
+            {
+              value: 2018,
+              percentage: 66.67
+            },
+            {
+              value: 2017,
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(dateYear: 2018.0)
           exif_2.update!(dateYear: 2018.0)
@@ -180,11 +275,24 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequent years for that lens' do
-          expect(service.call[:years]).to eq [2018, 2017]
+          expect(service.call[:years]).to eq expected_data
         end
       end
 
       context 'month year combinations' do
+        let(:expected_data) do
+          [
+            {
+              value: 'May 2017',
+              percentage: 66.67
+            },
+            {
+              value: 'June 2018',
+              percentage: 33.33
+            }
+          ]
+        end
+
         before do
           exif_1.update!(dateMonth: 5.0, dateYear: 2017.0)
           exif_2.update!(dateMonth: 6.0, dateYear: 2018.0)
@@ -192,7 +300,7 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequent month year combinations for that lens' do
-          expect(service.call[:month_year_combinations]).to eq ['May 2017', 'June 2018']
+          expect(service.call[:month_year_combinations]).to eq expected_data
         end
       end
     end
@@ -224,6 +332,23 @@ RSpec.describe CalculateDataByLens, type: :service do
         let(:keyword_image_3) { create(:keyword_image, image: image_1.id, tag: keyword_3.id) }
         let(:keyword_image_4) { create(:keyword_image, image: image_2.id, tag: keyword_2.id) }
 
+        let(:expected_data) do
+          [
+            {
+              value: 'kitten',
+              percentage: 50
+            },
+            {
+              value: 'cat',
+              percentage: 25
+            },
+            {
+              value: 'portrait',
+              percentage: 25
+            }
+          ]
+        end
+
         before do
           exif_1.update!(image: image_1.id)
           exif_2.update!(image: image_2.id)
@@ -235,46 +360,98 @@ RSpec.describe CalculateDataByLens, type: :service do
         end
 
         it 'lists the most frequently used keywords for that lens and year' do
-          expect(service.call[:keywords]).to eq %w[kitten cat portrait]
+          expect(service.call[:keywords]).to eq expected_data
         end
       end
 
       context 'cameras' do
+        let(:expected_data) do
+          [
+            {
+              value: 'Canon EOS 6D',
+              percentage: 50
+            },
+            {
+              value: 'Canon EOS 5D Mark IV',
+              percentage: 50
+            }
+          ]
+        end
+
         it 'lists the most frequently used camera models for that lens and year' do
-          expect(service.call[:cameras]).to eq ['Canon EOS 6D', 'Canon EOS 5D Mark IV']
+          expect(service.call[:cameras]).to eq expected_data
         end
       end
 
       context 'focal_lengths' do
+        let(:expected_data) do
+          [
+            {
+              value: 24,
+              percentage: 50
+            },
+            {
+              value: 50,
+              percentage: 50
+            }
+          ]
+        end
+
         before do
           exif_1.update!(focalLength: 24.0)
           exif_2.update!(focalLength: 50.0)
         end
 
         it 'lists the most frequently used focal lengths for that lens and year' do
-          expect(service.call[:focal_lengths]).to eq [24, 50]
+          expect(service.call[:focal_lengths]).to eq expected_data
         end
       end
 
       context 'shutter_speeds' do
+        let(:expected_data) do
+          [
+            {
+              value: (1 / 1600r),
+              percentage: 50
+            },
+            {
+              value: (1 / 60r),
+              percentage: 50
+            }
+          ]
+        end
+
         before do
           exif_1.update!(shutterSpeed: 10.643856)
           exif_2.update!(shutterSpeed: 5.91)
         end
 
         it 'lists the most frequently used shutter speeds for that lens and year' do
-          expect(service.call[:shutter_speeds]).to eq [(1 / 1600r), (1 / 60r)]
+          expect(service.call[:shutter_speeds]).to eq expected_data
         end
       end
 
       context 'isos' do
+        let(:expected_data) do
+          [
+            {
+              value: 200,
+              percentage: 50
+            },
+            {
+              value: 1250,
+              percentage: 50
+            }
+          ]
+        end
+
         before do
           exif_1.update!(isoSpeedRating: 200.0)
           exif_2.update!(isoSpeedRating: 1250.0)
         end
 
         it 'lists the most frequently used isos for that lens and year' do
-          expect(service.call[:isos]).to eq [200, 1250]
+          expect(service.call[:isos]).to eq expected_data
         end
       end
 
@@ -333,30 +510,65 @@ RSpec.describe CalculateDataByLens, type: :service do
       end
 
       context 'months' do
+        let(:expected_data) do
+          [
+            {
+              value: 'July',
+              percentage: 50
+            },
+            {
+              value: 'January',
+              percentage: 50
+            }
+          ]
+        end
+
         before do
           exif_1.update!(dateMonth: 7.0)
           exif_2.update!(dateMonth: 1.0)
         end
 
         it 'lists the most frequent months for that lens and year' do
-          expect(service.call[:months]).to eq %w[July January]
+          expect(service.call[:months]).to eq expected_data
         end
       end
 
       context 'years' do
+        let(:expected_data) do
+          [
+            {
+              value: 2018,
+              percentage: 100
+            }
+          ]
+        end
+
         it 'only returns the specified year' do
-          expect(service.call[:years]).to eq [2018]
+          expect(service.call[:years]).to eq expected_data
         end
       end
 
       context 'month_year_combinations' do
+        let(:expected_data) do
+          [
+            {
+              value: 'October 2018',
+              percentage: 50
+            },
+            {
+              value: 'March 2018',
+              percentage: 50
+            }
+          ]
+        end
+
         before do
           exif_1.update!(dateMonth: 10.0)
           exif_2.update!(dateMonth: 3.0)
         end
 
         it 'only returns data for the specified year' do
-          expect(service.call[:month_year_combinations]).to eq ['October 2018', 'March 2018']
+          expect(service.call[:month_year_combinations]).to eq expected_data
         end
       end
     end

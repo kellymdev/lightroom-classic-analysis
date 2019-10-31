@@ -24,8 +24,21 @@ RSpec.describe CalculateKeywordData, type: :service do
     subject(:service) { CalculateKeywordData.new }
 
     context 'most frequent keywords' do
+      let(:expected_data) do
+        [
+          {
+            value: 'cat',
+            percentage: 66.67
+          },
+          {
+            value: 'dog',
+            percentage: 33.33
+          }
+        ]
+      end
+
       it 'returns an array of the most frequently used keyword values' do
-        expect(service.call[:most_frequent_keywords]).to eq %w[cat dog]
+        expect(service.call[:most_frequent_keywords]).to eq expected_data
       end
     end
 
@@ -39,6 +52,19 @@ RSpec.describe CalculateKeywordData, type: :service do
       let(:exif_3) { create(:exif, image: image_3.id) }
       let(:exif_4) { create(:exif, image: image_4.id, focalLength: 350.0) }
 
+      let(:expected_data) do
+        [
+          {
+            value: 'dog',
+            percentage: 50
+          },
+          {
+            value: 'seal',
+            percentage: 50
+          }
+        ]
+      end
+
       before do
         keyword_image_4
 
@@ -49,7 +75,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for wildlife' do
-        expect(service.call[:most_frequent_wildlife_keywords]).to eq %w[dog seal]
+        expect(service.call[:most_frequent_wildlife_keywords]).to eq expected_data
       end
     end
 
@@ -65,6 +91,23 @@ RSpec.describe CalculateKeywordData, type: :service do
       let(:exif_3) { create(:exif, image: image_3.id, focalLength: 400.0, isoSpeedRating: iso, cameraModelRef: camera.id) }
       let(:exif_4) { create(:exif, image: image_4.id, focalLength: 17.0, isoSpeedRating: iso, cameraModelRef: camera.id) }
 
+      let(:expected_data) do
+        [
+          {
+            value: 'dog',
+            percentage: 33.33
+          },
+          {
+            value: 'cat',
+            percentage: 33.33
+          },
+          {
+            value: 'mountain',
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         keyword_image_4
 
@@ -75,7 +118,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for wide angle landscape' do
-        expect(service.call[:most_frequent_landscape_keywords]).to eq %w[dog cat mountain]
+        expect(service.call[:most_frequent_landscape_keywords]).to eq expected_data
       end
     end
 
@@ -91,6 +134,19 @@ RSpec.describe CalculateKeywordData, type: :service do
       let(:exif_3) { create(:exif, image: image_3.id, lensRef: lens_2.id) }
       let(:exif_4) { create(:exif, image: image_4.id, lensRef: lens_1.id) }
 
+      let(:expected_data) do
+        [
+          {
+            value: 'dog',
+            percentage: 50
+          },
+          {
+            value: 'butterfly',
+            percentage: 50
+          }
+        ]
+      end
+
       before do
         keyword_image_4
 
@@ -101,7 +157,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns an array of the most frequently used keyword values for macro' do
-        expect(service.call[:most_frequent_macro_keywords]).to eq %w[dog butterfly]
+        expect(service.call[:most_frequent_macro_keywords]).to eq expected_data
       end
     end
 
@@ -117,6 +173,23 @@ RSpec.describe CalculateKeywordData, type: :service do
       let(:exif_3) { create(:exif, image: image_3.id, isoSpeedRating: 3200.0, aperture: 2.8) }
       let(:exif_4) { create(:exif, image: image_4.id, isoSpeedRating: 3200.0, aperture: 4.0) }
 
+      let(:expected_data) do
+        [
+          {
+            value: 'stars',
+            percentage: 50
+          },
+          {
+            value: 'cat',
+            percentage: 33.33
+          },
+          {
+            value: 'dog',
+            percentage: 16.67
+          }
+        ]
+      end
+
       before do
         keyword_image_4
         keyword_image_5
@@ -129,7 +202,7 @@ RSpec.describe CalculateKeywordData, type: :service do
       end
 
       it 'returns the most frequently used keyword values for astro' do
-        expect(service.call[:most_frequent_astro_keywords]).to eq %w[stars cat dog]
+        expect(service.call[:most_frequent_astro_keywords]).to eq expected_data
       end
     end
   end

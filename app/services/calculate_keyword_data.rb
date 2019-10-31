@@ -27,8 +27,8 @@ class CalculateKeywordData
   def calculate_most_frequent_keywords(keyword_ids)
     frequent_keyword_ids = calculate_frequently_used(keyword_ids)
 
-    frequent_keyword_ids.map do |keyword_id|
-      Keyword.find_by(id_local: keyword_id)&.lc_name
+    frequent_keyword_ids.each do |keyword_id|
+      keyword_id[:value] = Keyword.find_by(id_local: keyword_id[:value])&.lc_name
     end.compact
   end
 

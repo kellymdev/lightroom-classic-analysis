@@ -17,12 +17,38 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
     end
 
     context 'develop_steps' do
+      let(:expected_data) do
+        [
+          {
+            value: 'Contrast',
+            percentage: 66.67
+          },
+          {
+            value: 'Crop Rectangle',
+            percentage: 33.33
+          }
+        ]
+      end
+
       it 'returns a list of the most popular develop history steps' do
-        expect(service.call[:develop_steps]).to eq ['Contrast', 'Crop Rectangle']
+        expect(service.call[:develop_steps]).to eq expected_data
       end
     end
 
     context 'individual develop settings' do
+      let(:expected_data) do
+        [
+          {
+            value: '10',
+            percentage: 66.67
+          },
+          {
+            value: '7',
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         develop_step_1.update!(name: step_name)
         develop_step_2.update!(name: step_name)
@@ -33,7 +59,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Exposure' }
 
         it 'returns a list of the most popular exposure adjustments' do
-          expect(service.call[:exposure]).to eq %w[10 7]
+          expect(service.call[:exposure]).to eq expected_data
         end
       end
 
@@ -41,7 +67,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Contrast' }
 
         it 'returns a list of the most popular contrast adjustments' do
-          expect(service.call[:contrast]).to eq %w[10 7]
+          expect(service.call[:contrast]).to eq expected_data
         end
       end
 
@@ -49,7 +75,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Highlights' }
 
         it 'returns a list of the most popular highlight adjustments' do
-          expect(service.call[:highlights]).to eq %w[10 7]
+          expect(service.call[:highlights]).to eq expected_data
         end
       end
 
@@ -57,7 +83,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Shadows' }
 
         it 'returns a list of the most popular shadows adjustments' do
-          expect(service.call[:shadows]).to eq %w[10 7]
+          expect(service.call[:shadows]).to eq expected_data
         end
       end
 
@@ -65,7 +91,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'White Clipping' }
 
         it 'returns a list of the most popular white clipping adjustments' do
-          expect(service.call[:white_clipping]).to eq %w[10 7]
+          expect(service.call[:white_clipping]).to eq expected_data
         end
       end
 
@@ -73,7 +99,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Black Clipping' }
 
         it 'returns a list of the most popular black clipping adjustments' do
-          expect(service.call[:black_clipping]).to eq %w[10 7]
+          expect(service.call[:black_clipping]).to eq expected_data
         end
       end
 
@@ -81,7 +107,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Texture' }
 
         it 'returns a list of the most popular texture adjustments' do
-          expect(service.call[:texture]).to eq %w[10 7]
+          expect(service.call[:texture]).to eq expected_data
         end
       end
 
@@ -89,7 +115,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Clarity' }
 
         it 'returns a list of the most popular clarity adjustments' do
-          expect(service.call[:clarity]).to eq %w[10 7]
+          expect(service.call[:clarity]).to eq expected_data
         end
       end
 
@@ -97,7 +123,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Post-Crop Vignette Amount' }
 
         it 'returns a list of the most popular post-crop vignette amount adjustments' do
-          expect(service.call[:post_crop_vignette_amount]).to eq %w[10 7]
+          expect(service.call[:post_crop_vignette_amount]).to eq expected_data
         end
       end
 
@@ -105,7 +131,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Vibrance' }
 
         it 'returns a list of the most popular vibrance adjustments' do
-          expect(service.call[:vibrance]).to eq %w[10 7]
+          expect(service.call[:vibrance]).to eq expected_data
         end
       end
 
@@ -113,7 +139,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         let(:step_name) { 'Saturation' }
 
         it 'returns a list of the most popular saturation adjustments' do
-          expect(service.call[:saturation]).to eq %w[10 7]
+          expect(service.call[:saturation]).to eq expected_data
         end
       end
     end

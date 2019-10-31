@@ -30,17 +30,53 @@ RSpec.describe FrequencyCalculator, type: :concept do
 
     context 'when there are more than the specified number of results' do
       let(:number_of_results) { 3 }
+      let(:expected_results) do
+        [
+          {
+            value: 'B',
+            percentage: 40
+          },
+          {
+            value: 'A',
+            percentage: 20
+          },
+          {
+            value: 'C',
+            percentage: 20
+          }
+        ]
+      end
 
-      it 'returns an array of the most frequently occurring values up to the required number of results' do
-        expect(calculator).to eq %w[B A C]
+      it 'returns an array of the most frequently occurring values up to the required number of results including percentages' do
+        expect(calculator).to eq expected_results
       end
     end
 
     context 'when there are fewer than the specified number of results' do
       let(:number_of_results) { 5 }
+      let(:expected_results) do
+        [
+          {
+            value: 'B',
+            percentage: 40
+          },
+          {
+            value: 'A',
+            percentage: 20
+          },
+          {
+            value: 'C',
+            percentage: 20
+          },
+          {
+            value: 'D',
+            percentage: 20
+          }
+        ]
+      end
 
       it 'returns an array of all the values, ordered by frequency' do
-        expect(calculator).to eq %w[B A C D]
+        expect(calculator).to eq expected_results
       end
     end
   end
@@ -59,6 +95,25 @@ RSpec.describe FrequencyCalculator, type: :concept do
 
     it 'returns the frequencies of each of the elements' do
       expect(calculator).to eq expected_data
+    end
+  end
+
+  describe '.calculate_percentage' do
+    let(:exif_1) { create(:exif) }
+    let(:exif_2) { create(:exif) }
+    let(:exif_3) { create(:exif) }
+    let(:frequency_data) { [exif_1, exif_2, exif_3] }
+
+    subject(:calculator) { FrequencyCalculator.calculate_percentage(2, frequency_data) }
+
+    before do
+      exif_1
+      exif_2
+      exif_3
+    end
+
+    it 'returns the percentage of the frequency' do
+      expect(calculator).to eq 66.67
     end
   end
 
@@ -101,17 +156,45 @@ RSpec.describe FrequencyCalculator, type: :concept do
 
       context 'when there are more than the specified number of results' do
         let(:number_of_results) { 2 }
+        let(:expected_data) do
+          [
+            {
+              value: lens_1.value,
+              percentage: 50
+            },
+            {
+              value: lens_2.value,
+              percentage: 25
+            }
+          ]
+        end
 
         it 'returns an array of the most frequently used values up to the required number of results' do
-          expect(calculator).to eq [lens_1.value, lens_2.value]
+          expect(calculator).to eq expected_data
         end
       end
 
       context 'when there are fewer than the specified number of results' do
         let(:number_of_results) { 5 }
+        let(:expected_data) do
+          [
+            {
+              value: lens_1.value,
+              percentage: 50
+            },
+            {
+              value: lens_2.value,
+              percentage: 25
+            },
+            {
+              value: lens_3.value,
+              percentage: 25
+            }
+          ]
+        end
 
         it 'returns an array of all the values' do
-          expect(calculator).to eq [lens_1.value, lens_2.value, lens_3.value]
+          expect(calculator).to eq expected_data
         end
       end
     end
@@ -221,10 +304,27 @@ RSpec.describe FrequencyCalculator, type: :concept do
       let(:number_of_results) { 3 }
       let(:camera_lens_ids) { [[camera_1.id, lens_1.id], [camera_2.id, lens_2.id], [camera_2.id, lens_1.id], [camera_2.id, lens_2.id]] }
 
+      let(:expected_result) do
+        [
+          {
+            value: 'Canon EOS 6D - EF400mm f/5.6L USM',
+            percentage: 50
+          },
+          {
+            value: 'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM',
+            percentage: 25
+          },
+          {
+            value: 'Canon EOS 6D - EF24-105mm f/4L IS USM',
+            percentage: 25
+          }
+        ]
+      end
+
       subject(:calculator) { FrequencyCalculator.calculate_frequently_used_camera_and_lens(camera_lens_ids, number_of_results) }
 
       it 'returns an array of camera and lens names' do
-        expect(calculator).to eq ['Canon EOS 6D - EF400mm f/5.6L USM', 'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM', 'Canon EOS 6D - EF24-105mm f/4L IS USM']
+        expect(calculator).to eq expected_result
       end
     end
 

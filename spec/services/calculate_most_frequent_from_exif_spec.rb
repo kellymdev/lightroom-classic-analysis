@@ -26,35 +26,100 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
     end
 
     context 'cameras' do
+      let(:expected_data) do
+        [
+          {
+            value: 'Canon EOS 5D Mark IV',
+            percentage: 66.67
+          },
+          {
+            value: 'Canon EOS 6D',
+            percentage: 33.33
+          }
+        ]
+      end
+
       it 'is the most frequently used cameras for the scope' do
-        expect(service.call[:cameras]).to eq ['Canon EOS 5D Mark IV', 'Canon EOS 6D']
+        expect(service.call[:cameras]).to eq expected_data
       end
     end
 
     context 'lenses' do
+      let(:expected_data) do
+        [
+          {
+            value: 'EF24-105mm f/4L IS USM',
+            percentage: 66.67
+          },
+          {
+            value: 'EF16-35mm f/4L IS USM',
+            percentage: 33.33
+          }
+        ]
+      end
+
       it 'is the most frequently used lenses for the scope' do
-        expect(service.call[:lenses]).to eq ['EF24-105mm f/4L IS USM', 'EF16-35mm f/4L IS USM']
+        expect(service.call[:lenses]).to eq expected_data
       end
     end
 
     context 'camera_lens_combinations' do
+      let(:expected_data) do
+        [
+          {
+            value: 'Canon EOS 6D - EF24-105mm f/4L IS USM',
+            percentage: 33.33
+          },
+          {
+            value: 'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM',
+            percentage: 33.33
+          }
+        ]
+      end
+
       it 'is the most frequently used camera and lens combinations for the scope' do
-        expect(service.call[:camera_lens_combinations]).to eq ['Canon EOS 6D - EF24-105mm f/4L IS USM', 'Canon EOS 5D Mark IV - EF24-105mm f/4L IS USM']
+        expect(service.call[:camera_lens_combinations]).to eq expected_data
       end
     end
 
     context 'focal_lengths' do
+      let(:expected_data) do
+        [
+          {
+            value: 24,
+            percentage: 66.67
+          },
+          {
+            value: 35,
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         exif_3.update!(focalLength: 24.0)
       end
 
       it 'is the most frequently used focal lengths for the scope' do
-        expect(service.call[:focal_lengths]).to eq [24, 35]
+        expect(service.call[:focal_lengths]).to eq expected_data
       end
     end
 
     context 'isos' do
       let(:exif_scope) { Exif.all }
+
+      let(:expected_data) do
+        [
+          {
+            value: 1600,
+            percentage: 66.67
+          },
+          {
+            value: 100,
+            percentage: 33.33
+          }
+        ]
+      end
 
       before do
         exif_1.update!(isoSpeedRating: 1600.0)
@@ -62,13 +127,26 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequently used isos for the scope' do
-        expect(service.call[:isos]).to eq [1600, 100]
+        expect(service.call[:isos]).to eq expected_data
       end
     end
 
     context 'shutter_speeds' do
       let(:shutter_speed_1) { 5.91 }
       let(:shutter_speed_2) { 7.96 }
+
+      let(:expected_data) do
+        [
+          {
+            value: (1 / 60r),
+            percentage: 66.67
+          },
+          {
+            value: (1 / 249r),
+            percentage: 33.33
+          }
+        ]
+      end
 
       before do
         exif_1.update!(shutterSpeed: shutter_speed_1)
@@ -77,7 +155,7 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequently used shutter speeds for the scope' do
-        expect(service.call[:shutter_speeds]).to eq [(1 / 60r), (1 / 249r)]
+        expect(service.call[:shutter_speeds]).to eq expected_data
       end
     end
 
@@ -133,6 +211,19 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
     end
 
     context 'months' do
+      let(:expected_data) do
+        [
+          {
+            value: 'April',
+            percentage: 66.67
+          },
+          {
+            value: 'November',
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         exif_1.update!(dateMonth: 4.0)
         exif_2.update!(dateMonth: 4.0)
@@ -140,11 +231,24 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequent months for the scope' do
-        expect(service.call[:months]).to eq %w[April November]
+        expect(service.call[:months]).to eq expected_data
       end
     end
 
     context 'years' do
+      let(:expected_data) do
+        [
+          {
+            value: 2018,
+            percentage: 66.67
+          },
+          {
+            value: 2019,
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         exif_1.update!(dateYear: 2019.0)
         exif_2.update!(dateYear: 2018.0)
@@ -152,11 +256,24 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequent years for the scope' do
-        expect(service.call[:years]).to eq [2018, 2019]
+        expect(service.call[:years]).to eq expected_data
       end
     end
 
     context 'month_year_combinations' do
+      let(:expected_data) do
+        [
+          {
+            value: 'June 2019',
+            percentage: 66.67
+          },
+          {
+            value: 'August 2018',
+            percentage: 33.33
+          }
+        ]
+      end
+
       before do
         exif_1.update!(dateMonth: 6.0, dateYear: 2019.0)
         exif_2.update!(dateMonth: 8.0, dateYear: 2018.0)
@@ -164,7 +281,7 @@ RSpec.describe CalculateMostFrequentFromExif, type: :service do
       end
 
       it 'is the most frequent month year combinations for the scope' do
-        expect(service.call[:month_year_combinations]).to eq ['June 2019', 'August 2018']
+        expect(service.call[:month_year_combinations]).to eq expected_data
       end
     end
   end

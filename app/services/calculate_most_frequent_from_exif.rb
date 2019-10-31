@@ -47,13 +47,17 @@ class CalculateMostFrequentFromExif
   def most_frequent_focal_lengths
     focal_lengths = exif_scope.pluck(:focalLength)
     results = calculate_frequencies(focal_lengths)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def most_frequent_isos
     isos = exif_scope.pluck(:isoSpeedRating)
     results = calculate_frequencies(isos)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def most_frequent_shutter_speeds
@@ -72,8 +76,8 @@ class CalculateMostFrequentFromExif
     months = exif_scope.pluck(:dateMonth)
 
     results = calculate_frequencies(months)
-    results.map do |result|
-      Date::MONTHNAMES[result]
+    results.each do |result|
+      result[:value] = Date::MONTHNAMES[result[:value]]
     end
   end
 
@@ -81,7 +85,9 @@ class CalculateMostFrequentFromExif
     years = exif_scope.pluck(:dateYear)
 
     results = calculate_frequencies(years)
-    results.map(&:round)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
   end
 
   def most_frequent_month_years

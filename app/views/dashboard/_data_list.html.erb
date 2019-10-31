@@ -2,7 +2,7 @@
 <dd>
   <ul>
     <% data.each do |item| %>
-      <li><%= item %></li>
+      <li><%= item[:value] %> (<%= item[:percentage] %>%)</li>
     <% end %>
   </ul>
 </dd>

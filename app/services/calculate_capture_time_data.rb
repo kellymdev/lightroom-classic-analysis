@@ -29,11 +29,13 @@ class CalculateCaptureTimeData
   end
 
   def format_time_range(most_frequent)
-    most_frequent.map do |hour|
-      formatted_hour = format_hour(hour)
+    most_frequent.each do |hour|
+      formatted_hour = format_hour(hour[:value])
 
-      "#{formatted_hour}:00 - #{formatted_hour}:59"
+      hour[:value] = "#{formatted_hour}:00 - #{formatted_hour}:59"
     end
+
+    most_frequent
   end
 
   def format_hour(hour)
