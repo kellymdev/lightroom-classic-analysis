@@ -74,7 +74,7 @@ class CalculateDevelopSettingData
     calculate_average(adjustments)
   end
 
-  def calculate_frequently_used(frequency_data, number_of_results = 5)
+  def calculate_frequently_used(frequency_data, number_of_results = 10)
     FrequencyCalculator.calculate_frequently_used(frequency_data, number_of_results)
   end
 

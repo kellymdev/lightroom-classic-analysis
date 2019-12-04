@@ -1,0 +1,18 @@
+<h3><%= heading %></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Percentage</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% data.each do |item| %>
+      <%= render partial: 'develop_data_row', locals: { item: item } %>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render partial: 'average_adjustments', locals: { positive:positive, negative: negative } %>
