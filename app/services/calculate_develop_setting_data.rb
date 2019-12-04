@@ -12,6 +12,7 @@ class CalculateDevelopSettingData
       black_clipping: develop_data_for('Black Clipping'),
       texture: develop_data_for('Texture'),
       clarity: develop_data_for('Clarity'),
+      dehaze: develop_data_for('Dehaze Amount'),
       post_crop_vignette_amount: develop_data_for('Post-Crop Vignette Amount'),
       vibrance: develop_data_for('Vibrance'),
       saturation: develop_data_for('Saturation')

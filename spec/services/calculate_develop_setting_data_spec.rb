@@ -279,6 +279,34 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         end
       end
 
+      context 'dehaze' do
+        let(:step_name) { 'Dehaze Amount' }
+
+        context 'most frequent' do
+          it 'returns a list of the most populate dehaze adjustments' do
+            expect(service.call[:dehaze][:most_frequent]).to eq expected_data
+          end
+        end
+
+        context 'positive' do
+          it 'returns the average positive dehaze adjustment' do
+            expect(service.call[:dehaze][:positive]).to eq 9
+          end
+        end
+
+        context 'negative' do
+          before do
+            develop_step_1.update!(valueString: '-5')
+            develop_step_2.update!(valueString: '-9')
+            develop_step_3.update!(valueString: '-1')
+          end
+
+          it 'returns the average negative dehaze adjustment' do
+            expect(service.call[:dehaze][:negative]).to eq(-5)
+          end
+        end
+      end
+
       context 'post_crop_vignette_amount' do
         let(:step_name) { 'Post-Crop Vignette Amount' }
 
