@@ -232,8 +232,14 @@ ActiveRecord::Schema.define(version: 0) do
   create_table "AgLastCatalogExport", primary_key: "image", force: :cascade do |t|
   end
 
-# Could not dump table "AgLibraryCollection" because of following StandardError
-#   Unknown type '' for column 'creationId'
+  create_table "AgLibraryCollection", primary_key: "id_local", force: :cascade do |t|
+    t.string "creationId"
+    t.string "genealogy"
+    t.integer "imageCount"
+    t.string "name"
+    t.integer "parent"
+    t.decimal "systemOnly"
+  end
 
 # Could not dump table "AgLibraryCollectionChangeCounter" because of following StandardError
 #   Unknown type '' for column 'collection'
@@ -244,8 +250,12 @@ ActiveRecord::Schema.define(version: 0) do
 # Could not dump table "AgLibraryCollectionCoverImage" because of following StandardError
 #   Unknown type '' for column 'collection'
 
-# Could not dump table "AgLibraryCollectionImage" because of following StandardError
-#   Unknown type '' for column 'pick'
+  create_table "AgLibraryCollectionImage", primary_key: "id_local", force: :cascade do |t|
+    t.integer "collection"
+    t.integer "image"
+    t.decimal "pick"
+    t.decimal "positionInCollection"
+  end
 
 # Could not dump table "AgLibraryCollectionImageChangeCounter" because of following StandardError
 #   Unknown type '' for column 'collectionImage'
