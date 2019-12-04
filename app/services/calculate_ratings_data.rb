@@ -60,10 +60,6 @@ class CalculateRatingsData
   end
 
   def calculate_percentage(value)
-    if value.zero?
-      0.to_d
-    else
-      (value / image_scope.count.to_d * 100).round(2)
-    end
+    FrequencyCalculator.calculate_percentage(value, image_scope)
   end
 end
