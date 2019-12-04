@@ -4,41 +4,17 @@ class CalculateDevelopSettingData
   def call
     {
       develop_steps: develop_steps,
-      exposure: adjustments_for('Exposure'),
-      contrast: adjustments_for('Contrast'),
-      highlights: adjustments_for('Highlights'),
-      shadows: adjustments_for('Shadows'),
-      white_clipping: adjustments_for('White Clipping'),
-      black_clipping: adjustments_for('Black Clipping'),
-      texture: adjustments_for('Texture'),
-      clarity: adjustments_for('Clarity'),
-      post_crop_vignette_amount: adjustments_for('Post-Crop Vignette Amount'),
-      vibrance: adjustments_for('Vibrance'),
-      saturation: adjustments_for('Saturation'),
-      averages: {
-        positive_exposure: average_positive_as_decimal_for('Exposure'),
-        negative_exposure: average_negative_as_decimal_for('Exposure'),
-        positive_contrast: average_positive_for('Contrast'),
-        negative_contrast: average_negative_for('Contrast'),
-        positive_highlights: average_positive_for('Highlights'),
-        negative_highlights: average_negative_for('Highlights'),
-        positive_shadows: average_positive_for('Shadows'),
-        negative_shadows: average_negative_for('Shadows'),
-        positive_white_clipping: average_positive_for('White Clipping'),
-        negative_white_clipping: average_negative_for('White Clipping'),
-        positive_black_clipping: average_positive_for('Black Clipping'),
-        negative_black_clipping: average_negative_for('Black Clipping'),
-        positive_texture: average_positive_for('Texture'),
-        negative_texture: average_negative_for('Texture'),
-        positive_clarity: average_positive_for('Clarity'),
-        negative_clarity: average_negative_for('Clarity'),
-        positive_post_crop_vignette_amount: average_positive_for('Post-Crop Vignette Amount'),
-        negative_post_crop_vignette_amount: average_negative_for('Post-Crop Vignette Amount'),
-        positive_vibrance: average_positive_for('Vibrance'),
-        negative_vibrance: average_negative_for('Vibrance'),
-        positive_saturation: average_positive_for('Saturation'),
-        negative_saturation: average_negative_for('Saturation')
-      }
+      exposure: develop_data_as_decimal_for('Exposure'),
+      contrast: develop_data_for('Contrast'),
+      highlights: develop_data_for('Highlights'),
+      shadows: develop_data_for('Shadows'),
+      white_clipping: develop_data_for('White Clipping'),
+      black_clipping: develop_data_for('Black Clipping'),
+      texture: develop_data_for('Texture'),
+      clarity: develop_data_for('Clarity'),
+      post_crop_vignette_amount: develop_data_for('Post-Crop Vignette Amount'),
+      vibrance: develop_data_for('Vibrance'),
+      saturation: develop_data_for('Saturation')
     }
   end
 
@@ -47,6 +23,22 @@ class CalculateDevelopSettingData
   def develop_steps
     steps = DevelopHistoryStep.all.pluck(:name)
     calculate_frequently_used(steps, 10)
+  end
+
+  def develop_data_for(setting_name)
+    {
+      most_frequent: adjustments_for(setting_name),
+      positive: average_positive_for(setting_name),
+      negative: average_negative_for(setting_name)
+    }
+  end
+
+  def develop_data_as_decimal_for(setting_name)
+    {
+      most_frequent: adjustments_for(setting_name),
+      positive: average_positive_as_decimal_for(setting_name),
+      negative: average_negative_as_decimal_for(setting_name)
+    }
   end
 
   def adjustments_for(setting_name)

@@ -9,10 +9,10 @@
   </thead>
 
   <tbody>
-    <% data.each do |item| %>
+    <% data[:most_frequent].each do |item| %>
       <%= render partial: 'develop_data_row', locals: { item: item } %>
     <% end %>
   </tbody>
 </table>
 
-<%= render partial: 'average_adjustments', locals: { positive:positive, negative: negative } %>
+<%= render partial: 'average_adjustments', locals: { positive: data[:positive], negative: data[:negative] } %>

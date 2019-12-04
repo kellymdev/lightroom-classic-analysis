@@ -58,105 +58,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'exposure' do
         let(:step_name) { 'Exposure' }
 
-        it 'returns a list of the most popular exposure adjustments' do
-          expect(service.call[:exposure]).to eq expected_data
+        context 'most_frequent' do
+          it 'returns a list of the most popular exposure adjustments' do
+            expect(service.call[:exposure][:most_frequent]).to eq expected_data
+          end
         end
-      end
-
-      context 'contrast' do
-        let(:step_name) { 'Contrast' }
-
-        it 'returns a list of the most popular contrast adjustments' do
-          expect(service.call[:contrast]).to eq expected_data
-        end
-      end
-
-      context 'highlights' do
-        let(:step_name) { 'Highlights' }
-
-        it 'returns a list of the most popular highlight adjustments' do
-          expect(service.call[:highlights]).to eq expected_data
-        end
-      end
-
-      context 'shadows' do
-        let(:step_name) { 'Shadows' }
-
-        it 'returns a list of the most popular shadows adjustments' do
-          expect(service.call[:shadows]).to eq expected_data
-        end
-      end
-
-      context 'white_clipping' do
-        let(:step_name) { 'White Clipping' }
-
-        it 'returns a list of the most popular white clipping adjustments' do
-          expect(service.call[:white_clipping]).to eq expected_data
-        end
-      end
-
-      context 'black clipping' do
-        let(:step_name) { 'Black Clipping' }
-
-        it 'returns a list of the most popular black clipping adjustments' do
-          expect(service.call[:black_clipping]).to eq expected_data
-        end
-      end
-
-      context 'Texture' do
-        let(:step_name) { 'Texture' }
-
-        it 'returns a list of the most popular texture adjustments' do
-          expect(service.call[:texture]).to eq expected_data
-        end
-      end
-
-      context 'clarity' do
-        let(:step_name) { 'Clarity' }
-
-        it 'returns a list of the most popular clarity adjustments' do
-          expect(service.call[:clarity]).to eq expected_data
-        end
-      end
-
-      context 'post_crop_vignette_amount' do
-        let(:step_name) { 'Post-Crop Vignette Amount' }
-
-        it 'returns a list of the most popular post-crop vignette amount adjustments' do
-          expect(service.call[:post_crop_vignette_amount]).to eq expected_data
-        end
-      end
-
-      context 'vibrance' do
-        let(:step_name) { 'Vibrance' }
-
-        it 'returns a list of the most popular vibrance adjustments' do
-          expect(service.call[:vibrance]).to eq expected_data
-        end
-      end
-
-      context 'saturation' do
-        let(:step_name) { 'Saturation' }
-
-        it 'returns a list of the most popular saturation adjustments' do
-          expect(service.call[:saturation]).to eq expected_data
-        end
-      end
-    end
-
-    context 'average values' do
-      before do
-        develop_step_1.update!(name: step_name)
-        develop_step_2.update!(name: step_name)
-        develop_step_3.update!(name: step_name)
-      end
-
-      context 'exposure' do
-        let(:step_name) { 'Exposure' }
 
         context 'positive' do
           it 'returns the average positive exposure adjustment' do
-            expect(service.call[:averages][:positive_exposure]).to eq 9
+            expect(service.call[:exposure][:positive]).to eq 9
           end
         end
 
@@ -168,7 +78,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative exposure adjustment' do
-            expect(service.call[:averages][:negative_exposure]).to eq(-0.5)
+            expect(service.call[:exposure][:negative]).to eq(-0.5)
           end
         end
       end
@@ -176,9 +86,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'contrast' do
         let(:step_name) { 'Contrast' }
 
+        context 'most_frequent' do
+          it 'returns a list of the most popular contrast adjustments' do
+            expect(service.call[:contrast][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive contrast adjustment' do
-            expect(service.call[:averages][:positive_contrast]).to eq 9
+            expect(service.call[:contrast][:positive]).to eq 9
           end
         end
 
@@ -190,7 +106,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative contrast adjustment' do
-            expect(service.call[:averages][:negative_contrast]).to eq(-5)
+            expect(service.call[:contrast][:negative]).to eq(-5)
           end
         end
       end
@@ -198,9 +114,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'highlights' do
         let(:step_name) { 'Highlights' }
 
+        context 'most frequent' do
+          it 'returns a list of the most popular highlight adjustments' do
+            expect(service.call[:highlights][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive highlights adjustment' do
-            expect(service.call[:averages][:positive_highlights]).to eq 9
+            expect(service.call[:highlights][:positive]).to eq 9
           end
         end
 
@@ -212,7 +134,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative highlights adjustment' do
-            expect(service.call[:averages][:negative_highlights]).to eq(-5)
+            expect(service.call[:highlights][:negative]).to eq(-5)
           end
         end
       end
@@ -220,9 +142,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'shadows' do
         let(:step_name) { 'Shadows' }
 
+        context 'most_frequent' do
+          it 'returns a list of the most popular shadows adjustments' do
+            expect(service.call[:shadows][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive shadows adjustment' do
-            expect(service.call[:averages][:positive_shadows]).to eq 9
+            expect(service.call[:shadows][:positive]).to eq 9
           end
         end
 
@@ -234,17 +162,23 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative shadows adjustment' do
-            expect(service.call[:averages][:negative_shadows]).to eq(-5)
+            expect(service.call[:shadows][:negative]).to eq(-5)
           end
         end
       end
 
-      context 'white clipping' do
+      context 'white_clipping' do
         let(:step_name) { 'White Clipping' }
+
+        context 'most frequent' do
+          it 'returns a list of the most popular white clipping adjustments' do
+            expect(service.call[:white_clipping][:most_frequent]).to eq expected_data
+          end
+        end
 
         context 'positive' do
           it 'returns the average positive white clipping adjustment' do
-            expect(service.call[:averages][:positive_white_clipping]).to eq 9
+            expect(service.call[:white_clipping][:positive]).to eq 9
           end
         end
 
@@ -256,7 +190,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative white clipping adjustment' do
-            expect(service.call[:averages][:negative_white_clipping]).to eq(-5)
+            expect(service.call[:white_clipping][:negative]).to eq(-5)
           end
         end
       end
@@ -264,9 +198,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'black clipping' do
         let(:step_name) { 'Black Clipping' }
 
+        context 'most frequent' do
+          it 'returns a list of the most popular black clipping adjustments' do
+            expect(service.call[:black_clipping][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive black clipping adjustment' do
-            expect(service.call[:averages][:positive_black_clipping]).to eq 9
+            expect(service.call[:black_clipping][:positive]).to eq 9
           end
         end
 
@@ -278,17 +218,23 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative black clipping adjustment' do
-            expect(service.call[:averages][:negative_black_clipping]).to eq(-5)
+            expect(service.call[:black_clipping][:negative]).to eq(-5)
           end
         end
       end
 
-      context 'texture' do
+      context 'Texture' do
         let(:step_name) { 'Texture' }
+
+        context 'most_frequent' do
+          it 'returns a list of the most popular texture adjustments' do
+            expect(service.call[:texture][:most_frequent]).to eq expected_data
+          end
+        end
 
         context 'positive' do
           it 'returns the average positive texture adjustment' do
-            expect(service.call[:averages][:positive_texture]).to eq 9
+            expect(service.call[:texture][:positive]).to eq 9
           end
         end
 
@@ -300,7 +246,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative texture adjustment' do
-            expect(service.call[:averages][:negative_texture]).to eq(-5)
+            expect(service.call[:texture][:negative]).to eq(-5)
           end
         end
       end
@@ -308,9 +254,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'clarity' do
         let(:step_name) { 'Clarity' }
 
+        context 'most frequent' do
+          it 'returns a list of the most popular clarity adjustments' do
+            expect(service.call[:clarity][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive clarity adjustment' do
-            expect(service.call[:averages][:positive_clarity]).to eq 9
+            expect(service.call[:clarity][:positive]).to eq 9
           end
         end
 
@@ -322,17 +274,23 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative clarity adjustment' do
-            expect(service.call[:averages][:negative_clarity]).to eq(-5)
+            expect(service.call[:clarity][:negative]).to eq(-5)
           end
         end
       end
 
-      context 'post crop vignette amount' do
+      context 'post_crop_vignette_amount' do
         let(:step_name) { 'Post-Crop Vignette Amount' }
+
+        context 'most popular' do
+          it 'returns a list of the most popular post-crop vignette amount adjustments' do
+            expect(service.call[:post_crop_vignette_amount][:most_frequent]).to eq expected_data
+          end
+        end
 
         context 'positive' do
           it 'returns the average positive post crop vignette amount adjustment' do
-            expect(service.call[:averages][:positive_post_crop_vignette_amount]).to eq 9
+            expect(service.call[:post_crop_vignette_amount][:positive]).to eq 9
           end
         end
 
@@ -344,7 +302,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative post crop vignette amount adjustment' do
-            expect(service.call[:averages][:negative_post_crop_vignette_amount]).to eq(-5)
+            expect(service.call[:post_crop_vignette_amount][:negative]).to eq(-5)
           end
         end
       end
@@ -352,9 +310,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'vibrance' do
         let(:step_name) { 'Vibrance' }
 
+        context 'most frequent' do
+          it 'returns a list of the most popular vibrance adjustments' do
+            expect(service.call[:vibrance][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive vibrance adjustment' do
-            expect(service.call[:averages][:positive_vibrance]).to eq 9
+            expect(service.call[:vibrance][:positive]).to eq 9
           end
         end
 
@@ -366,7 +330,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative vibrance amount' do
-            expect(service.call[:averages][:negative_vibrance]).to eq(-5)
+            expect(service.call[:vibrance][:negative]).to eq(-5)
           end
         end
       end
@@ -374,9 +338,15 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       context 'saturation' do
         let(:step_name) { 'Saturation' }
 
+        context 'most frequent' do
+          it 'returns a list of the most popular saturation adjustments' do
+            expect(service.call[:saturation][:most_frequent]).to eq expected_data
+          end
+        end
+
         context 'positive' do
           it 'returns the average positive saturation adjustment' do
-            expect(service.call[:averages][:positive_saturation]).to eq 9
+            expect(service.call[:saturation][:positive]).to eq 9
           end
         end
 
@@ -388,7 +358,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           end
 
           it 'returns the average negative saturation adjustment' do
-            expect(service.call[:averages][:negative_saturation]).to eq(-5)
+            expect(service.call[:saturation][:negative]).to eq(-5)
           end
         end
       end
