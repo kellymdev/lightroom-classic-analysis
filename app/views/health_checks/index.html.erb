@@ -1,0 +1,11 @@
+<div class="health-check content-section">
+  <h2>Health Check</h2>
+
+  <dl>
+    <%= render partial: 'health_check_rating', locals: { heading: 'Unrated Images', data: @ratings_data[:unrated] } %>
+
+    <%= render partial: 'health_check_rating', locals: { heading: '1 Star Rated Images', data: @ratings_data[:one_star] } %>
+
+    <%= render partial: 'health_check_rating', locals: { heading: 'Images Without Keywords', data: @health_check_data[:images_without_keywords] } %>
+  </dl>
+</div>

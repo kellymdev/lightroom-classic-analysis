@@ -1,52 +1,5 @@
-<h1>Lightroom Classic Analysis</h1>
 <p>Lightroom Classic catalog with <%= pluralize(@image_count, 'image') %>.</p>
-
-<%= render partial: 'navigation' %>
 
 <div class="most-popular content-section">
   <%= render partial: 'most_popular_data' %>
-</div>
-
-<div class="health-check content-section">
-  <%= render partial: 'health_check_data' %>
-</div>
-
-<div class="collection-data content-section">
-  <%= render partial: 'collection_data' %>
-</div>
-
-<div class="capture-time content-section">
-  <%= render partial: 'capture_time_data' %>
-</div>
-
-<div class="wildlife-data content-section">
-  <%= render partial: 'data_from_exif', locals: { title: 'Wildlife Data', data: @wildlife_data } %>
-</div>
-
-<div class="landscape-data content-section">
-  <%= render partial: 'data_from_exif', locals: { title: 'Wide Angle Landscape Data', data: @landscape_data } %>
-</div>
-
-<div class="macro-data content-section">
-  <%= render partial: 'data_from_exif', locals: { title: 'Macro Data', data: @macro_data } %>
-</div>
-
-<div class="astro-data content-section">
-  <%= render partial: 'data_from_exif', locals: { title: 'Astro Data', data: @astro_data } %>
-</div>
-
-<div class="keywords content-section">
-  <%= render partial: 'keyword_data' %>
-</div>
-
-<div class="ratings content-section">
-  <%= render partial: 'ratings_data' %>
-</div>
-
-<div class="develop-settings content-section">
-  <%= render partial: 'develop_setting_data' %>
-</div>
-
-<div class="data-by-camera-forms content-section">
-  <%= render partial: 'data_by_camera_forms' %>
 </div>

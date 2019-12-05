@@ -2,16 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe DashboardController, type: :controller do
-  render_views
-
+RSpec.describe CollectionsController, type: :controller do
   describe '#index' do
-    let(:image) { create(:image) }
-
-    before do
-      image
-    end
-
     it 'renders the index template' do
       get :index
 

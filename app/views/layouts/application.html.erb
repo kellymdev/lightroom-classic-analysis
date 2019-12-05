@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LightroomClassicAnalysis</title>
+    <title>Lightroom Classic Analysis</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,10 @@
   </head>
 
   <body>
+    <h1>Lightroom Classic Analysis</h1>
+
+    <%= render partial: 'shared/navigation' %>
+
     <%= yield %>
   </body>
 </html>

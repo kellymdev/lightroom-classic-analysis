@@ -7,7 +7,7 @@
     </tr>
 
     <% data.each do |_rating_key, rating_data| %>
-      <%= render partial: 'rating_row', locals: { data: rating_data } %>
+      <%= render partial: 'shared/rating_row', locals: { data: rating_data } %>
     <% end %>
   </table>
 </dd>

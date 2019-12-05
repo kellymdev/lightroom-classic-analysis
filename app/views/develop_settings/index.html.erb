@@ -1,0 +1,31 @@
+<div class="develop-settings-data content-section">
+  <h2>Develop Setting Data</h2>
+
+  <dl>
+    <%= render partial: 'shared/data_list', locals: { heading: 'Develop Steps', data: @develop_data[:develop_steps] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Exposure', data: @develop_data[:exposure] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Contrast', data: @develop_data[:contrast] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Highlights', data: @develop_data[:highlights] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Shadows', data: @develop_data[:shadows] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'White Clipping', data: @develop_data[:white_clipping] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Black Clipping', data: @develop_data[:black_clipping] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Texture', data: @develop_data[:texture] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Clarity', data: @develop_data[:clarity] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Dehaze', data: @develop_data[:dehaze] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Post-Crop Vignette Amount', data: @develop_data[:post_crop_vignette_amount] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Vibrance', data: @develop_data[:vibrance] } %>
+
+    <%= render partial: 'develop_data', locals: { heading: 'Saturation', data: @develop_data[:saturation] } %>
+  </dl>
+</div>

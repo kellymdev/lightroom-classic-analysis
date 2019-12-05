@@ -1,0 +1,26 @@
+<div class="data-by-camera-forms content-section">
+  <h2>Data By Camera</h2>
+
+  <%= form_with url: by_camera_path, local: true do |f| %>
+    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
+
+  <h2>Data By Lens</h2>
+
+  <%= form_with url: by_lens_path, local: true do |f| %>
+    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--' }) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
+
+  <h2>Data By Camera And Lens</h2>
+
+  <%= form_with url: by_camera_and_lens_path, local: true do |f| %>
+    <%= f.select(:camera_name, cameras_for_select, { include_blank: '--Select Camera--' }) %>
+    <%= f.select(:lens_name, lenses_for_select, { include_blank: '--Select Lens--'}) %>
+    <%= f.select(:year, years_for_select, { include_blank: 'All years' }) %>
+    <%= f.submit 'Go' %>
+  <% end %>
+</div>
