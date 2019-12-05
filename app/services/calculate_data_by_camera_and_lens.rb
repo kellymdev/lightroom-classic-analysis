@@ -20,7 +20,9 @@ class CalculateDataByCameraAndLens
       shutter_speeds: shutter_speeds_by_camera_and_lens,
       isos: isos_by_camera_and_lens,
       ratings: ratings_by_camera_and_lens,
-      months: months_by_camera_and_lens
+      months: months_by_camera_and_lens,
+      years: years_by_camera_and_lens,
+      month_year_combinations: month_year_combinations_by_camera_and_lens
     }
   end
 
@@ -80,6 +82,21 @@ class CalculateDataByCameraAndLens
     results.each do |result|
       result[:value] = Date::MONTHNAMES[result[:value]]
     end
+  end
+
+  def years_by_camera_and_lens
+    years = exif_scope.pluck(:dateYear)
+
+    results = calculate_frequently_used(years)
+    results.each do |result|
+      result[:value] = result[:value].round
+    end
+  end
+
+  def month_year_combinations_by_camera_and_lens
+    month_years = exif_scope.map(&:month_and_year).compact
+
+    calculate_frequently_used(month_years)
   end
 
   def calculate_frequently_used(frequency_data)

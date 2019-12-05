@@ -16,4 +16,8 @@
   <%= render partial: 'shared/ratings_by_equipment', locals: { data: @data_by_camera_and_lens[:ratings] } %>
 
   <%= render partial: 'shared/data_list', locals: { heading: 'Months', data: @data_by_camera_and_lens[:months] } %>
+
+  <%= render partial: 'shared/data_list', locals: { heading: 'Years', data: @data_by_camera_and_lens[:years] } %>
+
+  <%= render partial: 'shared/data_list', locals: { heading: 'Month Year Combinations', data: @data_by_camera_and_lens[:month_year_combinations] } %>
 </dl>

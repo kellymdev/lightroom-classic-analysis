@@ -237,6 +237,52 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
           expect(service.call[:months]).to eq expected_data
         end
       end
+
+      context 'years' do
+        let(:expected_data) do
+          [
+            {
+              value: 2019,
+              percentage: 66.67
+            },
+            {
+              value: 2018,
+              percentage: 33.33
+            }
+          ]
+        end
+
+        before do
+          exif_1.update!(dateYear: 2018.0)
+        end
+
+        it 'returns the most frequent years for that camera and lens' do
+          expect(service.call[:years]).to eq expected_data
+        end
+      end
+
+      context 'month_year_combinations' do
+        let(:expected_data) do
+          [
+            {
+              value: 'February 2019',
+              percentage: 66.67
+            },
+            {
+              value: 'July 2018',
+              percentage: 33.33
+            }
+          ]
+        end
+
+        before do
+          exif_2.update!(dateMonth: 7.0, dateYear: 2018.0)
+        end
+
+        it 'returns the most frequent month year combinations for that lens' do
+          expect(service.call[:month_year_combinations]).to eq expected_data
+        end
+      end
     end
 
     context 'when a year is passed in' do
@@ -435,6 +481,44 @@ RSpec.describe CalculateDataByCameraAndLens, type: :service do
 
         it 'returns the most frequent months for that camera, lens and year' do
           expect(service.call[:months]).to eq expected_data
+        end
+      end
+
+      context 'years' do
+        let(:expected_data) do
+          [
+            {
+              value: 2018,
+              percentage: 100
+            }
+          ]
+        end
+
+        it 'only returns the specified year' do
+          expect(service.call[:years]).to eq expected_data
+        end
+      end
+
+      context 'month_year_combinations' do
+        let(:expected_data) do
+          [
+            {
+              value: 'February 2018',
+              percentage: 50
+            },
+            {
+              value: 'November 2018',
+              percentage: 50
+            }
+          ]
+        end
+
+        before do
+          exif_2.update!(dateMonth: 11.0)
+        end
+
+        it 'returns the most frequent month year combinations for that camera, lens and year' do
+          expect(service.call[:month_year_combinations]).to eq expected_data
         end
       end
     end
