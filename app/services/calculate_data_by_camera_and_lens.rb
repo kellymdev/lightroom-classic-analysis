@@ -14,6 +14,7 @@ class CalculateDataByCameraAndLens
       camera: camera_name,
       lens: lens_name,
       years_covered: years_covered,
+      image_count: image_count,
       keywords: keywords_by_camera_and_lens,
       focal_lengths: focal_lengths_by_camera_and_lens,
       shutter_speeds: shutter_speeds_by_camera_and_lens,
@@ -27,6 +28,10 @@ class CalculateDataByCameraAndLens
 
   def years_covered
     year.presence || 'All years'
+  end
+
+  def image_count
+    image_ids.count
   end
 
   def keywords_by_camera_and_lens

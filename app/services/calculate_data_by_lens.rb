@@ -12,6 +12,7 @@ class CalculateDataByLens
     {
       lens: lens_name,
       years_covered: years_covered,
+      image_count: image_count,
       keywords: keywords_by_lens,
       cameras: cameras_by_lens,
       focal_lengths: focal_lengths_by_lens,
@@ -28,6 +29,10 @@ class CalculateDataByLens
 
   def years_covered
     year.presence || 'All years'
+  end
+
+  def image_count
+    image_ids.count
   end
 
   def keywords_by_lens

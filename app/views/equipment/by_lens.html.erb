@@ -2,6 +2,8 @@
 
 <h2><%= @data_by_lens[:lens] %> (<%= @data_by_lens[:years_covered] %>)</h2>
 
+<%= render partial: 'image_count', locals: { image_count: @data_by_lens[:image_count] } %>
+
 <dl>
   <%= render partial: 'shared/data_list', locals: { heading: 'Keywords', data: @data_by_lens[:keywords] } %>
 

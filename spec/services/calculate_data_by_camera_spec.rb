@@ -38,6 +38,16 @@ RSpec.describe CalculateDataByCamera, type: :service do
         end
       end
 
+      context 'image_count' do
+        before do
+          exif_1.update!(dateYear: 2017.0)
+        end
+
+        it 'returns the number of images that were taken by that camera for all years' do
+          expect(service.call[:image_count]).to eq 3
+        end
+      end
+
       context 'keywords' do
         let(:keyword_1) { create(:keyword, lc_name: 'cat') }
         let(:keyword_2) { create(:keyword, lc_name: 'kitten') }
@@ -296,6 +306,12 @@ RSpec.describe CalculateDataByCamera, type: :service do
       context 'years_covered' do
         it 'returns the year passed in' do
           expect(service.call[:years_covered]).to eq '2018'
+        end
+      end
+
+      context 'image_count' do
+        it 'returns the number of images taken for that camera in that year' do
+          expect(service.call[:image_count]).to eq 2
         end
       end
 
