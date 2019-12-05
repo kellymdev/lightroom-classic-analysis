@@ -15,7 +15,8 @@ class CalculateDevelopSettingData
       dehaze: develop_data_for('Dehaze Amount'),
       post_crop_vignette_amount: develop_data_for('Post-Crop Vignette Amount'),
       vibrance: develop_data_for('Vibrance'),
-      saturation: develop_data_for('Saturation')
+      saturation: develop_data_for('Saturation'),
+      white_balance: white_balance_data
     }
   end
 
@@ -65,6 +66,11 @@ class CalculateDevelopSettingData
   def average_negative_for(setting_name)
     adjustments = DevelopHistoryStep.for_setting(setting_name).negative.pluck(:valueString).map(&:to_i)
     calculate_average(adjustments)
+  end
+
+  def white_balance_data
+    white_balances = DevelopSetting.pluck(:whiteBalance)
+    calculate_frequently_used(white_balances)
   end
 
   def calculate_frequently_used(frequency_data, number_of_results = 10)

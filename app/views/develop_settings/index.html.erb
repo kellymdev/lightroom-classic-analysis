@@ -27,5 +27,8 @@
     <%= render partial: 'develop_data', locals: { heading: 'Vibrance', data: @develop_data[:vibrance] } %>
 
     <%= render partial: 'develop_data', locals: { heading: 'Saturation', data: @develop_data[:saturation] } %>
+
+    <h3>White Balance</h3>
+    <%= render partial: 'develop_setting_table', locals: { frequency_data: @develop_data[:white_balance] } %>
   </dl>
 </div>

@@ -1,18 +1,5 @@
 <h3><%= heading %></h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Value</th>
-      <th>Percentage</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% data[:most_frequent].each do |item| %>
-      <%= render partial: 'develop_data_row', locals: { item: item } %>
-    <% end %>
-  </tbody>
-</table>
+<%= render partial: 'develop_setting_table', locals: { frequency_data: data[:most_frequent] } %>
 
 <%= render partial: 'average_adjustments', locals: { positive: data[:positive], negative: data[:negative] } %>

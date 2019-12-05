@@ -35,7 +35,7 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       end
     end
 
-    context 'individual develop settings' do
+    context 'individual develop steps' do
       let(:expected_data) do
         [
           {
@@ -388,6 +388,37 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           it 'returns the average negative saturation adjustment' do
             expect(service.call[:saturation][:negative]).to eq(-5)
           end
+        end
+      end
+    end
+
+    context 'develop setting data' do
+      context 'white_balance' do
+        let(:develop_setting_1) { create(:develop_setting, whiteBalance: 'As Shot') }
+        let(:develop_setting_2) { create(:develop_setting, whiteBalance: 'Custom') }
+        let(:develop_setting_3) { create(:develop_setting, whiteBalance: 'Custom') }
+
+        let(:expected_data) do
+          [
+            {
+              value: 'Custom',
+              percentage: 66.67
+            },
+            {
+              value: 'As Shot',
+              percentage: 33.33
+            }
+          ]
+        end
+
+        before do
+          develop_setting_1
+          develop_setting_2
+          develop_setting_3
+        end
+
+        it 'returns a list of the most popular white balance settings' do
+          expect(service.call[:white_balance]).to eq expected_data
         end
       end
     end
