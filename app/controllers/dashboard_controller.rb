@@ -6,6 +6,7 @@ class DashboardController < ApplicationController
 
     @most_popular_data = CalculateMostPopularData.new.call
     @health_check_data = CalculateHealthCheckData.new.call
+    @collection_data = CalculateCollectionData.new.call
     @capture_time_data = CalculateCaptureTimeData.new.call
     @wildlife_data = CalculateMostFrequentFromExif.new(Exif.wildlife, 5).call
     @landscape_data = CalculateMostFrequentFromExif.new(Exif.wide_angle_landscape, 5).call

@@ -1,0 +1,12 @@
+<tr>
+  <td><%= collection[:name] %></td>
+  <td><%= collection[:image_count] %></td>
+  <td><%= collection[:sub_collection_count] %></td>
+  <td>
+    <ul>
+      <% collection[:sub_collections].each do |sub_collection| %>
+        <li><%= sub_collection %></li>
+      <% end %>
+    </ul>
+  </td>
+</tr>
