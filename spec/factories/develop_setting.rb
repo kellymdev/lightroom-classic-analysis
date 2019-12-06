@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :develop_setting do
     croppedHeight { nil }
     croppedWidth { 'uncropped' }
-    fileHeight { 3456.0 }
-    fileWidth { 5184.0 }
+    fileHeight { nil }
+    fileWidth { nil }
     grayscale { 0 }
     hasDevelopAdjustmentsEx { 1.0 }
     image { 1 }
@@ -17,6 +17,8 @@ FactoryBot.define do
     factory :cropped_develop_setting do
       croppedHeight { 3295.0 }
       croppedWidth { 4943.0 }
+      fileHeight { 3456.0 }
+      fileWidth { 5184.0 }
     end
   end
 end

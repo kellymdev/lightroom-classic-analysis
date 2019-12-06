@@ -421,6 +421,35 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           expect(service.call[:white_balance]).to eq expected_data
         end
       end
+
+      context 'crop_ratios' do
+        let(:develop_setting_1) { create(:cropped_develop_setting, croppedWidth: 4441.0, croppedHeight: 2961.0) }
+        let(:develop_setting_2) { create(:cropped_develop_setting, croppedWidth: 5240.0, croppedHeight: 3493.0) }
+        let(:develop_setting_3) { create(:cropped_develop_setting, croppedWidth: 3275.0, croppedHeight: 3314.0) }
+
+        let(:expected_data) do
+          [
+            {
+              value: '3 x 2',
+              percentage: 66.67
+            },
+            {
+              value: '1 x 1',
+              percentage: 33.33
+            }
+          ]
+        end
+
+        before do
+          develop_setting_1
+          develop_setting_2
+          develop_setting_3
+        end
+
+        it 'returns a list of the most popular crop ratios' do
+          expect(service.call[:crop_ratios]).to eq expected_data
+        end
+      end
     end
   end
 end

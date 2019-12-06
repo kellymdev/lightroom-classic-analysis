@@ -16,7 +16,8 @@ class CalculateDevelopSettingData
       post_crop_vignette_amount: develop_data_for('Post-Crop Vignette Amount'),
       vibrance: develop_data_for('Vibrance'),
       saturation: develop_data_for('Saturation'),
-      white_balance: white_balance_data
+      white_balance: white_balance_data,
+      crop_ratios: crop_ratio_data
     }
   end
 
@@ -71,6 +72,11 @@ class CalculateDevelopSettingData
   def white_balance_data
     white_balances = DevelopSetting.pluck(:whiteBalance)
     calculate_frequently_used(white_balances)
+  end
+
+  def crop_ratio_data
+    crop_ratios = DevelopSetting.cropped.map(&:crop_ratio)
+    calculate_frequently_used(crop_ratios)
   end
 
   def calculate_frequently_used(frequency_data, number_of_results = 10)
