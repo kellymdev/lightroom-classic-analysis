@@ -393,11 +393,11 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
     end
 
     context 'develop setting data' do
-      context 'white_balance' do
-        let(:develop_setting_1) { create(:develop_setting, whiteBalance: 'As Shot') }
-        let(:develop_setting_2) { create(:develop_setting, whiteBalance: 'Custom') }
-        let(:develop_setting_3) { create(:develop_setting, whiteBalance: 'Custom') }
+      let(:develop_setting_1) { create(:develop_setting) }
+      let(:develop_setting_2) { create(:develop_setting) }
+      let(:develop_setting_3) { create(:develop_setting) }
 
+      context 'white_balance' do
         let(:expected_data) do
           [
             {
@@ -412,9 +412,9 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         end
 
         before do
-          develop_setting_1
-          develop_setting_2
-          develop_setting_3
+          develop_setting_1.update!(whiteBalance: 'As Shot')
+          develop_setting_2.update!(whiteBalance: 'Custom')
+          develop_setting_3.update!(whiteBalance: 'Custom')
         end
 
         it 'returns a list of the most popular white balance settings' do
@@ -423,10 +423,6 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
       end
 
       context 'crop_ratios' do
-        let(:develop_setting_1) { create(:cropped_develop_setting, croppedWidth: 4441.0, croppedHeight: 2961.0) }
-        let(:develop_setting_2) { create(:cropped_develop_setting, croppedWidth: 5240.0, croppedHeight: 3493.0) }
-        let(:develop_setting_3) { create(:cropped_develop_setting, croppedWidth: 3275.0, croppedHeight: 3314.0) }
-
         let(:expected_data) do
           [
             {
@@ -441,13 +437,38 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
         end
 
         before do
-          develop_setting_1
-          develop_setting_2
-          develop_setting_3
+          develop_setting_1.update!(croppedWidth: 4441.0, croppedHeight: 2961.0)
+          develop_setting_2.update!(croppedWidth: 5240.0, croppedHeight: 3493.0)
+          develop_setting_3.update!(croppedWidth: 3275.0, croppedHeight: 3314.0)
         end
 
         it 'returns a list of the most popular crop ratios' do
           expect(service.call[:crop_ratios]).to eq expected_data
+        end
+      end
+
+      context 'process_version' do
+        let(:expected_data) do
+          [
+            {
+              value: 6.7,
+              percentage: 66.67
+            },
+            {
+              value: 11.0,
+              percentage: 33.33
+            }
+          ]
+        end
+
+        before do
+          develop_setting_1.update!(processVersion: 6.7)
+          develop_setting_2.update!(processVersion: 11.0)
+          develop_setting_3.update!(processVersion: 6.7)
+        end
+
+        it 'returns a list of the most popular process versions' do
+          expect(service.call[:process_versions]).to eq expected_data
         end
       end
     end

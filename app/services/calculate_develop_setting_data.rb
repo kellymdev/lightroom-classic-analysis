@@ -17,7 +17,8 @@ class CalculateDevelopSettingData
       vibrance: develop_data_for('Vibrance'),
       saturation: develop_data_for('Saturation'),
       white_balance: white_balance_data,
-      crop_ratios: crop_ratio_data
+      crop_ratios: crop_ratio_data,
+      process_versions: process_version_data
     }
   end
 
@@ -77,6 +78,11 @@ class CalculateDevelopSettingData
   def crop_ratio_data
     crop_ratios = DevelopSetting.cropped.map(&:crop_ratio)
     calculate_frequently_used(crop_ratios)
+  end
+
+  def process_version_data
+    process_versions = DevelopSetting.pluck(:processVersion).compact
+    calculate_frequently_used(process_versions)
   end
 
   def calculate_frequently_used(frequency_data, number_of_results = 10)
