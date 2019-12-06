@@ -29,6 +29,30 @@ RSpec.describe DevelopSetting, type: :model do
         end
       end
     end
+
+    describe '.developed' do
+      let(:develop_setting) { create(:develop_setting, hasDevelopAdjustmentsEx: develop_adjustments) }
+
+      before do
+        develop_setting
+      end
+
+      context 'when the image has develop adjustments' do
+        let(:develop_adjustments) { 1.0 }
+
+        it 'is included in the results' do
+          expect(DevelopSetting.developed).to include develop_setting
+        end
+      end
+
+      context 'when the image does not have develop adjustments' do
+        let(:develop_adjustments) { -1.0 }
+
+        it 'is not included in the results' do
+          expect(DevelopSetting.developed).not_to include develop_setting
+        end
+      end
+    end
   end
 
   describe '#uncropped?' do
@@ -115,6 +139,46 @@ RSpec.describe DevelopSetting, type: :model do
 
       it 'is false' do
         expect(develop_setting.missing_size_information?).to eq false
+      end
+    end
+  end
+
+  describe '#lens_profile_corrections?' do
+    let(:develop_setting) { create(:develop_setting, profileCorrections: profile_corrections) }
+
+    context 'when lens profile corrections have been applied' do
+      let(:profile_corrections) { 1 }
+
+      it 'is true' do
+        expect(develop_setting.lens_profile_corrections?).to eq true
+      end
+    end
+
+    context 'when lens profile corrections have not been applied' do
+      let(:profile_corrections) { nil }
+
+      it 'is false' do
+        expect(develop_setting.lens_profile_corrections?).to eq false
+      end
+    end
+  end
+
+  describe '#chromatic_aberration_corrections?' do
+    let(:develop_setting) { create(:develop_setting, removeChromaticAberration: remove_chromatic_aberration) }
+
+    context 'when chromatic aberration corrections have been applied' do
+      let(:remove_chromatic_aberration) { 1 }
+
+      it 'is true' do
+        expect(develop_setting.chromatic_aberration_corrections?).to eq true
+      end
+    end
+
+    context 'when chromatic aberration corrections have not been applied' do
+      let(:remove_chromatic_aberration) { nil }
+
+      it 'is false' do
+        expect(develop_setting.chromatic_aberration_corrections?).to eq false
       end
     end
   end

@@ -471,6 +471,58 @@ RSpec.describe CalculateDevelopSettingData, type: :service do
           expect(service.call[:process_versions]).to eq expected_data
         end
       end
+
+      context 'lens corrections' do
+        context 'lens_profile_corrections' do
+          let(:expected_data) do
+            [
+              {
+                value: true,
+                percentage: 50
+              },
+              {
+                value: false,
+                percentage: 50
+              }
+            ]
+          end
+
+          before do
+            develop_setting_1.update!(hasDevelopAdjustmentsEx: -1.0)
+            develop_setting_2.update!(profileCorrections: 1)
+            develop_setting_3.update!(profileCorrections: nil)
+          end
+
+          it 'returns the percentages of developed images that have had lens profile corrections applied' do
+            expect(service.call[:lens_profile_corrections]).to eq expected_data
+          end
+        end
+
+        context 'chromatic_aberration_corrections' do
+          let(:expected_data) do
+            [
+              {
+                value: true,
+                percentage: 50
+              },
+              {
+                value: false,
+                percentage: 50
+              }
+            ]
+          end
+
+          before do
+            develop_setting_1.update!(hasDevelopAdjustmentsEx: -1.0)
+            develop_setting_2.update!(removeChromaticAberration: 1)
+            develop_setting_3.update!(removeChromaticAberration: nil)
+          end
+
+          it 'returns the percentages of developed images that have had chromatic aberration corrections applied' do
+            expect(service.call[:chromatic_aberration_corrections]).to eq expected_data
+          end
+        end
+      end
     end
   end
 end

@@ -18,7 +18,9 @@ class CalculateDevelopSettingData
       saturation: develop_data_for('Saturation'),
       white_balance: white_balance_data,
       crop_ratios: crop_ratio_data,
-      process_versions: process_version_data
+      process_versions: process_version_data,
+      lens_profile_corrections: lens_profile_correction_data,
+      chromatic_aberration_corrections: chromatic_aberration_correction_data
     }
   end
 
@@ -83,6 +85,16 @@ class CalculateDevelopSettingData
   def process_version_data
     process_versions = DevelopSetting.pluck(:processVersion).compact
     calculate_frequently_used(process_versions)
+  end
+
+  def lens_profile_correction_data
+    profile_corrections = DevelopSetting.developed.map(&:lens_profile_corrections?)
+    calculate_frequently_used(profile_corrections)
+  end
+
+  def chromatic_aberration_correction_data
+    corrections = DevelopSetting.developed.map(&:chromatic_aberration_corrections?)
+    calculate_frequently_used(corrections)
   end
 
   def calculate_frequently_used(frequency_data, number_of_results = 10)

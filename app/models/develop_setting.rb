@@ -6,6 +6,7 @@ class DevelopSetting < ApplicationRecord
   UNCROPPED = 'uncropped'
 
   scope :cropped, -> { where.not(croppedWidth: UNCROPPED) }
+  scope :developed, -> { where(hasDevelopAdjustmentsEx: 1.0) }
 
   def uncropped?
     croppedWidth == UNCROPPED
@@ -27,5 +28,13 @@ class DevelopSetting < ApplicationRecord
   def missing_size_information?
     # this appears to happen for video files
     croppedWidth.nil? && croppedHeight.nil? && fileHeight.nil? && fileWidth.nil?
+  end
+
+  def lens_profile_corrections?
+    profileCorrections == 1
+  end
+
+  def chromatic_aberration_corrections?
+    removeChromaticAberration == 1
   end
 end

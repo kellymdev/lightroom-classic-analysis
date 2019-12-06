@@ -37,4 +37,10 @@
 
   <h3>Process Versions</h3>
   <%= render partial: 'develop_setting_table', locals: { frequency_data: @develop_data[:process_versions] } %>
+
+  <h3>Lens Profile Corrections</h3>
+  <%= render partial: 'develop_setting_table', locals: { frequency_data: @develop_data[:lens_profile_corrections] } %>
+
+  <h3>Chromatic Aberration Corrections</h3>
+  <%= render partial: 'develop_setting_table', locals: { frequency_data: @develop_data[:chromatic_aberration_corrections] } %>
 </div>
